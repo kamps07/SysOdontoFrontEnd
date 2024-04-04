@@ -1,7 +1,7 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Login.css'; // Importe o arquivo CSS onde você irá definir os estilos
+import './Login.css';
+import TextSysOdonto from "../../Assets/TextSysOdonto.svg"
 
 export default function Login() {
 
@@ -9,21 +9,31 @@ export default function Login() {
     const [senha, setSenha] = useState("");
 
     return (
-        <div className="login-container">
-            <input
-                className="login-input"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder='E-mail' />
+        <>
+            <div className="login-wallpaper">
+                <div className='container'>
 
-            <input
-                className="login-input"
-                value={senha}
-                onChange={(e) => setSenha(e.target.value)}
-                placeholder='Senha'
-                type='password' />
+                    <div className="input-container">
+                        <img src={TextSysOdonto} />
+                        <input
+                            className="login-input"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder='E-mail' />
+                        <input
+                            className="login-input"
+                            value={senha}
+                            onChange={(e) => setSenha(e.target.value)}
+                            placeholder='Senha'
+                            type='password' />
+                        <div>
+                            <button className="login-button">Entrar</button>
+                        </div>
+                    </div>
+                </div>
 
-            <button onClick={Login}>Login</button>
-        </div>
+            </div>
+        </>
     );
 }
+
