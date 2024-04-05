@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import TextSysOdonto from "../../Assets/TextSysOdonto.svg"
+import Odontograma from '../../Components/Odontograma/Odontograma';
 
 export default function Login() {
 
@@ -9,8 +10,10 @@ export default function Login() {
     const [senha, setSenha] = useState("");
 
     return (
+
         <>
-            <div className="login-wallpaper">
+            <Odontograma></Odontograma>
+            {/* <div className="login-wallpaper">
                 <div className='container'>
 
                     <div className="input-container">
@@ -32,7 +35,7 @@ export default function Login() {
                     </div>
                 </div>
 
-            </div>
+            </div> */}
         </>
     );
 }
