@@ -1,0 +1,78 @@
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.input-container {
+    background-color: #FFFFFF;
+    width: 450px;
+    height: 600px;
+    padding-top: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #666666;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+}
+
+.login-input {
+    width: 300px;
+    height: 30px;
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+.login-wallpaper {
+    background-image: url('/src/images/WallpaperLogin.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.login-button{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 25px;
+    color: #FFFFFF;
+    width: 335px;
+    height: 45px;
+    background-color: #1088AE;
+    border-radius: 5px;
+    border-color: #1088AE;
+}
+
+.Logo-alinhamento {
+margin-bottom: 10px;
+}
+
+.alinhamento {
+    text-align: left; 
+    margin-left: 200px;
+
+    text-decoration: underline;
+}
+
+.Texto-Cadastro {
+    font-size: 25px;
+}
+
+.destaque {
+    color:  #1088AE;
+    font-weight: bold;
+    margin-top: 3px;
+    margin-bottom: 6px;
+    
+}  
+
+.destaque:hover{
+    color: #666666;
+}
