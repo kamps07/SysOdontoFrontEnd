@@ -4,12 +4,6 @@ import TextSysOdonto from "../../Assets/TextSysOdonto.svg";
 import './Login.css';
 
 export default function Login() {
-<<<<<<< HEAD
-
-    const navigate = useNavigate();
-
-=======
->>>>>>> 8421a680920c195f78dae50ddc09b4e7a359fb9e
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [mostrarSenha, setMostrarSenha] = useState(false);
@@ -37,12 +31,6 @@ export default function Login() {
                             className="login-input"
                             value={senha}
                             onChange={(e) => setSenha(e.target.value)}
-<<<<<<< HEAD
-                            placeholder='Senha'
-                            type='password' />
-                        <div>
-                            <button onClick={Login} className="login-button">Entrar</button>
-=======
                             placeholder='Digite sua Senha'
                             type={mostrarSenha ? 'text' : 'password'} />
                         <div className='alinhamento'>
@@ -52,7 +40,6 @@ export default function Login() {
                             >
                                 {mostrarSenha ? 'Ocultar Senha' : 'Mostrar Senha'}
                             </a>
->>>>>>> 8421a680920c195f78dae50ddc09b4e7a359fb9e
                         </div>
 
                         <button className="login-button">Entrar</button>
