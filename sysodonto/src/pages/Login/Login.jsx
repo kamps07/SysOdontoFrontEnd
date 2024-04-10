@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import TextSysOdonto from "../../Assets/TextSysOdonto.svg";
 import './Login.css';
+
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [mostrarSenha, setMostrarSenha] = useState(false);
+
+    const navigate = useNavigate();
+    const Navegar = () => {navigate("/Cadastro")}
 
     const toggleMostrarSenha = () => {
         setMostrarSenha(!mostrarSenha);
@@ -44,7 +48,7 @@ export default function Login() {
 
                         <button className="login-button">Entrar</button>
 
-                        <p> Não tem uma conta SysOdonto? <span className='destaque'>Cadastre-se agora</span></p>
+                        <p> Não tem uma conta SysOdonto? <span className='destaque' onClick={Navegar}>Cadastre-se agora</span></p>
                     </div>
                 </div>
             </div>

@@ -11,6 +11,9 @@ export default function Cadastro() {
     const [confirmarsenha, setConfimarSenha] = useState("");
     const [mostrarSenha, setMostrarSenha] = useState(false);
 
+    const navigate = useNavigate();
+    const Navegar = () => {navigate("/")}
+
     const toggleMostrarSenha = () => {
         setMostrarSenha(!mostrarSenha);
     };
@@ -79,7 +82,7 @@ export default function Cadastro() {
 
                         <button className="login-button">Entrar</button>
 
-                        <p> Não tem uma conta SysOdonto? <span className='destaque'>Cadastre-se agora</span></p>
+                        <p> Não tem uma conta SysOdonto? <span className='destaque' onClick={Navegar}>Cadastre-se agora</span></p>
                     </div>
                 </div>
             </div>
