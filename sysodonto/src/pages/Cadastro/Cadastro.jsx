@@ -27,28 +27,30 @@ export default function Cadastro() {
                             <img src={TextSysOdonto} alt="Logo" />
                         </div>
                         <p className='Texto-Cadastro'>Cadastre-se</p>
+
                         <input
                             className="login-input"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder='Digite seu E-mail' />
-
                         <input
                             className="login-input"
                             value={nome}
                             onChange={(e) => setNome(e.target.value)}
                             placeholder='Digite seu Nome Completo' />
+                        <div class="login-select">
+                            <select
+                                className="funcao-input"
+                                value={funcao}
+                                onChange={(e) => setFuncao(e.target.value)}
+                            >
+                                <option value="" disabled hidden>Selecione sua função</option>
+                                {funcoes.map((funcao, index) => (
+                                    <option key={index} value={funcao}>{funcao}</option>
+                                ))}
+                            </select>
+                        </div>
 
-                        <select
-                            className="login-input"
-                            value={funcao}
-                            onChange={(e) => setFuncao(e.target.value)}
-                        >
-                            <option className="login-input" value="" disabled hidden>Selecione sua função</option>
-                            {funcoes.map((funcao, index) => (
-                                <option className="login-input" key={index} value={funcao}>{funcao}</option>
-                            ))}
-                        </select>
 
 
 

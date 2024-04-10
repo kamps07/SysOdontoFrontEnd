@@ -17,6 +17,10 @@
     border-radius: 20px;
 }
 
+.focus {
+    outline-color: transparent;
+}
+
 .login-input {
     width: 300px;
     height: 30px;
@@ -27,17 +31,46 @@
     font-size: 15px;
 }
 
+.login-select {
+    width: 317.6px;
+    height: 47.6px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+/* div.login-input {
+    outline-color: black;
+} */
+
+.funcao-input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-size: 15px;
+    color: #666666;
+    outline-color: black;
+}
+
+
+
+select {
+    border-style: inset;
+    outline-color: transparent;
+}
+
 .login-wallpaper {
     background-image: url('/src/images/WallpaperLogin.jpg');
     background-size: cover;
     background-position: center;
     height: 100vh;
     display: flex;
-    justify-content: center; 
-    align-items: center; 
+    justify-content: center;
+    align-items: center;
 }
 
-.login-button{
+.login-button {
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
@@ -51,11 +84,11 @@
 }
 
 .Logo-alinhamento {
-margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .alinhamento {
-    text-align: left; 
+    text-align: left;
     margin-left: 200px;
 
     text-decoration: underline;
@@ -66,13 +99,13 @@ margin-bottom: 10px;
 }
 
 .destaque {
-    color:  #1088AE;
+    color: #1088AE;
     font-weight: bold;
     margin-top: 3px;
     margin-bottom: 6px;
-    
-}  
 
-.destaque:hover{
+}
+
+.destaque:hover {
     color: #666666;
 }
