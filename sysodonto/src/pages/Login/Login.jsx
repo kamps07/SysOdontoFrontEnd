@@ -5,6 +5,8 @@ import TextSysOdonto from "../../Assets/TextSysOdonto.svg"
 
 export default function Login() {
 
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
 
@@ -27,7 +29,7 @@ export default function Login() {
                             placeholder='Senha'
                             type='password' />
                         <div>
-                            <button className="login-button">Entrar</button>
+                            <button onClick={Login} className="login-button">Entrar</button>
                         </div>
                     </div>
                 </div>
