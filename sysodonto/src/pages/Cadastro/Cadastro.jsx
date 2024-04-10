@@ -84,7 +84,7 @@ export default function Cadastro() {
 
                         <button className="login-button">Entrar</button>
 
-                        <p> Não tem uma conta SysOdonto? <span className='destaque'>Cadastre-se agora</span></p>
+                        <p> Ja possui uma conta no SysOdonto <span className='destaque' onClick={Navegar}>Login</span></p>
                     </div>
                 </div>
             </div>
