@@ -1,22 +1,21 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TextSysOdonto from "../../Assets/TextSysOdonto.svg";
-import './Login.css';
+import './Cadastro.css';
 
-export default function Login() {
-<<<<<<< HEAD
-
-    const navigate = useNavigate();
-
-=======
->>>>>>> 8421a680920c195f78dae50ddc09b4e7a359fb9e
+export default function Cadastro() {
+    const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
+    const [funcao, setFuncao] = useState("");
     const [senha, setSenha] = useState("");
+    const [confirmarsenha, setConfimarSenha] = useState("");
     const [mostrarSenha, setMostrarSenha] = useState(false);
 
     const toggleMostrarSenha = () => {
         setMostrarSenha(!mostrarSenha);
     };
+
+    const funcoes = ["Dentista", "Recepcionista", "Outro"]; // Opções para a caixa
 
     return (
         <>
@@ -27,24 +26,46 @@ export default function Login() {
                         <div className='Logo-alinhamento'>
                             <img src={TextSysOdonto} alt="Logo" />
                         </div>
-                        <p className='Texto-login'>Faça login na sua conta</p>
+                        <p className='Texto-Cadastro'>Cadastre-se</p>
                         <input
                             className="login-input"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder='Digite seu E-mail' />
+
+                        <input
+                            className="login-input"
+                            value={nome}
+                            onChange={(e) => setNome(e.target.value)}
+                            placeholder='Digite seu Nome Completo' />
+
+                        <select
+                            className="login-input"
+                            value={funcao}
+                            onChange={(e) => setFuncao(e.target.value)}
+                        >
+                            <option className="login-input" value="" disabled hidden>Selecione sua função</option>
+                            {funcoes.map((funcao, index) => (
+                                <option className="login-input" key={index} value={funcao}>{funcao}</option>
+                            ))}
+                        </select>
+
+
+
                         <input
                             className="login-input"
                             value={senha}
                             onChange={(e) => setSenha(e.target.value)}
-<<<<<<< HEAD
-                            placeholder='Senha'
-                            type='password' />
-                        <div>
-                            <button onClick={Login} className="login-button">Entrar</button>
-=======
                             placeholder='Digite sua Senha'
                             type={mostrarSenha ? 'text' : 'password'} />
+
+                        <input
+                            className="login-input"
+                            value={confirmarsenha}
+                            onChange={(e) => setConfimarSenha(e.target.value)}
+                            placeholder='Confirme sua Senha'
+                            type={mostrarSenha ? 'text' : 'password'} />
+
                         <div className='alinhamento'>
                             <a
                                 className='destaque'
@@ -52,7 +73,6 @@ export default function Login() {
                             >
                                 {mostrarSenha ? 'Ocultar Senha' : 'Mostrar Senha'}
                             </a>
->>>>>>> 8421a680920c195f78dae50ddc09b4e7a359fb9e
                         </div>
 
                         <button className="login-button">Entrar</button>

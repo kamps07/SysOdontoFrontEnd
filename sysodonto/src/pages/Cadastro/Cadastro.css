@@ -6,7 +6,7 @@
 .input-container {
     background-color: #FFFFFF;
     width: 450px;
-    height: 500px;
+    height: 600px;
     padding-top: 5%;
     display: flex;
     flex-direction: column;
@@ -57,11 +57,11 @@ margin-bottom: 10px;
 .alinhamento {
     text-align: left; 
     margin-left: 200px;
-    margin-bottom: 10px;
+
     text-decoration: underline;
 }
 
-.Texto-login {
+.Texto-Cadastro {
     font-size: 25px;
 }
 
