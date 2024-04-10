@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import TextSysOdonto from "../../Assets/TextSysOdonto.svg";
 import './Cadastro.css';
 
+
+
 export default function Cadastro() {
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
@@ -79,7 +81,7 @@ export default function Cadastro() {
 
                         <button className="login-button">Entrar</button>
 
-                        <p> Não tem uma conta SysOdonto? <span className='destaque'>Cadastre-se agora</span></p>
+                        <p> Tem uma conta SysOdonto? <span className='destaque'>Faça Login</span></p>
                     </div>
                 </div>
             </div>
