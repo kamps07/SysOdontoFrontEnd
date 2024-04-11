@@ -2,22 +2,28 @@ import { jwtDecode } from "jwt-decode";
 
 const AuthService = {
     SalvarToken(token) {
-        localStorage.setItem("jwt", token)
+        localStorage.setItem("jwt", token);
     },
-    VerificarSeUsuarioEstaLogado () {
+    PegarToken() {
+        return localStorage.getItem("jwt");
+    },
+    Sair() {
+        return localStorage.removeItem("jwt");
+    },
+    VerificarSeUsuarioEstaLogado() {
         const token = localStorage.getItem("jwt");
-        if (token == null) {return false}
+        if (token == null) { return false }
 
-        const DataAtual = Date.parse(new Date()) / 1000;
+        const dataAtual = Date.parse(new Date()) / 1000;
 
         const userData = jwtDecode(token);
 
-        if (DataAtual > userData.exp){
+        if (dataAtual > userData.exp) {
             localStorage.removeItem("jwt");
             return false;
         }
 
-        return true; 
+        return true;
     }
 };
 

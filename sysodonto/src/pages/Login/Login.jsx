@@ -1,23 +1,64 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import TextSysOdonto from "../../Assets/TextSysOdonto.svg";
 import './Login.css';
-
+import ApiService from '../../Services/ApiService';
+import AuthService from '../../Services/AuthService';
+import ToastService from '../../Services/ToastService';
 
 export default function Login() {
+
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [mostrarSenha, setMostrarSenha] = useState(false);
 
-    const navigate = useNavigate();
-    const Navegar = () => {navigate("/Cadastro")}
+    useEffect(() => {
+        VerificarLogin();
+    }, []);
+
+    function VerificarLogin() {
+        const usuarioEstaLogado = AuthService.VerificarSeUsuarioEstaLogado();
+        if (usuarioEstaLogado) {
+            navigate("/Cadastro");
+        }
+    }
 
     const toggleMostrarSenha = () => {
         setMostrarSenha(!mostrarSenha);
     };
 
+    async function Login() {
+        try {
+            const body = new URLSearchParams({
+                email,
+                senha,
+            });
+
+            const response = await ApiService.post("/Dentista/Login", body);
+            const token = response.data.token;
+
+            AuthService.SalvarToken(token);
+
+            ToastService.Success("Seja bem vindo, " + email);
+
+            navigate("/Cadastro");
+        }
+        catch (error) {
+            if (error.response?.status === 401) {
+                ToastService.Error("E-mail e/ou senha inválidos!");
+                return;
+            }
+            ToastService.Error("Houve um erro no servidor ao realizar o seu login\r\nTente novamente mais tarde.");
+        }
+    }
+
+
     return (
         <>
+
+
             <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
             <div className="login-wallpaper">
                 <div className='container'>
@@ -46,9 +87,9 @@ export default function Login() {
                             </a>
                         </div>
 
-                        <button className="login-button">Entrar</button>
+                        <button onClick={Login} className="login-button">Entrar</button>
 
-                        <p> Não tem uma conta SysOdonto? <span className='destaque' onClick={Navegar}>Cadastre-se agora</span></p>
+                        <p> Não tem uma conta SysOdonto? <span className='destaque'>Cadastre-se agora</span></p>
                     </div>
                 </div>
             </div>
