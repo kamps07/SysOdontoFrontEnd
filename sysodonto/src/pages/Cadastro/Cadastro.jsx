@@ -14,8 +14,9 @@ export default function Cadastro() {
     const [mostrarSenha, setMostrarSenha] = useState(false);
 
     const navigate = useNavigate();
-    const Logar = navigate("/Login");
-
+    const Logar = () => {
+        navigate("/Login");
+      };
     const toggleMostrarSenha = () => {
         setMostrarSenha(!mostrarSenha);
     };
