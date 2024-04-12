@@ -14,7 +14,10 @@ export default function Login() {
     const [senha, setSenha] = useState("");
     const [mostrarSenha, setMostrarSenha] = useState(false);
     
-    const Cadastrar = navigate("/Cadastro");
+    const Cadastrar = () => {
+        navigate("/Cadastro");
+    };
+    
 
     useEffect(() => {
         VerificarLogin();
