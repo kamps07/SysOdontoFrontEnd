@@ -1,13 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Menu.css';
 import TextSysOdonto from "../../Assets/TextSysOdonto.svg";
+import { useNavigate } from 'react-router-dom';
+import AuthService from '../../Services/AuthService';
 
-const Menu = () => {
+export default function Home () {
   const [menu, setMenu] = useState('agenda');
+  const navigate = useNavigate();
 
   const handleTabClick = (menu) => {
     setMenu(menu);
   };
+
+  const Dental = () => (
+    <div className="dental">
+      {'Nome da Clínica'}
+    </div>
+  );
+
+  function VerificarLogin() {
+    const usuarioEstaLogado = AuthService.VerificarSeUsuarioEstaLogado();
+
+    if (!usuarioEstaLogado) {
+        navigate("/Login");
+    }
+  };
+  
+
+  useEffect(() => {
+    VerificarLogin();
+}, []);
 
   return (
     <div className="menu">
@@ -27,12 +49,4 @@ const Menu = () => {
       </div>
     </div>
   );
-};
-
-const Dental = () => (
-  <div className="dental">
-    {'Nome da Clínica'}
-  </div>
-);
-
-export default Menu;
+}

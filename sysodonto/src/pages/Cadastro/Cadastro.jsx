@@ -14,7 +14,7 @@ export default function Cadastro() {
     const [mostrarSenha, setMostrarSenha] = useState(false);
 
     const navigate = useNavigate();
-    const Navegar = () => {navigate("/")}
+    const Logar = navigate("/Login");
 
     const toggleMostrarSenha = () => {
         setMostrarSenha(!mostrarSenha);
@@ -84,7 +84,7 @@ export default function Cadastro() {
 
                         <button className="login-button">Entrar</button>
 
-                        <p> Ja possui uma conta no SysOdonto <span className='destaque' onClick={Navegar}>Login</span></p>
+                        <p> Ja possui uma conta no SysOdonto? <span className='destaque' onClick={Logar}>Login</span></p>
                     </div>
                 </div>
             </div>

@@ -2,6 +2,7 @@
 import './App.css';
 import { Navigate } from "react-router-dom"
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from'./pages/Home/Menu';
 import Login from './pages/Login/Login';
 import Cadastro from './pages/Cadastro/Cadastro';
 import { ToastContainer } from 'react-toastify';
@@ -9,12 +10,16 @@ import { ToastContainer } from 'react-toastify';
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "/Login",
       element: <Login />,
     },
     {
       path: "/Cadastro",
       element: <Cadastro />
+    },
+    {
+      path: "/",
+      element: <Home/>
     },
   ]);
 

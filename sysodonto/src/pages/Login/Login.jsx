@@ -13,6 +13,8 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [mostrarSenha, setMostrarSenha] = useState(false);
+    
+    const Cadastrar = navigate("/Cadastro");
 
     useEffect(() => {
         VerificarLogin();
@@ -21,7 +23,7 @@ export default function Login() {
     function VerificarLogin() {
         const usuarioEstaLogado = AuthService.VerificarSeUsuarioEstaLogado();
         if (usuarioEstaLogado) {
-            navigate("/Cadastro");
+            navigate("/");
         }
     }
 
@@ -43,7 +45,7 @@ export default function Login() {
 
             ToastService.Success("Seja bem vindo, " + email);
 
-            navigate("/Cadastro");
+            navigate("/");
         }
         catch (error) {
             if (error.response?.status === 401) {
@@ -89,7 +91,7 @@ export default function Login() {
 
                         <button onClick={Login} className="login-button">Entrar</button>
 
-                        <p> Não tem uma conta SysOdonto? <span className='destaque'>Cadastre-se agora</span></p>
+                        <p> Não tem uma conta SysOdonto? <span onClick={Cadastrar} className='destaque'>Cadastre-se agora</span></p>
                     </div>
                 </div>
             </div>
