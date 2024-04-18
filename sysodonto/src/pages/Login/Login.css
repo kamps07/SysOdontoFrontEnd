@@ -76,3 +76,21 @@ margin-bottom: 10px;
 .destaque:hover{
     color: #666666;
 }
+
+.login-select {
+    width: 317.6px;
+    height: 47.6px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+.funcao-input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-size: 15px;
+    color: #666666;
+    outline-color: black;
+}

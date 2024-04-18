@@ -12,11 +12,13 @@ export default function Login() {
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const [funcao, setFuncao] = useState("");
     const [mostrarSenha, setMostrarSenha] = useState(false);
     
     const Cadastrar = () => {
         navigate("/Cadastro");
       };
+
     
 
     useEffect(() => {
@@ -59,6 +61,7 @@ export default function Login() {
         }
     }
 
+    const funcoes = ["Dentista", "Recepcionista"];
 
     return (
         <>
@@ -83,6 +86,18 @@ export default function Login() {
                             onChange={(e) => setSenha(e.target.value)}
                             placeholder='Digite sua Senha'
                             type={mostrarSenha ? 'text' : 'password'} />
+                        <div className='login-select'>
+                            <select
+                            className="funcao-input"
+                            value={funcao}
+                            onChange={(e) => setFuncao(e.target.value)}
+                            >
+                            <option value="" disabled hidden>Selecione sua função</option>
+                            {funcoes.map((funcao, index) => (
+                                <option key={index} value={funcao}>{funcao}</option>
+                            ))}
+                            </select>
+                        </div>
                         <div className='alinhamento'>
                             <a
                                 className='destaque'
