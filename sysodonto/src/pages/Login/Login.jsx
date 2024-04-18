@@ -41,7 +41,7 @@ export default function Login() {
                 senha,
             });
 
-            const response = await ApiService.post("/Dentista/Login", body);
+            const response = await ApiService.post("/Usuarios/Login", body);
             const token = response.data.token;
 
             AuthService.SalvarToken(token);

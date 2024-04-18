@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TextSysOdonto from "../../Assets/TextSysOdonto.svg";
 import './Cadastro.css';
+import ApiService from '../../Services/ApiService';
+import AuthService from '../../Services/AuthService';
+import ToastService from '../../Services/ToastService';
 
 
 
@@ -16,11 +19,55 @@ export default function Cadastro() {
     const navigate = useNavigate();
     const Logar = () => { navigate("/Login")};
 
+    useEffect(() => {
+        VerificarLogin();
+    }, []);
+
+    function VerificarLogin() {
+        const usuarioEstaLogado = AuthService.VerificarSeUsuarioEstaLogado();
+        if (usuarioEstaLogado) {
+            navigate("/");
+        }
+    }
+    const Cadastro = async () => {
+        try {
+            const body = new ({
+                email,
+                nome,
+                funcao,
+                senha,
+            });
+
+            const response = await ApiService.post("/Usuarios/cadastrar", body);
+
+            ToastService.Success("Agora faça Login");
+
+            navigate("/Login");
+        }
+        catch (error) {
+            if (error.response?.status === 401) {
+                ToastService.Error("E-mail já cadastrado!");
+                return;
+            }
+            ToastService.Error("Houve um erro no servidor ao realizar o seu cadastro\r\nTente novamente mais tarde.");
+        }
+        
+        
+        if (senha !== confirmarsenha) {
+            ToastService.Error("As senhas não coincidem.");
+            return;
+        }
+
+    };
+        
+
     const toggleMostrarSenha = () => {
         setMostrarSenha(!mostrarSenha);
     };
 
-    const funcoes = ["Dentista", "Recepcionista", "Outro"]; // Opções para a caixa
+    
+
+    const funcoes = ["Dentista", "Recepcionista"]; // Opções para a caixa
 
     return (
         <>
@@ -82,7 +129,7 @@ export default function Cadastro() {
                             </a>
                         </div>
 
-                        <button className="login-button">Cadastrar</button>
+                        <button onClick={Cadastro} className="login-button">Cadastrar</button>
 
                         <p> Já tem uma conta SysOdonto? <span className='destaque' onClick={Logar}>Faça Login</span></p>
                     </div>
