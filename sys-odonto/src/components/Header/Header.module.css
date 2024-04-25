@@ -1,0 +1,42 @@
+.container {
+  height: 100%;
+  width: 100%;
+  background-color: aqua;
+  display: flex;
+  flex-direction: row;
+}
+
+.logoClinica {
+  height: 100%;
+  width: 25%;
+  background-color: darkblue;
+}
+
+.paginas {
+  height: 100%;
+  width: 70%;
+  background-color: red;
+  display: flex;
+  flex-direction: row;
+  padding-left: 12%;
+  padding-right: 12%;
+}
+
+.logo {
+  height: 100%;
+  width: 25%;
+  background-color: chocolate;
+}
+
+.pagina {
+  height: 100%;
+  width: 33%;
+  background-color: yellow;
+}
+
+.paginaSelecionada {
+  height: 100%;
+  width: 33%;
+  background-color: yellow;
+  border: solid 3px black;
+}

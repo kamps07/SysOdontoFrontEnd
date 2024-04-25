@@ -1,0 +1,18 @@
+.container {
+    background-color: blueviolet;
+    height: 100%;
+    width: 100%;
+
+}
+
+.header {
+    height: 15%;
+    width: 100%;
+    background-color: aqua;
+}
+
+.content {
+    height: 85%;
+    width: 100%;
+    background-color: cadetblue;
+}
