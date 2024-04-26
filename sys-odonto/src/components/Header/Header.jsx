@@ -1,4 +1,5 @@
 import styles from './Header.module.css'
+import TextSysOdonto from '../../assets/TextSysOdonto.svg';
 import AuthService from '../../services/AuthService'
 
 
@@ -34,8 +35,10 @@ export default function Header({ paginaSelecionada, setPaginaSelecionada }) {
           <span >Financeiro</span>
         </div>
       </div>
-      <div className={styles.logo}>
-
+      <div className={styles.containerLogo}>
+        <div className={styles.logo}>
+        <img src={TextSysOdonto} alt='Logo' />
+        </div>
       </div>
     </div>
   );

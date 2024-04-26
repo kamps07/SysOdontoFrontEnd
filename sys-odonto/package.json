@@ -10,10 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@devexpress/dx-react-scheduler": "^4.0.8",
+    "axios": "^1.6.8",
+    "devextreme": "23.2.5",
+    "devextreme-react": "23.2.5",
+    "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "axios": "^1.6.8",
-    "jwt-decode": "^4.0.0",
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
     "react-toastify": "^10.0.5",

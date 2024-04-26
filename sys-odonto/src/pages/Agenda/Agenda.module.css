@@ -1,0 +1,36 @@
+.container {
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.sidebar {
+    min-height: 100%;
+    width: 20%;
+}
+
+.scheduler {
+    height: '400px';
+    width: 80%;
+    padding: 2%;
+    overflow-y: 'auto';
+}
+
+.botaoContainer {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 4%;
+}
+
+.botaoAgenda {
+    height: 40%;
+    width: 75%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1088AE;
+}

@@ -1,42 +1,50 @@
 .container {
   height: 100%;
   width: 100%;
-  background-color: aqua;
   display: flex;
   flex-direction: row;
+  box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .logoClinica {
   height: 100%;
   width: 25%;
-  background-color: darkblue;
 }
 
 .paginas {
   height: 100%;
   width: 70%;
-  background-color: red;
   display: flex;
   flex-direction: row;
   padding-left: 12%;
   padding-right: 12%;
 }
 
-.logo {
+.containerLogo {
   height: 100%;
   width: 25%;
-  background-color: chocolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  padding-right: 20%;
 }
 
 .pagina {
   height: 100%;
   width: 33%;
-  background-color: yellow;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .paginaSelecionada {
   height: 100%;
   width: 33%;
-  background-color: yellow;
-  border: solid 3px black;
+  border-bottom: solid 2px black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
