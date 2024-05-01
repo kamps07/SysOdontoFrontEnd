@@ -34,11 +34,11 @@ export default function Cadastro() {
             const body = {
                 email,
                 nome,
-                cpf,
-                senha
+                funcao,
+                senha,
             };
 
-            const response = await ApiService.post('/Administrador/CadastrarAdministrador', body);
+            const response = await ApiService.post('/Usuarios/cadastrar', body);
 
             ToastService.Success('Agora faça Login');
 
@@ -61,6 +61,10 @@ export default function Cadastro() {
         setMostrarSenha(!mostrarSenha);
     };
 
+
+
+    const funcoes = ['Dentista', 'Recepcionista']; // Opções para a caixa
+
     return (
         <>
             <meta name='viewport' content='width=device-width, initial-scale=1.0'></meta>
@@ -79,14 +83,21 @@ export default function Cadastro() {
                             placeholder='Digite seu E-mail' />
                         <input
                             className={styles.loginInput}
-                            value={cpf}
-                            onChange={(e) => setCPF(e.target.value)}
-                            placeholder='Digite seu CPF' />    
-                        <input
-                            className={styles.loginInput}
                             value={nome}
                             onChange={(e) => setNome(e.target.value)}
                             placeholder='Digite seu Nome Completo' />
+                        <div class='login-select'>
+                            <select
+                                className={styles.loginSelect}
+                                value={funcao}
+                                onChange={(e) => setFuncao(e.target.value)}
+                            >
+                                <option value='' disabled hidden>Selecione sua função</option>
+                                {funcoes.map((funcao, index) => (
+                                    <option key={index} value={funcao}>{funcao}</option>
+                                ))}
+                            </select>
+                        </div>
                         <input
                             className={styles.loginInput}
                             value={senha}

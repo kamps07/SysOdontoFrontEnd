@@ -71,17 +71,15 @@ select {
 
 .loginButton {
     font-style: normal;
-    display: flex;
     font-weight: 600;
     font-size: 20px;
     line-height: 25px;
     color: #FFFFFF;
     width: 335px;
     height: 45px;
-    background-color: #1088AE;
+    background-color: c;
     border-radius: 5px;
-    align-items: center;
-    justify-content: center;
+    border-color: #1088AE;
 }
 
 .logoAlinhamento {
