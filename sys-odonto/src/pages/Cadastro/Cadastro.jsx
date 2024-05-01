@@ -9,12 +9,7 @@ import ToastService from '../../services/ToastService';
 
 
 export default function Cadastro() {
-    const [nome, setNome] = useState('');
-    const [email, setEmail] = useState('');
-    const [funcao, setFuncao] = useState('');
-    const [senha, setSenha] = useState('');
-    const [confirmarsenha, setConfimarSenha] = useState('');
-    const [mostrarSenha, setMostrarSenha] = useState(false);
+   
 
     const navigate = useNavigate();
     const Logar = () => { navigate('/Login') };

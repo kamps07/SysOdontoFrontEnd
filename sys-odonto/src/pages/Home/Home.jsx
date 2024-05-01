@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Header from '../../components/Header/Header'
-import PaginaTesteVerde from '../PaginaTesteVerde/PaginaTesteVerde';
+import Pacientes from '../Pacientes/Pacientes';
 import styles from './Home.module.css'
-import PaginaTesteVermelha from '../PaginaTesteVermelha/PaginaTesteVermelha';
+import Financeiro from '../Financeiro/Financeiro';
 import Agenda from '../Agenda/Agenda';
 
 export default function Home() {
@@ -17,8 +17,8 @@ export default function Home() {
             </div>
             <div className={styles.content}>
                 {paginaSelecionada == "Agenda" && <Agenda />}
-                {paginaSelecionada == "Pacientes" && <PaginaTesteVermelha />}
-                {paginaSelecionada == "Financeiro" && <PaginaTesteVermelha />}
+                {paginaSelecionada == "Pacientes" && <Pacientes />}
+                {paginaSelecionada == "Financeiro" && <Financeiro />}
             </div>
         </div>
     );

@@ -4,7 +4,7 @@ import styles from './Agenda.module.css';
 import { locale, loadMessages } from 'devextreme/localization';
 import ptMessages from 'devextreme/localization/messages/pt.json';
 import { EditingState } from '@devexpress/dx-react-scheduler';
-import PaginaTesteVermelha from '../PaginaTesteVermelha/PaginaTesteVermelha';
+import PaginaTesteVermelha from '../Financeiro/Financeiro';
 
 loadMessages(ptMessages);
 locale('pt-BR');

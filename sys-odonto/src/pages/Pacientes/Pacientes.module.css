@@ -1,0 +1,78 @@
+.inputContainer {
+    border: 1px solid #666666;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    margin-bottom: 2%;
+    color: black;
+}
+
+.container {
+    margin: 20px;
+    width: 95%;
+    text-align: justify;
+    align-items: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    align-content: stretch;
+    justify-content: space-around;
+    align-items: center;
+   
+   } 
+
+
+/* 
+   
+
+
+.espacamento{
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+
+
+.titleHeader{
+color: #1088AE;
+font-size: large;
+font-weight: bold;
+}
+
+.loginInput {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+    background-color: #fff;
+}  
+
+/*/
+
+/* .inputContainer {
+    border: 1px solid #666666;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    margin: 2%;
+    margin: 2px;
+} */
+
+
+
+
+/* .inputContainer {
+    background-color: #FFFFFF;
+    border: 1px solid #666666;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    margin: 2%;
+}
+
+.loginInput {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+    background-color: #fff;
+} */ 
