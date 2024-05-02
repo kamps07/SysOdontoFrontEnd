@@ -1,9 +1,10 @@
+body {
+    overflow-x: hidden; /* Evita a rolagem horizontal */
+}
 .container {
     background-color: white;
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    height: 100vh;
 }
 
 
