@@ -12,6 +12,7 @@ export default function Login() {
 
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [funcao, setFuncao] = useState('');
     const [mostrarSenha, setMostrarSenha] = useState(false);
 
     const Cadastrar = () => {
@@ -40,7 +41,7 @@ export default function Login() {
                 senha,
             });
 
-            const response = await ApiService.post('/Administrador/Login', body);
+            const response = await ApiService.post('/Usuarios/Login', body);
             const token = response.data.token;
 
             AuthService.SalvarToken(token);
@@ -83,6 +84,18 @@ export default function Login() {
                             onChange={(e) => setSenha(e.target.value)}
                             placeholder='Digite sua Senha'
                             type={mostrarSenha ? 'text' : 'password'} />
+                        <div className={styles.loginSelect}>
+                            <select
+                                className={styles.funcaoInput}
+                                value={funcao}
+                                onChange={(e) => setFuncao(e.target.value)}
+                            >
+                                <option value='' disabled hidden>Selecione sua função</option>
+                                {funcoes.map((funcao, index) => (
+                                    <option key={index} value={funcao}>{funcao}</option>
+                                ))}
+                            </select>
+                        </div>
                         <div className={styles.alinhamento}>
                             <a
                                 className={styles.destaque}

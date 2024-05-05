@@ -40,7 +40,6 @@
 
 .loginButton {
     font-style: normal;
-    display: flex;
     font-weight: 600;
     font-size: 20px;
     line-height: 25px;
@@ -49,8 +48,7 @@
     height: 45px;
     background-color: #1088AE;
     border-radius: 5px;
-    align-items: center;
-    justify-content: center;
+    border-color: #1088AE;
 }
 
 .LogoAlinhamento {

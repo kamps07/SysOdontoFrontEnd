@@ -4,16 +4,13 @@ import styles from './Agenda.module.css';
 import { locale, loadMessages } from 'devextreme/localization';
 import ptMessages from 'devextreme/localization/messages/pt.json';
 import { EditingState } from '@devexpress/dx-react-scheduler';
-import PaginaTesteVermelha from '../PaginaTesteVermelha/PaginaTesteVermelha';
-import ModalAgendamento from '../../components/ModalAgendamento/ModalAgendamento';
-import { useState } from 'react';
+import PaginaTesteVerde from '../PaginaTesteVerde/PaginaTesteVerde';
 
 loadMessages(ptMessages);
 locale('pt-BR');
 
 export default function Agenda() {
 
-    const [modalAberto, setModalAberto] = useState(false);
     const eventos = [
         {
             title: "Install New Database",
@@ -42,19 +39,11 @@ export default function Agenda() {
         // Por exemplo, você pode usar um estado para controlar um modal ou outro componente
     };
 
-    function AbrirModal() {
-        setModalAberto(true)
-    }
-
     return (
         <div className={styles.container}>
-            <ModalAgendamento
-                modalAberto={modalAberto}
-                setModalAberto={setModalAberto}
-            />
             <div className={styles.sidebar}>
                 <div className={styles.botaoContainer}>
-                    <button className={styles.botaoAgenda} onClick={AbrirModal}> + Novo Agendamento</button>
+                    <button className={styles.botaoAgenda}> + Novo Agendamento</button>
                 </div>
 
             </div>
