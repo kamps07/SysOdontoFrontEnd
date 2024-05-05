@@ -62,6 +62,7 @@ export default function Agenda() {
 
                 <Scheduler
                     id="scheduler"
+                    
                     defaultCurrentView="week"
                     dataSource={eventos}
                     timeZone="America/Sao_Paulo"

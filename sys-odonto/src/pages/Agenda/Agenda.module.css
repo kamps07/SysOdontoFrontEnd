@@ -14,7 +14,7 @@
     height: '400px';
     width: 80%;
     padding: 2%;
-    overflow-y: 'auto';
+    z-index: 0;
 }
 
 .botaoContainer {
