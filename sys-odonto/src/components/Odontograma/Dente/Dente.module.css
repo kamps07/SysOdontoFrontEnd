@@ -1,0 +1,7 @@
+.dente {
+    fill: #fff;
+}
+
+.dente:hover {
+    fill: red;
+}

@@ -1,7 +1,9 @@
+import Odontograma from "../../components/Odontograma/Odontograma";
+
 export default function PaginaTesteVermelha() {
     return (
-        <div style={{ backgroundColor: "black", height: '40%', width: '40%' }}>
-
+        <div>
+            <Odontograma></Odontograma>
         </div>
     );
 }
