@@ -5,11 +5,15 @@ import { locale, loadMessages } from 'devextreme/localization';
 import ptMessages from 'devextreme/localization/messages/pt.json';
 import { EditingState } from '@devexpress/dx-react-scheduler';
 import PaginaTesteVerde from '../PaginaTesteVerde/PaginaTesteVerde';
+import ModalAgendamento from '../../components/ModalAgendamento/ModalAgendamento';
+import { useState } from 'react';
 
 loadMessages(ptMessages);
 locale('pt-BR');
 
 export default function Agenda() {
+
+    const [modalAgendamentoAberto, setModalAgendamentoAberto] = useState(false);
 
     const eventos = [
         {
@@ -30,35 +34,32 @@ export default function Agenda() {
 
     const handleAppointmentFormOpening = (e) => {
         e.cancel = true;
-        openCustomAppointmentForm(e.appointmentData);
-    };
-
-    const openCustomAppointmentForm = (appointmentData) => {
-        // Exibir um formulário personalizado ou executar uma ação desejada
-        console.log('Abrindo formulário personalizado para:', appointmentData);
-        // Por exemplo, você pode usar um estado para controlar um modal ou outro componente
+        const appointmentData = e.appointmentData;
+        setModalAgendamentoAberto(true);
     };
 
     return (
         <div className={styles.container}>
+            <ModalAgendamento
+                modalAberto={modalAgendamentoAberto}
+                setModalAberto={setModalAgendamentoAberto}
+            ></ModalAgendamento>
+
             <div className={styles.sidebar}>
                 <div className={styles.botaoContainer}>
-                    <button className={styles.botaoAgenda}> + Novo Agendamento</button>
+                    <button className={styles.botaoAgenda} onClick={() => setModalAgendamentoAberto(true)}> + Novo Agendamento</button>
                 </div>
-
             </div>
             <div className={styles.scheduler}>
-
                 <Scheduler
                     id="scheduler"
-                    
+
                     defaultCurrentView="week"
                     dataSource={eventos}
                     timeZone="America/Sao_Paulo"
                     onAppointmentAdded={CommitChanges}
                     onAppointmentFormOpening={handleAppointmentFormOpening}
                 >
-
                     <View
                         type="day"
                         startDayHour={1}

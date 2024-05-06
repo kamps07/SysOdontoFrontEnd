@@ -1,7 +1,28 @@
-.dente {
+.default {
     fill: #fff;
 }
 
-.dente:hover {
-    fill: red;
+.default:hover {
+    fill: #ccc;
+}
+
+.Red {
+    fill: #ff0000;
+}
+
+.Red:hover {
+    fill: #b32828;
+}
+
+.Green {
+    fill: #0e9100;
+}
+
+.Green:hover {
+    fill: rgb(0, 101, 29);
+}
+
+polygon {
+    stroke: #000;
+    stroke-width: 0.4;
 }
