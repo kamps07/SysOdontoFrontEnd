@@ -63,7 +63,7 @@ export default function Cadastro() {
 
 
 
-    const funcoes = ['Dentista', 'Recepcionista']; // Opções para a caixa
+    const funcoes = ['Dentista', 'Recepcionista', 'Ambos']; // Opções para a caixa
 
     return (
         <>

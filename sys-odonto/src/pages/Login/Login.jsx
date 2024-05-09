@@ -36,10 +36,12 @@ export default function Login() {
 
     async function Login() {
         try {
-            const body = new URLSearchParams({
+            const body = {
                 email,
                 senha,
-            });
+                funcao,
+            };
+            
 
             const response = await ApiService.post('/Usuarios/Login', body);
             const token = response.data.token;
