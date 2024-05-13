@@ -20,13 +20,13 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-end;
-    height: 6rem;
+    height: 5rem;
 }
 
 .containerDatas {
     display: flex;
     flex-direction: row;
-    margin-top: 1em;
+    margin-top: 1.3em;
     justify-content: space-between;
     height: 6rem;
 }

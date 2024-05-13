@@ -4,7 +4,6 @@
 }
 
 .inputContainer {
-    background-color: #FFFFFF;
     width: 450px;
     height: 500px;
     padding-top: 5%;
@@ -26,6 +25,7 @@
     border-radius: 5px;
     font-size: 15px;
     background-color: #fff;
+    color: #000;
 }
 
 .loginWallpaper {

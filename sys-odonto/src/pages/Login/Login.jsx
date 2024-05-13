@@ -39,7 +39,6 @@ export default function Login() {
             const body = {
                 email,
                 senha,
-                funcao,
             };
             
 
@@ -86,18 +85,7 @@ export default function Login() {
                             onChange={(e) => setSenha(e.target.value)}
                             placeholder='Digite sua Senha'
                             type={mostrarSenha ? 'text' : 'password'} />
-                        <div className={styles.loginSelect}>
-                            <select
-                                className={styles.funcaoInput}
-                                value={funcao}
-                                onChange={(e) => setFuncao(e.target.value)}
-                            >
-                                <option value='' disabled hidden>Selecione sua função</option>
-                                {funcoes.map((funcao, index) => (
-                                    <option key={index} value={funcao}>{funcao}</option>
-                                ))}
-                            </select>
-                        </div>
+
                         <div className={styles.alinhamento}>
                             <a
                                 className={styles.destaque}
