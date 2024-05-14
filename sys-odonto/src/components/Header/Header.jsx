@@ -1,13 +1,26 @@
 import styles from './Header.module.css'
 import TextSysOdonto from '../../assets/TextSysOdonto.svg';
 import AuthService from '../../services/AuthService'
+import { useEffect, useState } from 'react';
 
 
 export default function Header({ paginaSelecionada, setPaginaSelecionada }) {
+
+  const [logoClinica, setLogoClinica] = useState("");
+
+  function carregarLogo() {
+    const userData = AuthService.PegarDadosUsuario();
+    setLogoClinica(userData.ImgUrl);
+  }
+
+  useEffect(() => {
+    carregarLogo();
+  }, []);
+
   return (
     <div className={styles.container}>
       <div className={styles.logoClinica}>
-
+        <img src={logoClinica} alt='Logo' />
       </div>
       <div className={styles.paginas}>
         <div
@@ -47,7 +60,7 @@ export default function Header({ paginaSelecionada, setPaginaSelecionada }) {
       </div>
       <div className={styles.containerLogo}>
         <div className={styles.logo}>
-        <img src={TextSysOdonto} alt='Logo' />
+          <img src={TextSysOdonto} alt='Logo' />
         </div>
       </div>
     </div>

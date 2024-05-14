@@ -24,6 +24,46 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
             padding: '2em'
         },
     };
+
+    useEffect(() => {
+        ListarDentistas();
+        ListarPacientes();
+    }, []);
+
+    async function ListarDentistas() {
+        try {
+            const response = await ApiService.get('/usuarios/dentistas');
+            const listaDeDentistas = response.data.map(item => ({
+                value: item.id,
+                label: item.nome
+            }));
+
+            setDentistas(listaDeDentistas);
+
+        } catch (error) {
+            ToastService.Error("Erro ao listar Dentistas!");
+        }
+    }
+
+    async function ListarPacientes() {
+        try {
+            const response = await ApiService.get('/paciente/listarPacientes');
+            const listaDePacientes = response.data.map(item => ({
+                value: item.id,
+                label: item.nome
+            }));
+
+            setPacientes(listaDePacientes);
+
+        } catch (error) {
+            ToastService.Error("Erro ao listar Pacientes!");
+        }
+    }
+
+    const [dentistas, setDentistas] = useState([]);
+    const [pacientes, setPacientes] = useState([]);
+
+
     Modal.setAppElement('#root');
     return (
         <Modal
@@ -39,10 +79,10 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
                 </div>
                 <div className={styles.containerFormulario}>
                     <div className={styles.containerDentista}>
-                        <Select placeholder={"Dentista"}></Select>
+                        <Select options={dentistas} placeholder={"Dentista"}></Select>
                     </div>
                     <div className={styles.containerPaciente}>
-                        <Select placeholder={"Paciente"} width={"75%"}></Select>
+                        <Select options={pacientes} placeholder={"Paciente"} width={"75%"}></Select>
                         <button className={styles.button}>+ Cadastrar</button>
                     </div>
                     <div className={styles.containerDatas}>
