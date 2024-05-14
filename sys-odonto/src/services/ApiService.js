@@ -8,11 +8,11 @@ function createHeader() {
             headers: {
                 Authorization: 'Bearer ' + jwt
             }
-        }
+        };
     }
 }
 
-const baseUrl = "https://localhost:7044/api"
+const baseUrl = "https://localhost:7044/api";
 const ApiService = {
 
     async get(endpoint) {
@@ -26,6 +26,20 @@ const ApiService = {
         const header = createHeader();
 
         const response = await axios.post(baseUrl + endpoint, body, header);
+        return response;
+    },
+
+    async delete(endpoint) {
+        const header = createHeader();
+
+        const response = await axios.delete(baseUrl + endpoint, header);
+        return response;
+    },
+
+    async put(endpoint, body) {
+        const header = createHeader();
+
+        const response = await axios.put(baseUrl + endpoint, body, header);
         return response;
     }
 };

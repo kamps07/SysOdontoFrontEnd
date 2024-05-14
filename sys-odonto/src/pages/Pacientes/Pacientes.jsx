@@ -25,7 +25,6 @@ export default function Pacientes() {
     const [grauDeParentesco, setGrauDeParentesco] = useState('');
 
     const validarDados = () => {
-       
         if (!nome || !dataNascimento || !genero || !rg ||
             !cpf || !email || !telefone || !profissao ||
             !logradouro || !numero || !complemento || !cep ||
@@ -84,6 +83,37 @@ export default function Pacientes() {
         }
     };
 
+    const AlterarPaciente = async () => {
+        // if (!validarDados()) return;
+
+        try {
+            const response = await ApiService.put('/Paciente/AlterarPaciente', {
+                cpf, // Adicionando o CPF como parte do corpo da requisição
+                nome,
+                dataNascimento,
+                genero,
+                rg,
+                email,
+                telefone,
+                profissao,
+                logradouro,
+                numero,
+                complemento,
+                cep,
+                bairro,
+                cidade,
+                estado,
+                nomeResponsavel,
+                numeroResponsavel,
+                documentoResponsavel,
+                grauDeParentesco
+            });
+            ToastService.Success('Alterações realizadas');
+        } catch (error) {
+            ToastService.Error('Houve um erro no servidor ao realizar a alteração.');
+        }
+    };
+
     return (
         <div className={styles.container}>
             <div>
@@ -115,7 +145,7 @@ export default function Pacientes() {
                                 <input className={styles.loginInput} value={cpf} onChange={(e) => setCpf(e.target.value)} />
                             </label>
                         </div>
-                        <div className={styles.teste1}> 
+                        <div className={styles.teste1}>
                             <label>
                                 E-mail: *
                                 <input className={styles.loginInput} value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -185,28 +215,37 @@ export default function Pacientes() {
                     <div className={styles.inputContainer}>
                         <div>
                             <label>
-                                Nome do Responsável: 
+                                Nome do Responsável:
                                 <input className={styles.loginInput} value={nomeResponsavel} onChange={(e) => setNomeResponsavel(e.target.value)} />
                             </label>
                         </div>
                         <div className={styles.organizacaocoluna}>
                             <label className={styles.dimensaoInput3}>
-                                Número do Responsável: 
+                                Número do Responsável:
                                 <input className={styles.loginInput} value={numeroResponsavel} onChange={(e) => setNumeroResponsavel(e.target.value)} />
                             </label>
                             <label className={styles.dimensaoInput3}>
-                                Documento do Responsável: 
+                                Documento do Responsável:
                                 <input className={styles.loginInput} value={documentoResponsavel} onChange={(e) => setDocumentoResponsavel(e.target.value)} />
                             </label>
                             <label className={styles.dimensaoInput3}>
-                                Grau de Parentesco: 
+                                Grau de Parentesco:
                                 <input className={styles.loginInput} value={grauDeParentesco} onChange={(e) => setGrauDeParentesco(e.target.value)} />
                             </label>
                         </div>
                     </div>
                     <div className={styles.buttonAlinhamento}>
-                        <button onClick={CadastrarPaciente} className={styles.button}> Finalizar Cadastro</button>
+                        <button onClick={CadastrarPaciente} className={styles.button}>Finalizar Cadastro</button>
                     </div>
+
+                    <div className={styles.buttonAlinhamento}>
+                        <button onClick={AlterarPaciente} className={styles.button}>Alterar Cadastro</button>
+                    </div>
+
+                    <div className={styles.buttonAlinhamento}>
+                        <button onClick={CadastrarPaciente} className={styles.button}>Deletar Cadastro</button>
+                    </div>
+
                 </div>
             </div>
         </div>
