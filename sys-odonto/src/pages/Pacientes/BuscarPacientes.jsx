@@ -7,7 +7,7 @@ import CadastrarPacientes from './Pacientes';
 export default function Pacientes() {
     const [mostrarCadastro, setMostrarCadastro] = useState(false);
     const [cpf, setCpf] = useState('');
-    const [pacientes, setPacientes] = useState(null); // Alteração aqui
+    const [pacientes, setPaciente] = useState(null); 
 
     const toggleCadastro = () => {
         setMostrarCadastro(!mostrarCadastro);
@@ -19,11 +19,12 @@ export default function Pacientes() {
 
     const handleBuscarPaciente = async () => {
         try {
-            const response = await ApiService.get(`/Paciente/ListarPaciente?cpf=${cpf}`);
-            const pacientes = response.data; // Alteração aqui
-            setPacientes(Array.isArray(pacientes) ? pacientes : [pacientes]); // Alteração aqui
+            const response = await ApiService.get(`/Paciente/BuscarPorCPF/${cpf}`);
+            const pacientes = response.data; 
+            setPacientes(pacientes);
+            
+
         } catch (error) {
-            console.error('Erro ao buscar paciente:', error);
             ToastService.Error('Houve um erro no servidor ao buscar o paciente.');
         }
     };
@@ -35,27 +36,32 @@ export default function Pacientes() {
                 {mostrarCadastro ? (
                     <CadastrarPacientes />
                 ) : (
-                    <>
+                    
+                    <div>
                         <button onClick={toggleCadastro}>Cadastrar Paciente</button>
                         <div>
                             <label>Buscar Paciente por CPF:</label>
                             <input type="text" value={cpf} onChange={handleInputChange} />
                             <button onClick={handleBuscarPaciente}>Buscar</button>
                         </div>
-                        {pacientes && ( // Alteração aqui
+
+                        {pacientes && ( 
                             <div>
-                                <h2>Dados do(s) Paciente(s)</h2>
-                                {pacientes.map(p => (
-                                    <div key={p.id}>
-                                        <p><strong>Nome:</strong> {p.nome}</p>
-                                        <p><strong>Data de Nascimento:</strong> {p.dataNascimento}</p>
-                                        <p><strong>Gênero:</strong> {p.genero}</p>
-                                        {/* Adicione outros dados do paciente conforme necessário */}
+                                <h2>Dados do Paciente </h2>
+
+                                {pacientes.map(paciente => (
+                                    <div key={paciente.id}>
+                                        <p><strong>Nome:</strong> {paciente.nome}</p>
+                                        <p><strong>Data de Nascimento:</strong> {paciente.dataNascimento}</p>
+                                        <p><strong>Gênero:</strong> {paciente.genero}</p>
+                                      
                                     </div>
                                 ))}
+
+                                
                             </div>
                         )}
-                    </>
+                </div>
                 )}
             </div>
         </div>
