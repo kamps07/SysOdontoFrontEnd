@@ -54,7 +54,7 @@ export default function Header({ paginaSelecionada, setPaginaSelecionada }) {
             : styles.pagina}
           onClick={() => setPaginaSelecionada("Prontuário")}
         >
-          <span >Prontuário</span>
+          <span >Prontuários</span>
         </div>
 
       </div>

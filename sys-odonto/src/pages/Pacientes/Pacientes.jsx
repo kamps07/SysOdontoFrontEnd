@@ -235,17 +235,20 @@ export default function Pacientes() {
                         </div>
                     </div>
                     <div className={styles.buttonAlinhamento}>
-                        <button onClick={CadastrarPaciente} className={styles.button}>Finalizar Cadastro</button>
-                    </div>
 
-                    <div className={styles.buttonAlinhamento}>
-                        <button onClick={AlterarPaciente} className={styles.button}>Alterar Cadastro</button>
-                    </div>
+                        <div className={styles.buttonAlinhamento}>
+                            <button onClick={CadastrarPaciente} className={styles.button}>Finalizar Cadastro</button>
+                        </div>
 
-                    <div className={styles.buttonAlinhamento}>
-                        <button onClick={CadastrarPaciente} className={styles.button}>Deletar Cadastro</button>
-                    </div>
+                        <div className={styles.buttonAlinhamento}>
+                            <button onClick={AlterarPaciente} className={styles.button}>Alterar Cadastro</button>
+                        </div>
 
+                        <div className={styles.buttonAlinhamento}>
+                        <   button onClick={CadastrarPaciente} className={styles.button}>Deletar Cadastro</button>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>

@@ -8,6 +8,7 @@ import { baseZIndex } from 'devextreme/ui/overlay';
 import Input from '../Input/Input';
 import Select from '../Select/Select';
 import TextArea from '../TextArea/TextArea';
+import CadastrarPacientes from '../../pages/Pacientes/BuscarPacientes'
 
 export default function ModalAgendamento({ modalAberto, setModalAberto }) {
     const customStyles = {
@@ -16,7 +17,7 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
             left: '50%',
             right: 'auto',
             bottom: 'auto',
-            height: '65%',
+            height: '80%',
             width: '45%',
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
@@ -47,7 +48,7 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
 
     async function ListarPacientes() {
         try {
-            const response = await ApiService.get('/paciente/listarPacientes');
+            const response = await ApiService.get('/Paciente/ListarPacientes');
             const listaDePacientes = response.data.map(item => ({
                 value: item.id,
                 label: item.nome
@@ -83,7 +84,7 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
                     </div>
                     <div className={styles.containerPaciente}>
                         <Select options={pacientes} placeholder={"Paciente"} width={"75%"}></Select>
-                        <button className={styles.button}>+ Cadastrar</button>
+                        <button className={styles.button} onClick={<CadastrarPacientes/>}>+ Cadastrar</button>
                     </div>
                     <div className={styles.containerDatas}>
                         <Select placeholder={"Data da consulta"} width={"28%"}></Select>
@@ -96,7 +97,7 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
                     </div>
                 </div>
                 <div className={styles.containerButtons}>
-                    <button className={styles.button}>Cancelar</button>
+                    <button className={styles.button} onClick={() => setModalAberto(false)}>Cancelar</button>
                     <button className={styles.button}>Confirmar</button>
                 </div>
             </div>

@@ -16,6 +16,7 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 18px;
+    padding-right: 1em;
 }
 
 .button:hover {
@@ -92,5 +93,5 @@ margin: 20px;
 .buttonAlinhamento{
     display: flex;
     flex-direction: row-reverse;
-    padding: 20px;
+    padding: 0.5em;
 }
