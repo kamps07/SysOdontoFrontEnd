@@ -13,18 +13,18 @@ export default function Home() {
 
     const navigate = useNavigate();
 
-    // function VerificarLogin() {
-    //     const usuarioEstaLogado = AuthService.VerificarSeUsuarioEstaLogado();
+    function VerificarLogin() {
+        const usuarioEstaLogado = AuthService.VerificarSeUsuarioEstaLogado();
     
-    //     if (!usuarioEstaLogado) {
-    //         navigate("/Login");
-    //     }
-    //   };
+        if (!usuarioEstaLogado) {
+            navigate("/Login");
+        }
+      };
     
     
-    //   useEffect(() => {
-    //     VerificarLogin();
-    // }, []);
+      useEffect(() => {
+        VerificarLogin();
+    }, []);
 
     const [paginaSelecionada, setPaginaSelecionada] = useState("Agenda");
 
