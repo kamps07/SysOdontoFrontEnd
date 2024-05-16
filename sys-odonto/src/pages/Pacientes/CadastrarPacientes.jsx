@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import styles from './Pacientes.module.css';
+import styles from './CadastrarPacientes.module.css';
 import ApiService from '../../services/ApiService';
 import ToastService from '../../services/ToastService';
 
-export default function Pacientes() {
+export default function CadastrarPacientes() {
     const [nome, setNome] = useState('');
     const [dataNascimento, setDataDeNascimento] = useState('');
     const [genero, setGenero] = useState('');
