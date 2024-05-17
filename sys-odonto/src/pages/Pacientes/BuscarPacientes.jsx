@@ -30,21 +30,23 @@ export default function Pacientes() {
             const pacientes = response.data;
             setPacientes(pacientes); 
         } catch (error) {
-            ToastService.Error('Houve um erro no servidor ao buscar o paciente.');
+            ToastService.Error('Paciente não encontrado.');
         }
     };
 
     return (
         <div>
+
             <div className={styles.pacientesContainer}>
+                <meta name='viewport' content='width=device-width, initial-scale=1.0'></meta>
                 {mostrarCadastro ? (
                     <CadastrarPacientes />
                 ) : (
                     <div>
-                        <button onClick={toggleCadastro}>Cadastrar Paciente</button>
+                        <button className={styles.button} onClick={toggleCadastro}>Cadastrar Paciente</button>
                         <div>
-                            <label>Buscar Paciente por CPF ou Nome:</label>
-                            <input type="text" value={cpfNome} onChange={handleInputChange} />
+                            <label className={styles.tituloCampos}>Buscar Paciente por CPF ou Nome:</label>
+                            <input className={styles.input} type="text" value={cpfNome} onChange={handleInputChange} />
                             <button onClick={handleBuscarPaciente}>Buscar</button>
                         </div>
 

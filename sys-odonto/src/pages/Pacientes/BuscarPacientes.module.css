@@ -47,7 +47,7 @@
 }
 
 
-.loginInput {
+.input {
     height: 30px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -65,6 +65,8 @@
 font-size: 18px;
 font-weight: bold;
 margin: 20px;
+color:  #1088AE;
+
 }
 
 .buttonEspaco{

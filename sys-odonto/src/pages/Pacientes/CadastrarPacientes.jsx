@@ -88,7 +88,7 @@ export default function CadastrarPacientes() {
 
         try {
             const response = await ApiService.put('/Paciente/AlterarPaciente', {
-                cpf, // Adicionando o CPF como parte do corpo da requisição
+                cpf, 
                 nome,
                 dataNascimento,
                 genero,
@@ -110,9 +110,16 @@ export default function CadastrarPacientes() {
             });
             ToastService.Success('Alterações realizadas');
         } catch (error) {
-            ToastService.Error('Houve um erro no servidor ao realizar a alteração.');
+            ToastService.Error('Erro ao alterar.');
         }
     };
+
+
+    
+
+
+    
+    
 
     return (
         <div className={styles.container}>
@@ -242,10 +249,6 @@ export default function CadastrarPacientes() {
 
                         <div className={styles.buttonAlinhamento}>
                             <button onClick={AlterarPaciente} className={styles.button}>Alterar Cadastro</button>
-                        </div>
-
-                        <div className={styles.buttonAlinhamento}>
-                        <   button onClick={CadastrarPaciente} className={styles.button}>Deletar Cadastro</button>
                         </div>
 
                     </div>
