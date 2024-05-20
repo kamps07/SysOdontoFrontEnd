@@ -4,7 +4,6 @@ import styles from './Agenda.module.css';
 import { locale, loadMessages } from 'devextreme/localization';
 import ptMessages from 'devextreme/localization/messages/pt.json';
 import { EditingState } from '@devexpress/dx-react-scheduler';
-import PaginaTesteVerde from '../PaginaTesteVerde/PaginaTesteVerde';
 import ModalAgendamento from '../../components/ModalAgendamento/ModalAgendamento';
 import { useState } from 'react';
 

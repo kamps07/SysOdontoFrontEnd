@@ -1,12 +1,12 @@
 import { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header'
-import Pacientes from '../Pacientes/BuscarPacientes';
 import styles from './Home.module.css'
 import Financeiro from '../Financeiro/Financeiro';
 import Agenda from '../Agenda/Agenda';
 import AuthService from '../../services/AuthService';
 import Prontuario from '../Prontuario/Prontuario';
+import BuscarPacientes from "../../pages/Pacientes/BuscarPacientes/BuscarPacientes";
 
 export default function Home() {
 
@@ -36,7 +36,7 @@ export default function Home() {
             </div>
             <div className={styles.content}>
                 {paginaSelecionada == "Agenda" && <Agenda />}
-                {paginaSelecionada == "Pacientes" && <Pacientes />}
+                {paginaSelecionada == "Pacientes" && <BuscarPacientes />}
                 {paginaSelecionada == "Financeiro" && <Financeiro />}
                 {paginaSelecionada == "Prontuário" && <Prontuario />}
             </div>

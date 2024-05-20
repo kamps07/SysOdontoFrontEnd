@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import styles from './CadastrarPacientes.module.css';
-import ApiService from '../../services/ApiService';
-import ToastService from '../../services/ToastService';
+import styles from './CadastrarPaciente.module.css';
+import ApiService from '../../../services/ApiService';
+import ToastService from '../../../services/ToastService';
 
-export default function CadastrarPacientes() {
+export default function CadastrarPaciente() {
     const [nome, setNome] = useState('');
     const [dataNascimento, setDataDeNascimento] = useState('');
     const [genero, setGenero] = useState('');
@@ -55,11 +55,11 @@ export default function CadastrarPacientes() {
     const CadastrarPaciente = async () => {
         if (!validarDados()) return;
 
+
         try {
             const response = await ApiService.post('/Paciente/CadastrarPaciente', {
                 nome,
                 dataNascimento,
-                genero,
                 rg,
                 cpf,
                 email,
@@ -83,43 +83,7 @@ export default function CadastrarPacientes() {
         }
     };
 
-    const AlterarPaciente = async () => {
-        // if (!validarDados()) return;
 
-        try {
-            const response = await ApiService.put('/Paciente/AlterarPaciente', {
-                cpf, 
-                nome,
-                dataNascimento,
-                genero,
-                rg,
-                email,
-                telefone,
-                profissao,
-                logradouro,
-                numero,
-                complemento,
-                cep,
-                bairro,
-                cidade,
-                estado,
-                nomeResponsavel,
-                numeroResponsavel,
-                documentoResponsavel,
-                grauDeParentesco
-            });
-            ToastService.Success('Alterações realizadas');
-        } catch (error) {
-            ToastService.Error('Erro ao alterar.');
-        }
-    };
-
-
-    
-
-
-    
-    
 
     return (
         <div className={styles.container}>
@@ -137,8 +101,9 @@ export default function CadastrarPacientes() {
                         <div className={styles.organizacaocoluna}>
                             <label className={styles.dimensaoInput4}>
                                 Data de Nascimento: *
-                                <input className={styles.loginInput} value={dataNascimento} onChange={(e) => setDataDeNascimento(e.target.value)} type="date" />
+                                <input className={styles.loginInput} value={dataNascimento} onChange={(e) => setDataNascimento(e.target.value)} type="date" />
                             </label>
+
                             <label className={styles.dimensaoInput4}>
                                 Gênero: *
                                 <input className={styles.loginInput} value={genero} onChange={(e) => setGenero(e.target.value)} />
@@ -245,10 +210,6 @@ export default function CadastrarPacientes() {
 
                         <div className={styles.buttonAlinhamento}>
                             <button onClick={CadastrarPaciente} className={styles.button}>Finalizar Cadastro</button>
-                        </div>
-
-                        <div className={styles.buttonAlinhamento}>
-                            <button onClick={AlterarPaciente} className={styles.button}>Alterar Cadastro</button>
                         </div>
 
                     </div>

@@ -8,7 +8,7 @@ import { baseZIndex } from 'devextreme/ui/overlay';
 import Input from '../Input/Input';
 import Select from '../Select/Select';
 import TextArea from '../TextArea/TextArea';
-import CadastrarPacientes from '../../pages/Pacientes/BuscarPacientes'
+import CadastrarPacientes from '../../pages/Pacientes/BuscarPacientes/BuscarPacientes'
 
 export default function ModalAgendamento({ modalAberto, setModalAberto }) {
     const customStyles = {

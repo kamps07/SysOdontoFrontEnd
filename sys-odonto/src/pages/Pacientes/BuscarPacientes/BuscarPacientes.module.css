@@ -1,0 +1,134 @@
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.buttonCadastro {
+    background-color: #1088AE;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+
+.buttonCadastro:hover {
+    background-color: #0c6c89;
+}
+
+.button {
+    background-color: #1088AE;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    align-items: flex-start;
+}
+
+.button:hover {
+    background-color: #0c6c89;
+}
+
+.input {
+    height: 35px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+    background-color: #fff;
+    color: #666666;
+    width: 95%;
+    margin-right: 20px;
+}
+
+.tituloCampos {
+    font-size: 22px;
+    font-weight: bold;
+    color: #1088AE;
+}
+
+.buscador {
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    padding: 10px;
+    margin: 2%;
+}
+
+.pacientesContainer {
+    height: 100vh;
+    /* background-image: url('../../assets/WallpaperLogin.jpg');
+    background-size: cover;
+    background-position: center; */
+    margin: 0%;
+}
+
+
+ .containerButton {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+
+/* styles.css */
+
+.tableContainer {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+    background-color: #fff;
+    color: #666666;
+    margin-top: 30px;
+}
+
+.tableContainer table {
+    border-collapse: collapse;
+    width: 100%;
+    color: #666666;
+}
+
+.tableContainer th, .tableContainer td {
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #ddd; 
+   
+}
+
+.tableContainer th {
+    background-color: #fff;
+    color: #1088AE;
+    border: 1px solid #ddd; /* Adiciona uma borda de 1px sólida com cor #ddd */
+    text-align: left;
+    padding: 8px;
+}
+
+.tableContainer tr:nth-child(odd) {
+    background-color: #1089ae13;;
+}
+
+.tableContainer tr:hover {
+    background-color: #1089ae53;
+}
+
+.tableContainer th:nth-child(1), .tableContainer td:nth-child(1) {
+    width: 60%; /* Define a largura da primeira coluna como 100 pixels */
+}
+
+.tableContainer th:nth-child(2), .tableContainer td:nth-child(2) {
+    width: 20%; /* Define a largura da segunda coluna como 150 pixels */
+}
+
+.tableContainer th:nth-child(3), .tableContainer td:nth-child(3) {
+    width: 20; /* Define a largura da terceira coluna como 200 pixels */
+}
+
+  
+
+
