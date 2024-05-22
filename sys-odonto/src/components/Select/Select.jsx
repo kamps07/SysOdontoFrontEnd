@@ -7,7 +7,7 @@ export default function Select({ options, placeholder, width }) {
     return (
         <div className={styles.container} style={{ width }}>
             <span className={styles.label}>{placeholder}</span>
-            <SelectComponent className={styles.component} options={options} />
+            <SelectComponent className={styles.component} options={options}/>
         </div>
     )
 }

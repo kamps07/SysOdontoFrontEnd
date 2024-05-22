@@ -6,6 +6,7 @@ import styles from './ModalAgendamento.module.css'
 import { Height, Width } from 'devextreme-react/cjs/chart';
 import { baseZIndex } from 'devextreme/ui/overlay';
 import Input from '../Input/Input';
+import DatePicker from 'react-datepicker';
 import Select from '../Select/Select';
 import TextArea from '../TextArea/TextArea';
 import CadastrarPacientes from '../../pages/Pacientes/BuscarPacientes/BuscarPacientes'
@@ -87,7 +88,12 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
                         <button className={styles.button} onClick={<CadastrarPacientes/>}>+ Cadastrar</button>
                     </div>
                     <div className={styles.containerDatas}>
-                        <Select placeholder={"Data da consulta"} width={"28%"}></Select>
+                        <div className={styles.dateContainer}>
+                        <span className={styles.dateLabel}>
+                            Data da Consulta
+                            <input className={styles.datePicker} type="date"></input>
+                        </span>
+                        </div>
                         <Select placeholder={"Horário"} width={"28%"}></Select>
                         <Select placeholder={"Duração"} width={"28%"}></Select>
 

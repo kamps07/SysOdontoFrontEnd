@@ -51,6 +51,31 @@
     color: #1088AE;
 }
 
+.dateLabel{
+    margin-bottom: 0.5em;
+    font-size: large;
+}
+
+.dateContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.datePicker{
+    height: 2.5em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+    background-color: #fff;
+    color: #666666;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 0.6em;
+    justify-content: space-evenly;
+    max-width:100%;
+}
+
 
 .titleContainer {
     height: 3em;
@@ -61,4 +86,8 @@
     height: 2.8rem;
     background-color: #1088AE;
     margin-left: 1em;
+}
+
+.calendar{
+
 }
