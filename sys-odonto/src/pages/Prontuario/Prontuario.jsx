@@ -7,15 +7,21 @@ import Anamnese from './Anamnese/Anamnese';
 import Tratamentos from './Tratamentos/Tratamentos';
 import Arquivos from './Arquivos/Arquivos';
 import Documentos from './Documentos/Documentos';
+import ModalCadastroClinica from '../../components/ModalCadastroClínica/ModalCadastroClínica';
 
 
 
 function Prontuario() {
 
     const [paginaSelecionada, setPaginaSelecionada] = useState("Evolucoes");
+    const [modalAberto, setModalAberto] = useState(false);
 
     return (
         <div className={styles.container}>
+            <ModalCadastroClinica
+                modalAberto={modalAberto}
+                setModalAberto={setModalAberto}
+                />
             <div className={styles.header}>
                 <HeaderProntuario paginaSelecionada={paginaSelecionada} setPaginaSelecionada={setPaginaSelecionada}></HeaderProntuario>
             </div>
