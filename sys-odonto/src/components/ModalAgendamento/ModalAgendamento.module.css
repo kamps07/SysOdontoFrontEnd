@@ -27,7 +27,6 @@
     display: flex;
     flex-direction: row;
     margin-top: 1.3em;
-    justify-content: space-between;
     height: 6rem;
 }
 
@@ -51,17 +50,19 @@
     color: #1088AE;
 }
 
-.dateLabel{
+.dateLabel {
     margin-bottom: 0.5em;
     font-size: large;
 }
 
-.dateContainer{
+.dateContainer {
     display: flex;
     flex-direction: column;
+    width: 12em;
+    padding-right: 2em;
 }
 
-.datePicker{
+.datePicker {
     height: 2.5em;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -73,7 +74,10 @@
     flex-direction: row;
     margin-top: 0.6em;
     justify-content: space-evenly;
-    max-width:100%;
+    max-width: 100%;
+}
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
 }
 
 
@@ -88,6 +92,4 @@
     margin-left: 1em;
 }
 
-.calendar{
-
-}
+.calendar {}

@@ -10,6 +10,7 @@ import DatePicker from 'react-datepicker';
 import Select from '../Select/Select';
 import TextArea from '../TextArea/TextArea';
 import CadastrarPacientes from '../../pages/Pacientes/BuscarPacientes/BuscarPacientes'
+import moment from 'moment';
 
 export default function ModalAgendamento({ modalAberto, setModalAberto }) {
     const customStyles = {
@@ -32,6 +33,16 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
         ListarPacientes();
     }, []);
 
+    const [dentista, setDentista] = useState([]);
+    const [paciente, setPaciente] = useState([]);
+    const [horario, setHorario] = useState([]);
+    const [data, setData] = useState(moment().format('YYYY-MM-DD'));
+    const [observacao, setObservacao] = useState([]);
+
+    useEffect(() => {
+        ListarHorarios();
+    }, [data])
+
     async function ListarDentistas() {
         try {
             const response = await ApiService.get('/usuarios/dentistas');
@@ -43,7 +54,7 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
             setDentistas(listaDeDentistas);
 
         } catch (error) {
-            ToastService.Error("Erro ao listar Dentistas!");
+            ToastService.Error("Erro ao listar dentistas!");
         }
     }
 
@@ -58,14 +69,48 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
             setPacientes(listaDePacientes);
 
         } catch (error) {
-            ToastService.Error("Erro ao listar Pacientes!");
+            ToastService.Error("Erro ao listar pacientes!");
         }
     }
 
-    const [dentistas, setDentistas] = useState([]);
-    const [pacientes, setPacientes] = useState([]);
+    async function ListarHorarios() {
+        try {
+            const dataSelecionada = moment(data);
 
+            const dia = dataSelecionada.day();
+            const mes = dataSelecionada.month();
+            const ano = dataSelecionada.year();
 
+            const response = await ApiService.get(`/Agendamento/ListarHorariosDisponiveis?dia=${dia}&mes=${mes}&ano=${ano}`);
+            const listaDeHorarios = response.data.map(item => ({
+                value: item,
+                label: item
+            }));
+
+            setHorarios(listaDeHorarios);
+
+        } catch (error) {
+            ToastService.Error("Erro ao listar horarios!");
+        }
+    
+    }
+
+        async function CadastrarAgendamento(){
+                try {
+                    const response = await ApiService.post('/Paciente/CadastrarPaciente', {
+                        dentista,
+                        paciente,
+                        data,
+                        horario,
+                        observacao
+                    });
+                    ToastService.Success('Agendamento Realizado');
+                }
+            catch (error) {
+                ToastService.Error('Houve um erro ao realizar o agendamento');
+            }
+            
+        }    
     Modal.setAppElement('#root');
     return (
         <Modal
@@ -81,30 +126,34 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
                 </div>
                 <div className={styles.containerFormulario}>
                     <div className={styles.containerDentista}>
-                        <Select options={dentistas} placeholder={"Dentista"}></Select>
+                        <Select options={dentista} placeholder={"Dentista"}></Select>
                     </div>
                     <div className={styles.containerPaciente}>
-                        <Select options={pacientes} placeholder={"Paciente"} width={"75%"}></Select>
-                        <button className={styles.button} onClick={<CadastrarPacientes/>}>+ Cadastrar</button>
+                        <Select options={paciente} placeholder={"Paciente"} width={"75%"}></Select>
+                        <button className={styles.button}>+ Cadastrar</button>
                     </div>
                     <div className={styles.containerDatas}>
                         <div className={styles.dateContainer}>
-                        <span className={styles.dateLabel}>
-                            Data da Consulta
-                            <input className={styles.datePicker} type="date"></input>
-                        </span>
+                            <span className={styles.dateLabel}>
+                                Data da Consulta
+                                <input
+                                    className={styles.datePicker}
+                                    type="date"
+                                    value={data}
+                                    onChange={(e) => { setData(e.target.value) }}
+                                    onKeyDown={(e) => { e.preventDefault(); }}
+                                />
+                            </span>
                         </div>
-                        <Select placeholder={"Horário"} width={"28%"}></Select>
-                        <Select placeholder={"Duração"} width={"28%"}></Select>
-
+                        <Select options={horario} placeholder={"Horário"} width={"28%"} onChange={(e) => { setHorario(e.target.value) }}></Select>
                     </div>
                     <div className={styles.containerObservacao}>
-                        <TextArea placeholder={"Observações"}></TextArea>
+                        <TextArea placeholder={"Observações"} onChange={(e) => { setObservacao(e.target.value) }}></TextArea>
                     </div>
                 </div>
                 <div className={styles.containerButtons}>
                     <button className={styles.button} onClick={() => setModalAberto(false)}>Cancelar</button>
-                    <button className={styles.button}>Confirmar</button>
+                    <button className={styles.button} onClick={CadastrarAgendamento}>Confirmar</button>
                 </div>
             </div>
         </Modal>
