@@ -17,27 +17,32 @@ export default function ModalCadastroClinica({ modalAberto, setModalAberto, busc
     };
     Modal.setAppElement('#root');
 
-    const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
+    const [nome, setNome] = useState("");
+    const [telefone, setTelefone] = useState("");
+    const [endereco, setEndereco] = useState("");
     const [imagem, setImagem] = useState("");
     const [previa, setPrevia] = useState("");
+
+ 
 
     async function Cadastrar() {
         try {
             const body = {
-                email,
-                senha,
+                nome,
+                telefone,
+                endereco,
                 base64: imagem
             };
 
-            await ApiService.post("/Clinica/cadastrarclinica", body);
-            ToastService.Success("Clínica cadastrado com sucesso!");
+            await ApiService.post('/Clinica/cadastrarclinica', body);
+            ToastService.Success('Clínica cadastrado com sucesso!');
             setModalAberto(false);
-            await buscarUsuarios();
-        } catch (error) {
-            ToastService.Error("Erro ao cadastrar Clínica");
+        }
+        catch (error) {
+            ToastService.Error('Erro ao cadastrar Clínica');
         }
     }
+
     function handleFileChange(event) {
         const selectedFile = event.target.files[0];
 
@@ -67,11 +72,13 @@ export default function ModalCadastroClinica({ modalAberto, setModalAberto, busc
                 <img className={styles.imagem} src={previa} />
             </div>
 
-            <input placeholder='E-mail' value={email} onChange={(e) => setEmail(e.target.value)} />
-            <input placeholder='Senha' type='Password' value={senha} onChange={(e) => setSenha(e.target.value)} />
+            <input placeholder='Nome' value={nome} onChange={(e) =>setNome(e.target.value)} />
+            <input placeholder='Telefone' value={telefone} onChange={(e) =>setTelefone(e.target.value)} />
+            <input placeholder='Endereco' value={endereco} onChange={(e) => setEndereco(e.target.value)} />
 
             <input type="file" accept="image/jpeg" onChange={handleFileChange} />
             <button onClick={Cadastrar}>Cadastrar</button>
         </Modal>
     )
 }
+
