@@ -3,7 +3,7 @@ import styles from './AlterarPaciente.module.css';
 import ApiService from '../../../services/ApiService';
 import ToastService from '../../../services/ToastService';
 
-export default function AlterarPaciente({ paciente }) {
+export default function AlterarPaciente({ paciente, fechar }) {
     const [nome, setNome] = useState('');
     const [nomeModificado, setNomeModificado] = useState(false);
     const [dataNascimento, setDataNascimento] = useState('');
@@ -46,12 +46,10 @@ export default function AlterarPaciente({ paciente }) {
     // Atualiza os inputs com as informações do paciente ao montar o componente
     useEffect(() => {
         if (paciente) {
-
             const formattedDate = paciente.dataNascimento ? new Date(paciente.dataNascimento).toISOString().substr(0, 10) : '';
             setDataNascimento(formattedDate);
 
             setNome(paciente.nome || '');
-            setDataNascimento(paciente.dataNascimento || '');
             setGenero(paciente.genero || '');
             setRg(paciente.rg || '');
             setCpf(paciente.cpf || '');
@@ -134,11 +132,16 @@ export default function AlterarPaciente({ paciente }) {
     return (
         <div className={styles.container}>
             <div>
-                <label className={styles.titleHeader}> Alterar Paciente </label>
+                <div className={styles.header}>
+                    <label className={styles.titleHeader}>Alterar Paciente</label>
+                    <svg className={styles.closeIcon} onClick={fechar} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512">
+                        <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+                    </svg>
+                </div>
                 <div>
-                    <label className={styles.tituloCampos}> Informações básicas </label>
+                    <label className={styles.tituloCampos}>Informações básicas</label>
                     <div className={styles.inputContainer}>
-                        <div className={styles.teste} >
+                        <div className={styles.teste}>
                             <label>
                                 Nome: *
                                 <input className={`${styles.loginInput} ${nomeModificado ? styles.modified : ''}`} value={nome} onChange={(e) => { setNome(e.target.value); setNomeModificado(true); }} />
@@ -147,9 +150,7 @@ export default function AlterarPaciente({ paciente }) {
                         <div className={styles.organizacaocoluna}>
                             <label className={styles.dimensaoInput4}>
                                 Data de Nascimento: *
-                                <input className={`${styles.loginInput} ${dataNascimentoModificado ? styles.modified : ''}`} value={dataNascimento} onChange={(e) => { setDataNascimento(e.target.value); setDataNascimentoModificado(true); }}
-                                    type="date" />
-                            
+                                <input className={`${styles.loginInput} ${dataNascimentoModificado ? styles.modified : ''}`} value={dataNascimento} onChange={(e) => { setDataNascimento(e.target.value); setDataNascimentoModificado(true); }} type="date" />
                             </label>
                             <label className={styles.dimensaoInput4}>
                                 Gênero: *
@@ -164,18 +165,16 @@ export default function AlterarPaciente({ paciente }) {
                                 <input className={`${styles.loginInput} ${cpfModificado ? styles.modified : ''}`} value={cpf} onChange={(e) => { setCpf(e.target.value); setCpfModificado(true); }} readOnly />
                             </label>
                         </div>
-                        <div className={styles.teste1}>
-                            <label>
+                        <div className={styles.organizacaocoluna}>
+                            <label className={styles.dimensaoInput3}>
                                 E-mail: *
                                 <input className={`${styles.loginInput} ${emailModificado ? styles.modified : ''}`} value={email} onChange={(e) => { setEmail(e.target.value); setEmailModificado(true); }} />
                             </label>
-                        </div>
-                        <div className={styles.organizacaocoluna}>
-                            <label className={styles.dimensaoInput2}>
+                            <label className={styles.dimensaoInput3}>
                                 Telefone: *
                                 <input className={`${styles.loginInput} ${telefoneModificado ? styles.modified : ''}`} value={telefone} onChange={(e) => { setTelefone(e.target.value); setTelefoneModificado(true); }} />
                             </label>
-                            <label className={styles.dimensaoInput2}>
+                            <label className={styles.dimensaoInput3}>
                                 Profissão: *
                                 <input className={`${styles.loginInput} ${profissaoModificado ? styles.modified : ''}`} value={profissao} onChange={(e) => { setProfissao(e.target.value); setProfissaoModificado(true); }} />
                             </label>
@@ -183,54 +182,44 @@ export default function AlterarPaciente({ paciente }) {
                     </div>
                 </div>
                 <div>
-                    <div>
-                        <label className={styles.tituloCampos} > Endereço </label>
-
-                        <div className={styles.inputContainer}>
-
-                            <div className={styles.organizacaocoluna} >
-                                <label className={styles.dimensaoLogradouro} >
-                                    Logradouro: *
-                                    <input className={`${styles.loginInput} ${logradouroModificado ? styles.modified : ''}`} value={logradouro} onChange={(e) => { setLogradouro(e.target.value); setLogradouroModificado(true); }} />
-                                </label>
-                                <label className={styles.dimensaoNumero}>
-                                    Número: *
-                                    <input className={`${styles.loginInput} ${numeroModificado ? styles.modified : ''}`} value={numero} onChange={(e) => { setNumero(e.target.value); setNumeroModificado(true); }} />
-                                </label>
-                            </div>
-                            <div className={styles.organizacaocoluna}>
-                                <label className={styles.dimensaoInput3}>
-                                    Complemento:
-                                    <input className={`${styles.loginInput} ${complementoModificado ? styles.modified : ''}`} value={complemento} onChange={(e) => { setComplemento(e.target.value); setComplementoModificado(true); }} />
-                                </label>
-                                <label className={styles.dimensaoInput3}>
-                                    CEP: *
-                                    <input className={`${styles.loginInput} ${cepModificado ? styles.modified : ''}`} value={cep} onChange={(e) => { setCep(e.target.value); setCepModificado(true); }} />
-                                </label>
-
-                                <label className={styles.dimensaoInput3}>
-                                    Bairro: *
-                                    <input className={`${styles.loginInput} ${bairroModificado ? styles.modified : ''}`} value={bairro} onChange={(e) => { setBairro(e.target.value); setBairroModificado(true); }} />
-                                </label>
-                            </div>
-
-                            <div className={styles.organizacaocoluna}>
-                                <label className={styles.dimensaoInput2}>
-                                    Cidade: *
-                                    <input className={`${styles.loginInput} ${cidadeModificado ? styles.modified : ''}`} value={cidade} onChange={(e) => { setCidade(e.target.value); setCidadeModificado(true); }} />
-                                </label>
-                                <label className={styles.dimensaoInput2}>
-                                    Estado: *
-                                    <input className={`${styles.loginInput} ${estadoModificado ? styles.modified : ''}`} value={estado} onChange={(e) => { setEstado(e.target.value); setEstadoModificado(true); }} />
-                                </label>
-                            </div>
-
+                    <label className={styles.tituloCampos}>Endereço</label>
+                    <div className={styles.inputContainer}>
+                        <div className={styles.organizacaocoluna}>
+                            <label className={styles.dimensaoInput4}>
+                                CEP: *
+                                <input className={`${styles.loginInput} ${cepModificado ? styles.modified : ''}`} value={cep} onChange={(e) => { setCep(e.target.value); setCepModificado(true); }} />
+                            </label>
+                            <label className={styles.dimensaoLogradouro}>
+                                Logradouro: *
+                                <input className={`${styles.loginInput} ${logradouroModificado ? styles.modified : ''}`} value={logradouro} onChange={(e) => { setLogradouro(e.target.value); setLogradouroModificado(true); }} />
+                            </label>
+                            <label className={styles.dimensaoInput4}>
+                                Número: *
+                                <input className={`${styles.loginInput} ${numeroModificado ? styles.modified : ''}`} value={numero} onChange={(e) => { setNumero(e.target.value); setNumeroModificado(true); }} />
+                            </label>
                         </div>
-
+                        <div className={styles.organizacaocoluna}>
+                            <label className={styles.dimensaoInput4}>
+                                Complemento:
+                                <input className={`${styles.loginInput} ${complementoModificado ? styles.modified : ''}`} value={complemento} onChange={(e) => { setComplemento(e.target.value); setComplementoModificado(true); }} />
+                            </label>
+                            <label className={styles.dimensaoInput4}>
+                                Bairro: *
+                                <input className={`${styles.loginInput} ${bairroModificado ? styles.modified : ''}`} value={bairro} onChange={(e) => { setBairro(e.target.value); setBairroModificado(true); }} />
+                            </label>
+                            <label className={styles.dimensaoInput4}>
+                                Cidade: *
+                                <input className={`${styles.loginInput} ${cidadeModificado ? styles.modified : ''}`} value={cidade} onChange={(e) => { setCidade(e.target.value); setCidadeModificado(true); }} />
+                            </label>
+                            <label className={styles.dimensaoInput4}>
+                                Estado: *
+                                <input className={`${styles.loginInput} ${estadoModificado ? styles.modified : ''}`} value={estado} onChange={(e) => { setEstado(e.target.value); setEstadoModificado(true); }} />
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div>
-                    <label className={styles.tituloCampos} > Responsável/ Contato de emergência </label>
+                    <label className={styles.tituloCampos}>Responsável/ Contato de emergência</label>
                     <div className={styles.inputContainer}>
                         <div>
                             <label>
@@ -249,9 +238,7 @@ export default function AlterarPaciente({ paciente }) {
                             </label>
                             <label className={styles.dimensaoInput3}>
                                 Grau de Parentesco:
-                                <input className={`${styles.loginInput} ${grauDeParentescoModificado ? styles.modified : ''}`} value={grauDeParentesco} onChange={(e) => {
-                                    setGrauDeParentesco(e.target.value); setGrauDeParentescoModificado(true);
-                                }} />
+                                <input className={`${styles.loginInput} ${grauDeParentescoModificado ? styles.modified : ''}`} value={grauDeParentesco} onChange={(e) => { setGrauDeParentesco(e.target.value); setGrauDeParentescoModificado(true); }} />
                             </label>
                         </div>
                     </div>
@@ -262,4 +249,4 @@ export default function AlterarPaciente({ paciente }) {
             </div>
         </div>
     );
-}
+}    

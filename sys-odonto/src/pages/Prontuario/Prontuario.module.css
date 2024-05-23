@@ -17,3 +17,25 @@ body {
 .content {
     height: 85%;
 }
+
+.sidebar {
+    width: 20%;
+}
+
+.botaoContainer {
+    padding-top: 2.4em;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 4%;
+}
+
+.botaoClinica {
+    height: 4rem;
+    width: 75%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1088AE;
+}

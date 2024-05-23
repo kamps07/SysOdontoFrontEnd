@@ -18,13 +18,6 @@ function Prontuario() {
 
     return (
         <div className={styles.container}>
-            <ModalCadastroClinica
-                modalAberto={modalAberto}
-                setModalAberto={setModalAberto}
-                />
-            <div className={styles.header}>
-                <HeaderProntuario paginaSelecionada={paginaSelecionada} setPaginaSelecionada={setPaginaSelecionada}></HeaderProntuario>
-            </div>
             <div className={styles.content}>
                 {paginaSelecionada == "Anamnese" && <Anamnese />}
                 {paginaSelecionada == "Evolucoes" && <Evolucoes />}
@@ -32,6 +25,19 @@ function Prontuario() {
                 {paginaSelecionada == "Arquivos" && <Arquivos />}
                 {paginaSelecionada == "Documentos" && <Documentos />}
             </div>
+            <div className={styles.header}>
+                <HeaderProntuario paginaSelecionada={paginaSelecionada} setPaginaSelecionada={setPaginaSelecionada}></HeaderProntuario>
+            </div>
+            <ModalCadastroClinica
+                modalAberto={modalAberto}
+                setModalAberto={setModalAberto}
+                />
+            <div className={styles.sidebar}>
+                <div className={styles.botaoContainer}>
+                    <button className={styles.botaoClinica} onClick={() => setModalAberto(true)}> Cadastrar Clínica </button>
+                </div>
+            </div>
+            
         </div>
     );
 }
