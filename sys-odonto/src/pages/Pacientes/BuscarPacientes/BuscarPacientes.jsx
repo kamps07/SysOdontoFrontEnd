@@ -22,10 +22,10 @@ export default function BuscarPacientes() {
     };
 
     const fechar = () => {
-    
+        setCpfNome("");
         setMostrarCadastro(false);
         setMostrarAlterar(false);
-
+        setPacientes([]);
     };
 
 

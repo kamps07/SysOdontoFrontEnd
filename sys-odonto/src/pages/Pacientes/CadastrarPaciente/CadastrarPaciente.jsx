@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from './CadastrarPaciente.module.css';
 import ApiService from '../../../services/ApiService';
 import ToastService from '../../../services/ToastService';
+import axios from 'axios';
 
 export default function CadastrarPaciente({ fechar }) {
     const [nome, setNome] = useState('');
@@ -23,6 +24,16 @@ export default function CadastrarPaciente({ fechar }) {
     const [numeroResponsavel, setNumeroResponsavel] = useState('');
     const [documentoResponsavel, setDocumentoResponsavel] = useState('');
     const [grauDeParentesco, setGrauDeParentesco] = useState('');
+
+
+    const [camposInativos, setCamposInativos] = useState({
+        logradouro: true,
+        bairro: true,
+        cidade: true,
+        estado: true
+    });
+
+
 
     const validarDados = () => {
         if (!nome || !dataNascimento || !genero || !rg ||
@@ -85,6 +96,34 @@ export default function CadastrarPaciente({ fechar }) {
         }
     };
 
+    async function validarCep(cep) {
+
+        setCep(cep);
+        if (cep.length !== 8) { return; }
+
+        try {
+            const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+            const endereco = response.data;
+
+            setBairro(endereco.bairro);
+            setCidade(endereco.localidade);
+            setEstado(endereco.uf);
+            setLogradouro(endereco.logradouro);
+            
+            setCamposInativos({
+                logradouro: endereco.logradouro != "",
+                bairro: endereco.bairro != "",
+                cidade: endereco.cidade != "",
+                estado: endereco.estado != ""
+            });
+
+        } catch (error) {
+            ToastService.Error('CEP não encontrado!');
+            setCep("");
+        }
+
+    }
+
 
 
     return (
@@ -123,7 +162,7 @@ export default function CadastrarPaciente({ fechar }) {
                                 <input className={styles.loginInput} value={cpf} onChange={(e) => setCpf(e.target.value)} />
                             </label>
                         </div>
-                       
+
                         <div className={styles.organizacaocoluna}>
 
                             <label className={styles.dimensaoInput3}>
@@ -151,14 +190,14 @@ export default function CadastrarPaciente({ fechar }) {
                             <div className={styles.organizacaocoluna} >
 
 
-                                 <label className={styles.dimensaoInput4}>
+                                <label className={styles.dimensaoInput4}>
                                     CEP: *
-                                    <input className={styles.loginInput} value={cep} onChange={(e) => setCep(e.target.value)} />
+                                    <input className={styles.loginInput} value={cep} onChange={(e) => validarCep(e.target.value)} />
                                 </label>
 
                                 <label className={styles.dimensaoLogradouro} >
                                     Logradouro: *
-                                    <input className={styles.loginInput} value={logradouro} onChange={(e) => setLogradouro(e.target.value)} />
+                                    <input className={styles.loginInput} value={logradouro} onChange={(e) => setLogradouro(e.target.value)} readOnly={camposInativos.logradouro} />
                                 </label>
 
                                 <label className={styles.dimensaoInput4}>
@@ -178,17 +217,17 @@ export default function CadastrarPaciente({ fechar }) {
 
                                 <label className={styles.dimensaoInput4}>
                                     Bairro: *
-                                    <input className={styles.loginInput} value={bairro} onChange={(e) => setBairro(e.target.value)} />
+                                    <input className={styles.loginInput} value={bairro} onChange={(e) => setBairro(e.target.value)} readOnly={camposInativos.bairro} />
                                 </label>
 
 
                                 <label className={styles.dimensaoInput4}>
                                     Cidade: *
-                                    <input className={styles.loginInput} value={cidade} onChange={(e) => setCidade(e.target.value)} />
+                                    <input className={styles.loginInput} value={cidade} onChange={(e) => setCidade(e.target.value)} readOnly={camposInativos.cidade} />
                                 </label>
                                 <label className={styles.dimensaoInput4}>
                                     Estado: *
-                                    <input className={styles.loginInput} value={estado} onChange={(e) => setEstado(e.target.value)} />
+                                    <input className={styles.loginInput} value={estado} onChange={(e) => setEstado(e.target.value)} readOnly={camposInativos.estado} />
                                 </label>
                             </div>
 
