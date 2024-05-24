@@ -65,6 +65,9 @@ export default function ModalCadastroClinica({ modalAberto, setModalAberto, busc
         <Modal
             isOpen={modalAberto}
             style={customStyles}
+            shouldCloseOnEsc={true}
+            shouldCloseOnOverlayClick={true}
+            onRequestClose={() => { setModalAberto(false) }}
         >
             <h2>Cadastre-se</h2>
             <button onClick={() => { setModalAberto(false) }}>Fechar</button>
