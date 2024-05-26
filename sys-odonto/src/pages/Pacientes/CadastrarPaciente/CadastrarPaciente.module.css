@@ -108,4 +108,37 @@ margin: 20px;
     padding: 0.5em;
 }
 
-  
+.loginInput2{
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+    background-color: #fff;
+    color: #666666;
+    width: 99%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    max-width:100%;
+    margin-top: 10px;
+    
+}
+
+.parentescoContainer {
+    display: flex;
+    align-items: center;
+}
+
+.parentescoContainer select {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.parentescoContainer input {
+    flex: 1;
+}
+
+.readOnlyInput {
+    background-color: #f2f2f2;
+    cursor: not-allowed;
+  }
