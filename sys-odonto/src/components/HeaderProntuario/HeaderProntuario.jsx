@@ -6,17 +6,26 @@ import AuthService from '../../services/AuthService'
 export default function HeaderProntuario({ paginaSelecionada, setPaginaSelecionada }) {
   return (
     
-    <div className={styles.container}>
+    <div className={styles.quadro}>
 
-<div className={styles.quadro}>
+       
 
-        <div>
-            <span> Nome do paciente </span>
+        <div className={styles.nomePaciente}>
+            <span> Caio Rodrigues </span>
         </div>
 
         
 
       <div className={styles.paginas}>
+
+        <div
+          className={paginaSelecionada === "DadosPessoais"
+            ? styles.paginaSelecionada
+            : styles.pagina}
+          onClick={() => setPaginaSelecionada("DadosPessoais")}
+        >
+          <span >Dados Pessoais</span>
+        </div>
         <div
           onClick={() => setPaginaSelecionada("Evolucoes")}
           className={paginaSelecionada === "Evolucoes"
@@ -33,14 +42,6 @@ export default function HeaderProntuario({ paginaSelecionada, setPaginaSeleciona
         >
           <span >Anamnese</span>
         </div>
-        <div
-          className={paginaSelecionada === "Tratamentos"
-            ? styles.paginaSelecionada
-            : styles.pagina}
-          onClick={() => setPaginaSelecionada("Tratamentos")}
-        >
-          <span >Tratamentos</span>
-        </div>
 
         <div
           className={paginaSelecionada === "Documentos"
@@ -54,7 +55,7 @@ export default function HeaderProntuario({ paginaSelecionada, setPaginaSeleciona
       </div>
     </div>
 
-    </div>
+    
     
   );
 }

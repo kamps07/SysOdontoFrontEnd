@@ -1,41 +1,12 @@
-body {
-    overflow-x: hidden; /* Evita a rolagem horizontal */
-}
+
 .container {
-    background-color: white;
-    margin: 0;
-    padding: 0;
-    box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 20px 0 rgba(0, 0, 0, 0.19);
-    
+    margin-left: 8%;
+    margin-right: 8%;
+    margin-bottom: 2%;
+    margin-top: 2%;
+    height: max-content;
+    border-radius: 20px; 
+    border: 1px solid #666666;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
 }
 
-
-.header {
-    height: 15%;
-}
-
-.content {
-    height: 85%;
-}
-
-.sidebar {
-    width: 20%;
-}
-
-.botaoContainer {
-    padding-top: 2.4em;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-left: 4%;
-}
-
-.botaoClinica {
-    height: 4rem;
-    width: 75%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #1088AE;
-}

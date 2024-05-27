@@ -1,64 +1,38 @@
-.container {
-    height: 100%;
-    width: 100%;
-    padding-top: 2%;
-    padding-left: 2%;
-    padding-right: 2%;
+
+  .nomePaciente{
+    color: #1088AE;
+    font-weight: bold;
+    padding-bottom: 5px;
+    font-size: 18px;
+    text-align: start;
+    padding-left: 15px;
   }
   
-  .quadro{
-    display: flex;
-    box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 20px 0 rgba(0, 0, 0, 0.19);
-    flex-wrap: wrap;
-    align-content: center;
+  .quadro {
+    flex-direction: column;
+    border-bottom: 1px solid black; /* Define uma borda inferior sólida de 5px com cor preta */
+    padding-top: 10px;
+    color: #666666;
+   
+}
 
-  }
-
-  .quadro{
-    display: flex;
-    flex-direction: row;
-    box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 20px 0 rgba(0, 0, 0, 0.19);
-
-  }
-
-  .logoClinica {
-    height: 100%;
-    width: 25%;
-  }
-  
   .paginas {
-    width: 70%;
     display: flex;
     flex-direction: row;
-    padding-left: 12%;
-    padding-right: 12%;
+    justify-content: flex-start;
+    margin-left: 20px;
+    gap: 40px; 
   }
   
-  .containerLogo {
-    height: 100%;
-    width: 25%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .logo {
-    padding-right: 20%;
-  }
   
   .pagina {
-    height: 100%;
-    width: 33%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  justify-content: center;
   }
   
   .paginaSelecionada {
-    height: 100%;
-    width: 33%;
     border-bottom: solid 2px black;
-    display: flex;
+
     justify-content: center;
-    align-items: center;
-  }
+    }
+  
+  

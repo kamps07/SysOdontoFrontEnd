@@ -5,13 +5,14 @@ import ToastService from '../../../services/ToastService';
 import Lupa from "../../../assets/Lupa.svg";
 import AlterarPaciente from '../AlterarPaciente/AlterarPaciente';
 import CadastrarPaciente from '../CadastrarPaciente/CadastrarPaciente';
+import DadosPessoais from '../../Prontuario/DadosPessoais/DadosPessoais';
 
 export default function BuscarPacientes() {
     const [cpfNome, setCpfNome] = useState('');
     const [pacientes, setPacientes] = useState(null);
     const [cpfSelecionado, setCpfSelecionado] = useState(null);
     const [mostrarCadastro, setMostrarCadastro] = useState(false);
-    const [mostrarAlterar, setMostrarAlterar] = useState(false);
+    const [mostrarDadosPessoais, setMostrarAlterar] = useState(false);
     const [pacienteSelecionado, setPacienteSelecionado] = useState(null);
 
     const handleClick = (paciente) => {
@@ -56,8 +57,8 @@ export default function BuscarPacientes() {
 
     return (
         <div className={styles.pacientesContainer}>
-            {mostrarAlterar && <AlterarPaciente paciente={pacienteSelecionado} fechar={fechar}/>}
-            {!mostrarCadastro && !mostrarAlterar &&
+            {mostrarDadosPessoais && <DadosPessoais paciente={pacienteSelecionado} fechar={fechar}/>}
+            {!mostrarCadastro && !mostrarDadosPessoais &&
                 <div className={styles.container}>
                     <div className={styles.containerButton}>
                         <button className={styles.buttonCadastro} onClick={toggleCadastro}>+ Cadastrar Paciente</button>
@@ -99,7 +100,7 @@ export default function BuscarPacientes() {
                     </div>
                 </div>
             }
-            {mostrarCadastro && !mostrarAlterar && <CadastrarPaciente fechar={fechar} />}
+            {mostrarCadastro && !mostrarDadosPessoais && <CadastrarPaciente fechar={fechar} />}
  
         </div>
     );
