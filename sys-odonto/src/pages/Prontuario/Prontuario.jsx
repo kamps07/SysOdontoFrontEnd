@@ -8,40 +8,34 @@ import Arquivos from './Arquivos/Arquivos';
 import Documentos from './Documentos/Documentos';
 import ModalCadastroClinica from '../../components/ModalCadastroClínica/ModalCadastroClínica';
 
-function Prontuario() {
+function Prontuario({ paciente }) {
     
-    const [paginaSelecionada, setPaginaSelecionada] = useState("Evoluções");
+    const [paginaSelecionada, setPaginaSelecionada] = useState("DadosPessoais");
 
     useEffect(() => {
+
     }, []);
 
     return (
         <div>
-
-            <div className={styles.container}> 
-
-            <div>
-                <HeaderProntuario  
-                    paginaSelecionada={paginaSelecionada}
-                    setPaginaSelecionada={setPaginaSelecionada}
-                />
+            <div className={styles.container}>
+                <div>
+                    <HeaderProntuario  
+                        paginaSelecionada={paginaSelecionada}
+                        setPaginaSelecionada={setPaginaSelecionada}
+                        paciente={paciente}
+                    />
+                </div>
+                <div>
+                    <div>
+                        {paginaSelecionada === "DadosPessoais" && <DadosPessoais paciente={paciente} />}
+                        {paginaSelecionada === "Anamnese" && <Anamnese paciente={paciente} />}
+                        {paginaSelecionada === "Evolucoes" && <Evolucoes paciente={paciente} />}
+                        {paginaSelecionada === "Arquivos" && <Arquivos paciente={paciente} />}
+                        {paginaSelecionada === "Documentos" && <Documentos paciente={paciente} />}
+                    </div>
+                </div>
             </div>
-            <div >
-            <div>
-                {paginaSelecionada === "DadosPessoais" && <DadosPessoais />}
-                {paginaSelecionada === "Anamnese" && <Anamnese />}
-                {paginaSelecionada === "Evolucoes" && <Evolucoes />}
-                {paginaSelecionada === "Arquivos" && <Arquivos />}
-                {paginaSelecionada === "Documentos" && <Documentos />}
-            </div>
-
-            </div>
-
-            </div>
-           
-           
-            
-            
         </div>
     );
 }
