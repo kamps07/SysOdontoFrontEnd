@@ -36,3 +36,10 @@
   padding: 2em;
 }
 
+.dx-scheduler-appointment{
+  border-radius: 10px;
+}
+
+.dx-item.dx-scheduler-appointment.dx-scheduler-appointment-vertical.dx-resizable{
+  width: 200px !important;
+}
