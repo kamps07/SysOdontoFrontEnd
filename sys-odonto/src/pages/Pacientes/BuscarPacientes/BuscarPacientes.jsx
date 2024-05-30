@@ -3,33 +3,32 @@ import styles from './BuscarPacientes.module.css';
 import ApiService from '../../../services/ApiService';
 import ToastService from '../../../services/ToastService';
 import Lupa from "../../../assets/Lupa.svg";
-import AlterarPaciente from '../AlterarPaciente/AlterarPaciente';
 import CadastrarPaciente from '../CadastrarPaciente/CadastrarPaciente';
 import DadosPessoais from '../../Prontuario/DadosPessoais/DadosPessoais';
+import HeaderProntuario from '../../../components/HeaderProntuario/HeaderProntuario';
+import Prontuario from '../../Prontuario/Prontuario';
 
 export default function BuscarPacientes() {
     const [cpfNome, setCpfNome] = useState('');
     const [pacientes, setPacientes] = useState(null);
     const [cpfSelecionado, setCpfSelecionado] = useState(null);
     const [mostrarCadastro, setMostrarCadastro] = useState(false);
-    const [mostrarDadosPessoais, setMostrarAlterar] = useState(false);
+    const [mostrarProntuario, MostrarHeaderProntuario] = useState(false);
     const [pacienteSelecionado, setPacienteSelecionado] = useState(null);
 
     const handleClick = (paciente) => {
         setCpfSelecionado(paciente.cpf);
         setMostrarCadastro(false);
-        setMostrarAlterar(true);
+        MostrarHeaderProntuario(true);
         setPacienteSelecionado(paciente);
     };
 
     const fechar = () => {
         setCpfNome("");
         setMostrarCadastro(false);
-        setMostrarAlterar(false);
+        MostrarHeaderProntuario(false);
         setPacientes([]);
     };
-
-
     
 
     const handleInputChange = (event) => {
@@ -57,8 +56,8 @@ export default function BuscarPacientes() {
 
     return (
         <div className={styles.pacientesContainer}>
-            {mostrarDadosPessoais && <DadosPessoais paciente={pacienteSelecionado} fechar={fechar}/>}
-            {!mostrarCadastro && !mostrarDadosPessoais &&
+            {mostrarProntuario && <Prontuario paciente={pacienteSelecionado} fechar={fechar}/>}
+            {!mostrarCadastro && !mostrarProntuario &&
                 <div className={styles.container}>
                     <div className={styles.containerButton}>
                         <button className={styles.buttonCadastro} onClick={toggleCadastro}>+ Cadastrar Paciente</button>
@@ -100,7 +99,7 @@ export default function BuscarPacientes() {
                     </div>
                 </div>
             }
-            {mostrarCadastro && !mostrarDadosPessoais && <CadastrarPaciente fechar={fechar} />}
+            {mostrarCadastro && !mostrarProntuario && <CadastrarPaciente fechar={fechar} />}
  
         </div>
     );

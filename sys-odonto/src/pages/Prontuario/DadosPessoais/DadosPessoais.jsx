@@ -17,6 +17,7 @@ function DadosPessoais({ paciente }) {
     setMostrarAlterar(false);
   };
 
+
   return (
     <div className={styles.pacientesContainer}>
       {mostrarDadosPessoais && !mostrarAlterar && (
@@ -34,11 +35,11 @@ function DadosPessoais({ paciente }) {
               </label>
               <label>
                 <span className={styles.subTitulo}>CPF: </span>
-                <span>{paciente.cpf}</span>
+                <span>{paciente.cpf} </span>
               </label>
               <label>
                 <span className={styles.subTitulo}>RG: </span>
-                <span>{paciente.rg}</span>
+                <span>{paciente.rg} </span>
               </label>
               <label>
                 <span className={styles.subTitulo}>Profissão: </span>
@@ -89,7 +90,7 @@ function DadosPessoais({ paciente }) {
             </label>
             <label>
               <span className={styles.subTitulo}>CEP: </span>
-              <span>{paciente.cep}</span>
+              <span>{paciente.cep} </span>
             </label>
             <label>
               <span className={styles.subTitulo}>Bairro: </span>

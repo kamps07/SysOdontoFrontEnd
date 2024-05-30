@@ -3,7 +3,7 @@ import TextSysOdonto from '../../assets/TextSysOdonto.svg';
 import AuthService from '../../services/AuthService'
 
 
-export default function HeaderProntuario({ paginaSelecionada, setPaginaSelecionada }) {
+export default function HeaderProntuario({ paginaSelecionada, setPaginaSelecionada, paciente}) {
   return (
     
     <div className={styles.quadro}>
@@ -11,10 +11,9 @@ export default function HeaderProntuario({ paginaSelecionada, setPaginaSeleciona
        
 
         <div className={styles.nomePaciente}>
-            <span> Caio Rodrigues </span>
+            <span> {paciente.nome} </span>
         </div>
 
-        
 
       <div className={styles.paginas}>
 
