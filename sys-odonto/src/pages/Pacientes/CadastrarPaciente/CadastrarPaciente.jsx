@@ -102,6 +102,7 @@ export default function CadastrarPaciente({ fechar }) {
                 grauDeParentesco: grauParentescoFinal,
             });
             ToastService.Success('Paciente Cadastrado');
+            fechar();
         } catch (error) {
             ToastService.Error('Houve um erro no servidor ao realizar o seu Cadastro.');
         }

@@ -89,12 +89,10 @@ export default function AlterarPaciente({ paciente, fechar }) {
         }
     }, [paciente]);
 
-
- 
-
     const limparCaracteresEspeciais = (texto) => {
         return texto.replace(/[^\w\s]/gi, '');
     };
+  
 
     const validarDados = () => {
         if (!nome || !dataNascimento || !genero || !rg ||
@@ -157,6 +155,7 @@ export default function AlterarPaciente({ paciente, fechar }) {
                 grauDeParentesco: grauDeParentesco === 'Outro' ? outroGrauParentesco : grauDeParentesco,
             });
             ToastService.Success('Alterações realizadas');
+            fechar();
         } catch (error) {
             ToastService.Error('Erro ao alterar.');
             console.log(error)

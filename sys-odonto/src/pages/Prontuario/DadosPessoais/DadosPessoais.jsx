@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import InputMask from 'react-input-mask';
 import styles from './DadosPessoais.module.css';
 import AlterarPaciente from '../../Pacientes/AlterarPaciente/AlterarPaciente';
 
@@ -17,6 +18,10 @@ function DadosPessoais({ paciente }) {
     setMostrarAlterar(false);
   };
 
+  const abrirZapironga = (numero) => {
+    const url = "https://api.whatsapp.com/send/?phone=55" + numero;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
 
   return (
     <div className={styles.pacientesContainer}>
@@ -35,11 +40,13 @@ function DadosPessoais({ paciente }) {
               </label>
               <label>
                 <span className={styles.subTitulo}>CPF: </span>
-                <span>{paciente.cpf} </span>
+                <InputMask mask="999.999.999-99" value={paciente.cpf} disabled>
+                  {(inputProps) => <span>{inputProps.value}</span>}
+                </InputMask>
               </label>
               <label>
                 <span className={styles.subTitulo}>RG: </span>
-                <span>{paciente.rg} </span>
+                <span>{paciente.rg}</span>
               </label>
               <label>
                 <span className={styles.subTitulo}>Profissão: </span>
@@ -51,7 +58,9 @@ function DadosPessoais({ paciente }) {
               </label>
               <label>
                 <span className={styles.subTitulo}>Número de Celular: </span>
-                <span>{paciente.telefone}</span>
+                <InputMask mask="(99) 99999-9999" value={paciente.telefone} disabled>
+                  {(inputProps) => <span className={styles.celular} onClick={() => abrirZapironga(paciente.telefone)}>{inputProps.value}</span>}
+                </InputMask>
               </label>
             </div>
             <div className={styles.grade2}>
@@ -62,7 +71,9 @@ function DadosPessoais({ paciente }) {
               </label>
               <label>
                 <span className={styles.subTitulo}>CPF: </span>
-                <span>{paciente.documentoResponsavel}</span>
+                <InputMask mask="999.999.999-99" value={paciente.documentoResponsavel} disabled>
+                  {(inputProps) => <span>{inputProps.value}</span>}
+                </InputMask>
               </label>
               <label>
                 <span className={styles.subTitulo}>Grau de Parentesco: </span>
@@ -70,7 +81,9 @@ function DadosPessoais({ paciente }) {
               </label>
               <label>
                 <span className={styles.subTitulo}>Número de Celular: </span>
-                <span>{paciente.numeroResponsavel}</span>
+                <InputMask mask="(99) 99999-9999" value={paciente.numeroResponsavel} disabled>
+                  {(inputProps) => <span className={styles.celular} onClick={() => abrirZapironga(paciente.numeroResponsavel)}>{inputProps.value}</span>}
+                </InputMask>
               </label>
             </div>
           </div>
@@ -90,7 +103,9 @@ function DadosPessoais({ paciente }) {
             </label>
             <label>
               <span className={styles.subTitulo}>CEP: </span>
-              <span>{paciente.cep} </span>
+              <InputMask mask="99999-999" value={paciente.cep} disabled>
+                {(inputProps) => <span>{inputProps.value}</span>}
+              </InputMask>
             </label>
             <label>
               <span className={styles.subTitulo}>Bairro: </span>
