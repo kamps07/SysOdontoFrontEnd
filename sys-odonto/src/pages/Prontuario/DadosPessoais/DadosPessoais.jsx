@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import InputMask from 'react-input-mask';
+import MaskedInput from 'react-text-mask';
 import styles from './DadosPessoais.module.css';
 import AlterarPaciente from '../../Pacientes/AlterarPaciente/AlterarPaciente';
 
@@ -23,6 +23,32 @@ function DadosPessoais({ paciente }) {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
+  const formatCPF = (value) => {
+    if (!value) return '';
+    return value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  };
+
+  const formatRG = (value) => {
+    if (!value) return '';
+    return value.replace(/(\d{2})(\d{3})(\d{3})(\d{1})/, '$1.$2.$3-$4');
+  };
+
+  const formatPhone = (value) => {
+    if (!value) return '';
+    return value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+  };
+
+  const formatDate = (value) => {
+    if (!value) return '';
+    const date = new Date(value);
+    return date.toLocaleDateString('pt-BR');
+  };
+
+  const formatCEP = (value) => {
+    if (!value) return '';
+    return value.replace(/(\d{5})(\d{3})/, '$1-$2');
+  };
+
   return (
     <div className={styles.pacientesContainer}>
       {mostrarDadosPessoais && !mostrarAlterar && (
@@ -36,17 +62,21 @@ function DadosPessoais({ paciente }) {
               </label>
               <label>
                 <span className={styles.subTitulo}>Data de Nascimento: </span>
-                <span>{paciente.dataNascimento}</span>
+                <span>{formatDate(paciente.dataNascimento)}</span>
               </label>
               <label>
                 <span className={styles.subTitulo}>CPF: </span>
-                <InputMask mask="999.999.999-99" value={paciente.cpf} disabled>
-                  {(inputProps) => <span>{inputProps.value}</span>}
-                </InputMask>
+                <MaskedInput
+                  mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/]}
+                  value={formatCPF(paciente.cpf)}
+                  render={(ref, props) => (
+                    <span ref={ref} {...props}>{formatCPF(paciente.cpf)}</span>
+                  )}
+                />
               </label>
               <label>
                 <span className={styles.subTitulo}>RG: </span>
-                <span>{paciente.rg}</span>
+                <span>{formatRG(paciente.rg)}</span>
               </label>
               <label>
                 <span className={styles.subTitulo}>Profissão: </span>
@@ -58,9 +88,15 @@ function DadosPessoais({ paciente }) {
               </label>
               <label>
                 <span className={styles.subTitulo}>Número de Celular: </span>
-                <InputMask mask="(99) 99999-9999" value={paciente.telefone} disabled>
-                  {(inputProps) => <span className={styles.celular} onClick={() => abrirZapironga(paciente.telefone)}>{inputProps.value}</span>}
-                </InputMask>
+                <MaskedInput
+                  mask={[/\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+                  value={formatPhone(paciente.telefone)}
+                  render={(ref, props) => (
+                    <span ref={ref} {...props} className={styles.celular} onClick={() => abrirZapironga(paciente.telefone)}>
+                      {formatPhone(paciente.telefone)}
+                    </span>
+                  )}
+                />
               </label>
             </div>
             <div className={styles.grade2}>
@@ -71,9 +107,13 @@ function DadosPessoais({ paciente }) {
               </label>
               <label>
                 <span className={styles.subTitulo}>CPF: </span>
-                <InputMask mask="999.999.999-99" value={paciente.documentoResponsavel} disabled>
-                  {(inputProps) => <span>{inputProps.value}</span>}
-                </InputMask>
+                <MaskedInput
+                  mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/]}
+                  value={formatCPF(paciente.documentoResponsavel)}
+                  render={(ref, props) => (
+                    <span ref={ref} {...props}>{formatCPF(paciente.documentoResponsavel)}</span>
+                  )}
+                />
               </label>
               <label>
                 <span className={styles.subTitulo}>Grau de Parentesco: </span>
@@ -81,9 +121,15 @@ function DadosPessoais({ paciente }) {
               </label>
               <label>
                 <span className={styles.subTitulo}>Número de Celular: </span>
-                <InputMask mask="(99) 99999-9999" value={paciente.numeroResponsavel} disabled>
-                  {(inputProps) => <span className={styles.celular} onClick={() => abrirZapironga(paciente.numeroResponsavel)}>{inputProps.value}</span>}
-                </InputMask>
+                <MaskedInput
+                  mask={[/\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+                  value={formatPhone(paciente.numeroResponsavel)}
+                  render={(ref, props) => (
+                    <span ref={ref} {...props} className={styles.celular} onClick={() => abrirZapironga(paciente.numeroResponsavel)}>
+                      {formatPhone(paciente.numeroResponsavel)}
+                    </span>
+                  )}
+                />
               </label>
             </div>
           </div>
@@ -103,9 +149,13 @@ function DadosPessoais({ paciente }) {
             </label>
             <label>
               <span className={styles.subTitulo}>CEP: </span>
-              <InputMask mask="99999-999" value={paciente.cep} disabled>
-                {(inputProps) => <span>{inputProps.value}</span>}
-              </InputMask>
+              <MaskedInput
+                mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]}
+                value={formatCEP(paciente.cep)}
+                render={(ref, props) => (
+                  <span ref={ref} {...props}>{formatCEP(paciente.cep)}</span>
+                )}
+              />
             </label>
             <label>
               <span className={styles.subTitulo}>Bairro: </span>
@@ -135,3 +185,4 @@ function DadosPessoais({ paciente }) {
 }
 
 export default DadosPessoais;
+
