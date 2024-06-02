@@ -31,17 +31,20 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
     useEffect(() => {
         ListarDentistas();
         ListarPacientes();
+        ListarServicos();
     }, []);
 
     const [horario, setHorario] = useState();
     const [dentista, setDentista] = useState();
     const [paciente, setPaciente] = useState();
+    const [servico, setServico] = useState();
     const [data, setData] = useState(moment().format('YYYY-MM-DD'));
     const [observacao, setObservacao] = useState("");
 
     const [dentistas, setDentistas] = useState([]);
     const [pacientes, setPacientes] = useState([]);
     const [horarios, setHorarios] = useState([]);
+    const [servicos, setServicos] = useState([]);
 
     useEffect(() => {
         ListarHorarios();
@@ -77,6 +80,21 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
             ToastService.Error("Erro ao listar pacientes!");
         }
     }
+    async function ListarServicos() {
+        try {
+            const response = await ApiService.get('/Servico');
+
+            const servicos = response.data.map(item => ({
+                value: item.id,
+                label: item.nome
+            }));
+
+            setServicos(servicos);
+
+        } catch (error) {
+            ToastService.Error("Erro ao listar serviços!");
+        }
+    }
 
     async function ListarHorarios() {
         try {
@@ -103,16 +121,17 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
     async function CadastrarAgendamento() {
         try {
 
-            const dataAgendamento = moment(data);
+            const dataAgendamento = data.split('-');
 
             await ApiService.post('/Agendamento/cadastrar', {
-                dia: dataAgendamento.day(),
-                mes: dataAgendamento.month(),
-                ano: dataAgendamento.year(),
+                dia: dataAgendamento[2],
+                mes: dataAgendamento[1],
+                ano: dataAgendamento[0],
                 horario: horario.label,
                 dentista: dentista.value,
                 paciente: paciente.value,
-                observacoes: observacao
+                servico: servico.value,
+                observacoes: observacao,
             });
 
             ToastService.Success('Agendamento Realizado');
@@ -139,6 +158,9 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
     function OnSelectHorario(e) {
         setHorario(e);
     }
+    function OnSelectServico(e) {
+        setServico(e);
+    }
 
     Modal.setAppElement('#root');
     return (
@@ -155,7 +177,8 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
                 </div>
                 <div className={styles.containerFormulario}>
                     <div className={styles.containerDentista}>
-                        <Select options={dentistas} placeholder={"Dentista"} onChange={OnSelectDentista}></Select>
+                        <Select options={dentistas} placeholder={"Dentista"} onChange={OnSelectDentista} width={"48%"}></Select>
+                        <Select options={servicos} placeholder={"Serviço"} onChange={OnSelectServico} width={"48%"}></Select>
                     </div>
                     <div className={styles.containerPaciente}>
                         <Select options={pacientes} placeholder={"Paciente"} width={"75%"} onChange={OnSelectPaciente}></Select>

@@ -13,6 +13,9 @@
 
 .containerDentista {
     height: 6rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .containerPaciente {
@@ -76,6 +79,7 @@
     justify-content: space-evenly;
     max-width: 100%;
 }
+
 ::-webkit-calendar-picker-indicator {
     filter: invert(1);
 }

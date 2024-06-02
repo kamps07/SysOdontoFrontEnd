@@ -2,11 +2,13 @@ import styles from './Header.module.css'
 import TextSysOdonto from '../../assets/TextSysOdonto.svg';
 import AuthService from '../../services/AuthService'
 import { useEffect, useState } from 'react';
+import ModalCadastroClinica from '../ModalCadastroClínica/ModalCadastroClínica';
 
 
 export default function Header({ paginaSelecionada, setPaginaSelecionada }) {
 
   const [logoClinica, setLogoClinica] = useState("");
+  const [modalAberto, setModalAberto] = useState(false);
 
   function carregarLogo() {
     const userData = AuthService.PegarDadosUsuario();
@@ -19,9 +21,11 @@ export default function Header({ paginaSelecionada, setPaginaSelecionada }) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.logoClinica}>
+      <div className={styles.logoClinica} onClick={() => setModalAberto(true)}> {/* Adiciona o evento de clique para abrir o modal */}
         <img src={logoClinica} alt='Logo' />
       </div>
+      <ModalCadastroClinica modalAberto={modalAberto} setModalAberto={setModalAberto} /> {/* Renderiza o modal de cadastro de clínica */}
+      
       <div className={styles.paginas}>
         <div
           onClick={() => setPaginaSelecionada("Agenda")}
