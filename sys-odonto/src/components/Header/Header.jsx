@@ -2,7 +2,7 @@ import styles from './Header.module.css'
 import TextSysOdonto from '../../assets/TextSysOdonto.svg';
 import AuthService from '../../services/AuthService'
 import { useEffect, useState } from 'react';
-import ModalCadastroClinica from '../ModalCadastroClínica/ModalCadastroClínica';
+import ModalCadastroClinica from '../ModalCadastroClínica/ModalAlterarClínica';
 
 
 export default function Header({ paginaSelecionada, setPaginaSelecionada }) {

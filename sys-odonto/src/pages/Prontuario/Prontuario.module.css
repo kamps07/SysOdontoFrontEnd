@@ -1,9 +1,13 @@
 
 .container {
+    padding: 25px;
+}
+
+.container2 {
+    background-color: rgb(255, 255, 255);
     margin-left: 8%;
     margin-right: 8%;
     margin-bottom: 2%;
-    margin-top: 2%;
     height: max-content;
     border-radius: 20px; 
     border: 1px solid #666666;

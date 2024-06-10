@@ -6,7 +6,7 @@ import Anamnese from './Anamnese/Anamnese';
 import DadosPessoais from './DadosPessoais/DadosPessoais';
 import Arquivos from './Arquivos/Arquivos';
 import Documentos from './Documentos/Documentos';
-import ModalCadastroClinica from '../../components/ModalCadastroClínica/ModalCadastroClínica';
+import ModalCadastroClinica from '../../components/ModalCadastroClínica/ModalAlterarClínica';
 
 function Prontuario({ paciente }) {
     
@@ -17,8 +17,8 @@ function Prontuario({ paciente }) {
     }, []);
 
     return (
-        <div>
-            <div className={styles.container}>
+        <div className={styles.container}>
+            <div className={styles.container2}>
                 <div>
                     <HeaderProntuario  
                         paginaSelecionada={paginaSelecionada}

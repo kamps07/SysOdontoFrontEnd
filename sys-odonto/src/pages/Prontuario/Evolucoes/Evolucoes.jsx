@@ -2,45 +2,94 @@ import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Estilo para o editor
 import styles from './Evolucoes.module.css';
+import ModalTratamento from '../../../components/ModalTratamento/ModalTratamento';
+import ModalNovaEvolucao from '../../../components/ModalEvolucao/ModalNovaEvolucao';
 
 function Evolucoes() {
   const [descricao, setDescricao] = useState('');
+  const [modalTratamentoAberto, setModalTratamentoAberto] = useState(false);
+  const [modalEvolucaoAberto, setModalEvolucaoAberto] = useState(false);
 
-  const handleChange = (value) => {
-    setDescricao(value);
+
+
+  const handleAbrirModalTratamento = () => {
+    setModalTratamentoAberto(true);
   };
 
-  const modules = {
-    toolbar: {
-      container: [
-        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-        ['bold', 'italic', 'underline', 'strike'],
-        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        [{ 'color': [] }],
-        ['clean']
-      ]
-    },
-    clipboard: {
-      matchVisual: false // Desabilita a inserção de arquivos
-    },
-    imageDrop: false, // Desabilita a inserção de imagens arrastando e soltando
-    imageResize: false // Desabilita o redimensionamento de imagens
+  const handleAbrirModalEvolucao = () => {
+    setModalEvolucaoAberto(true);
   };
-  
-  
+
 
   return (
     <div className={styles.container}>
-      <span>Evolução do Paciente</span>
-      <div className={styles.textareaWrapper}>
-        <ReactQuill
-          theme="snow"
-          value={descricao}
-          onChange={handleChange}
-          modules={modules} // Passando os módulos configurados
-          className={styles.textarea}
-        />
+
+      <div className={styles.containerSuperior}>
+
+        <div className={styles.containerOdontograma}>
+
+          <div className={styles.containerTitle}>
+            <label className={styles.title}>Odontograma</label>
+          </div>
+
+          <div className={styles.grade2}>
+
+            <div className={styles.quadrantes}>
+              <div className={styles.row}>
+                <div className={styles.column}>
+                <span>Quadrante 1</span>
+                </div>
+                <div className={styles.column}>
+                <span>Quadrante 2</span>
+                </div>
+              </div>
+              <div className={styles.row}>
+                <div className={styles.column}>
+                <span>Quadrante 3</span>
+                </div>
+                <div className={styles.column}>
+                <span>Quadrante 4</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div className={styles.containerTratamento}>
+
+          <div className={styles.containerTitle}>
+            <label className={styles.title}>Tratamentos</label>
+          </div>
+
+          <div className={styles.grade2}>
+            
+          
+              <button className={styles.button} onClick={handleAbrirModalTratamento}>+ Adicionar Tratamento</button>
+              <ModalTratamento modalAberto={modalTratamentoAberto} setModalAberto={setModalTratamentoAberto} />
+           
+          </div>
+        </div>
+
       </div>
+
+
+      <div className={styles.containerHistorico}>
+
+        <div className={styles.titleAlinhamento}>
+            <label className={styles.title}>Hístorico</label>
+            <button className={styles.button} onClick={handleAbrirModalEvolucao}>+ Adicionar Evolução</button>
+            <ModalNovaEvolucao modalAberto={modalEvolucaoAberto} setModalAberto={setModalEvolucaoAberto} />
+        </div>
+
+
+
+        <div className={styles.grade2}>
+        </div>
+      </div>
+
+
+
     </div>
   );
 }
