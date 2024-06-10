@@ -14,6 +14,7 @@ locale('pt-BR');
 export default function Agenda() {
 
     const [agendamentos, setAgendamentos] = useState([]);
+    const [dataSelecionada, setDataSelecionada] = useState();
 
     const [modalAgendamentoAberto, setModalAgendamentoAberto] = useState(false);
 
@@ -31,7 +32,18 @@ export default function Agenda() {
 
     async function ListarAgendamentos() {
         try {
-            const response = await ApiService.get('/Agendamento/ListarAgendamentos?dia=29&mes=05&ano=2024');
+            const dataAtual = dataSelecionada ? dataSelecionada : moment();
+
+            const dataMoment = moment(dataAtual, 'DD/MM/YYYY');
+            const diaSemana = dataMoment.day();
+            const primeiroDiaSemana = dataMoment.clone().subtract(diaSemana, 'days');
+            const ultimoDiaSemana = dataMoment.clone().add(6 - diaSemana, 'days');
+            const primeiraData = primeiroDiaSemana.format('DD/MM/YYYY').split('/');
+            const ultimaData = ultimoDiaSemana.format('DD/MM/YYYY').split('/');
+
+            const rota = `/Agendamento/ListarAgendamentos?diaInicial=${primeiraData[0]}&mesInicial=${primeiraData[1]}&anoInicial=${primeiraData[2]}&diaFinal=${ultimaData[0]}&mesFinal=${ultimaData[1]}&anoFinal=${ultimaData[2]}`
+
+            const response = await ApiService.get(rota);
 
             const ag = response.data[0];
             console.log(ag.servico.duracao)
@@ -45,13 +57,11 @@ export default function Agenda() {
                 const endDate = moment(startDate).add('minutes', agendamento.servico.duracao);
 
                 return {
-                    "title": `${agendamento.servico.nome} - ${agendamento.paciente.nome}`,
+                    "title": `${agendamento.paciente.nome}`,
                     "startDate": startDate.toISOString(),
                     "endDate": endDate.toISOString(),
                 };
             });
-
-            console.log(agenda);
             setAgendamentos(agenda);
         } catch (error) {
             console.error("Erro ao listar os agendamentos:", error);
@@ -63,6 +73,10 @@ export default function Agenda() {
         ListarAgendamentos();
     }, [])
 
+
+    useEffect(() => {
+        ListarAgendamentos();
+    }, [dataSelecionada])
 
     return (
         <div className={styles.container}>
@@ -85,6 +99,7 @@ export default function Agenda() {
                     timeZone="America/Sao_Paulo"
                     onAppointmentAdded={CommitChanges}
                     onAppointmentFormOpening={handleAppointmentFormOpening}
+                    onCurrentDateChange={(e) => setDataSelecionada(e)}
                 >
                     <View
                         type="day"
