@@ -17,8 +17,8 @@ function Prontuario({ paciente }) {
     }, []);
 
     return (
-        <div>
-            <div className={styles.container}>
+        <div className={styles.container}>
+            <div className={styles.container2}>
                 <div>
                     <HeaderProntuario  
                         paginaSelecionada={paginaSelecionada}

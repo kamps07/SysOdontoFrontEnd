@@ -1,5 +1,6 @@
 body {
     overflow-x: hidden; /* Evita a rolagem horizontal */
+    margin-bottom: 20px;
 }
 .container {
     background-color: white;
@@ -16,4 +17,7 @@ body {
 .content {
     height: 85%;
     width: 100%;
+}
+.custom-select-height {
+    min-height: 40px; /* Defina a altura mínima desejada */
 }

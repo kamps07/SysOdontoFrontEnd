@@ -58,6 +58,19 @@
     line-height: 25px;
 }
 
+.gradeResponsavel {
+    background-color: #ffffff;
+    width: 50%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    line-height: 25px;
+}
+
 .grade3 {
     background-color: #ffffff;
     border: 1px solid #666666;
@@ -96,7 +109,61 @@
 
 .celular {
     color: #1088AE;
-    cursor: pointer;
     font-weight: bold;
     font-size: 14px;
+    margin-right: 5px;
+    
 }
+  
+  .celular:hover {
+    color: #0a6d8b;
+    text-decoration: underline; /* Sublinhar texto quando passar o mouse */
+    cursor: pointer; /* Mudar o cursor para indicar que é clicável */
+  }
+  
+
+.icon{
+    height: 18px;
+    margin: 0%;
+    padding: 0%;
+    margin-bottom: -3px;
+    margin-left: 5px;
+}
+
+.celular:hover::after {
+    margin-right: 5px;
+    margin-left: 5px;
+    content: "Mandar mensagem"; /* Conteúdo da caixa */
+    position: relative; /* Posição absoluta em relação ao elemento pai */
+    background-color: #1088AE;
+    padding: 2px; /* Espaçamento interno */
+    border-radius: 5px; /* Borda arredondada */
+    font-size: 12px; /* Tamanho da fonte */
+    color: #ffffff; /* Cor do texto */
+    z-index: 1; /* Z-index para sobrepor outros elementos */
+  }
+  
+  .adicionarInfo{
+    font-weight: bold;
+  }
+
+
+  .adicionarInfo:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    color: #1088AE;
+
+  }
+
+  .adicionarInfo2{
+    text-decoration: underline;
+  }
+  .adicionarInfo2:hover{
+    font-weight: bold;
+    cursor: pointer;
+    color: #1088AE;
+  }
+
+
+
+

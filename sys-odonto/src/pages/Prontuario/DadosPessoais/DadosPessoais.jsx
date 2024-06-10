@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MaskedInput from 'react-text-mask';
 import styles from './DadosPessoais.module.css';
 import AlterarPaciente from '../../Pacientes/AlterarPaciente/AlterarPaciente';
+import whatsapp from '../../../assets/whatsapp.png';
+
 
 function DadosPessoais({ paciente }) {
   const [mostrarAlterar, setMostrarAlterar] = useState(false);
   const [mostrarDadosPessoais, setMostrarDadosPessoais] = useState(true);
   const [pacienteSelecionado, setPacienteSelecionado] = useState(paciente);
+
 
   const handleAlterarPaciente = () => {
     setMostrarDadosPessoais(false);
@@ -19,7 +22,7 @@ function DadosPessoais({ paciente }) {
   };
 
   const abrirZapironga = (numero) => {
-    const url = "https://api.whatsapp.com/send/?phone=55" + numero;
+    const url = "https://api.whatsapp.com/send/?phone=55" + numero + "&text=SuaMensagem.";
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
@@ -35,13 +38,32 @@ function DadosPessoais({ paciente }) {
 
   const formatPhone = (value) => {
     if (!value) return '';
-    return value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    const cleanValue = value.replace(/[^\d]/g, ''); // Remove caracteres não numéricos
+    if (cleanValue.length === 11) { // Verifica se é um celular com DDD
+      return `(${cleanValue.slice(0, 2)}) ${cleanValue.slice(2, 3)} ${cleanValue.slice(3, 7)}-${cleanValue.slice(7)}`;
+    } else if (cleanValue.length === 10) { // Verifica se é um celular sem DDD
+      return `(${cleanValue.slice(0, 2)}) ${cleanValue.slice(2, 6)}-${cleanValue.slice(6)}`;
+    }
+    // Se não se encaixar em nenhum dos casos anteriores, retorna o valor original
+    return value;
   };
+
 
   const formatDate = (value) => {
     if (!value) return '';
     const date = new Date(value);
     return date.toLocaleDateString('pt-BR');
+  };
+
+  const calculateAge = (birthDate) => {
+    const today = new Date();
+    const birthDateObj = new Date(birthDate);
+    let age = today.getFullYear() - birthDateObj.getFullYear();
+    const monthDiff = today.getMonth() - birthDateObj.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDateObj.getDate())) {
+      age--;
+    }
+    return age;
   };
 
   const formatCEP = (value) => {
@@ -62,8 +84,9 @@ function DadosPessoais({ paciente }) {
               </label>
               <label>
                 <span className={styles.subTitulo}>Data de Nascimento: </span>
-                <span>{formatDate(paciente.dataNascimento)}</span>
+                <span> {formatDate(paciente.dataNascimento)} - {calculateAge(paciente.dataNascimento)} anos de idade</span>
               </label>
+
               <label>
                 <span className={styles.subTitulo}>CPF: </span>
                 <MaskedInput
@@ -89,49 +112,99 @@ function DadosPessoais({ paciente }) {
               <label>
                 <span className={styles.subTitulo}>Número de Celular: </span>
                 <MaskedInput
-                  mask={[/\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+                  mask={[/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
                   value={formatPhone(paciente.telefone)}
                   render={(ref, props) => (
-                    <span ref={ref} {...props} className={styles.celular} onClick={() => abrirZapironga(paciente.telefone)}>
+                    <span ref={ref} {...props} className={styles.celular} onClick={() => abrirZapironga(paciente.telefone)} >
                       {formatPhone(paciente.telefone)}
+                      <img src={whatsapp} alt="Ícone de WhatsApp" className={styles.icon} />
                     </span>
                   )}
                 />
               </label>
             </div>
-            <div className={styles.grade2}>
-              <span className={styles.titulo}>Responsável/Contato de emergência</span>
-              <label>
-                <span className={styles.subTitulo}>Nome Completo: </span>
-                <span>{paciente.nomeResponsavel}</span>
-              </label>
-              <label>
-                <span className={styles.subTitulo}>CPF: </span>
-                <MaskedInput
-                  mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/]}
-                  value={formatCPF(paciente.documentoResponsavel)}
-                  render={(ref, props) => (
-                    <span ref={ref} {...props}>{formatCPF(paciente.documentoResponsavel)}</span>
-                  )}
-                />
-              </label>
-              <label>
-                <span className={styles.subTitulo}>Grau de Parentesco: </span>
-                <span>{paciente.grauDeParentesco}</span>
-              </label>
-              <label>
-                <span className={styles.subTitulo}>Número de Celular: </span>
-                <MaskedInput
-                  mask={[/\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-                  value={formatPhone(paciente.numeroResponsavel)}
-                  render={(ref, props) => (
-                    <span ref={ref} {...props} className={styles.celular} onClick={() => abrirZapironga(paciente.numeroResponsavel)}>
-                      {formatPhone(paciente.numeroResponsavel)}
-                    </span>
-                  )}
-                />
-              </label>
-            </div>
+
+          
+             
+              {!paciente.nomeResponsavel && !paciente.documentoResponsavel && !paciente.grauDeParentesco && !paciente.numeroResponsavel ? (
+                <div className={styles.grade2}>
+                  <span className={styles.titulo}>Responsável/Contato de emergência</span>
+                  <span> Não há dados</span>
+                  <span onClick={handleAlterarPaciente}  className={styles.adicionarInfo}> Adicionar informações</span>
+                </div>
+              ) : (
+
+                <div className={styles.grade2}>
+                  <span className={styles.titulo}>Responsável/Contato de emergência</span>
+                  {paciente.nomeResponsavel ? (
+                    
+                    <label>
+                      <span className={styles.subTitulo}>Nome Completo: </span>
+                      <span>{paciente.nomeResponsavel}</span>
+                    </label>
+                  ) : 
+                  <label>
+                      <span className={styles.subTitulo}>Nome Completo: </span>
+                      <span onClick={handleAlterarPaciente}  className={styles.adicionarInfo2}> Adicionar</span>
+                    </label>}
+                  <label>
+                 
+                    {paciente.documentoResponsavel ? (
+                      <MaskedInput
+                        mask={[
+                          /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/
+                        ]}
+                        value={formatCPF(paciente.documentoResponsavel)}
+                        render={(ref, props) => (
+                          <span ref={ref} {...props}>{formatCPF(paciente.documentoResponsavel)}</span>
+                        )}
+                      />
+                    ) : 
+                    <label>
+                    <span className={styles.subTitulo}>CPF: </span>
+                    <span onClick={handleAlterarPaciente}  className={styles.adicionarInfo2}> Adicionar</span>
+                  </label>}
+
+                  </label>
+                    {paciente.grauDeParentesco ?(
+                  <label>
+                      <span className={styles.subTitulo}>Grau de Parentesco: </span>
+                      <span>{paciente.grauDeParentesco}</span>
+                  </label>
+                    ):
+                    <label>
+                      <span className={styles.subTitulo}>Grau de Parentesco: </span>
+                      <span onClick={handleAlterarPaciente}  className={styles.adicionarInfo2}> Adicionar</span>
+                  </label>
+                    }
+                  <label>
+                    <span className={styles.subTitulo}>Número de Celular: </span>
+                    {paciente.numeroResponsavel ? (
+                      <MaskedInput
+                        mask={[
+                          /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/
+                        ]}
+                        value={formatPhone(paciente.numeroResponsavel)}
+                        render={(ref, props) => (
+                          <span ref={ref} {...props} className={styles.celular} onClick={() => abrirZapironga(paciente.numeroResponsavel)}>
+                            {formatPhone(paciente.numeroResponsavel)}
+                            <img src={whatsapp} alt="Ícone de WhatsApp" className={styles.icon} />
+                          </span>
+                        )}
+                      />
+                    ) : 
+                    <label>
+
+                    <span onClick={handleAlterarPaciente}  className={styles.adicionarInfo2}> Adicionar</span>
+                  </label>}
+                  
+                  </label>
+                </div>
+              )}
+
+          
+
+
           </div>
           <div className={styles.grade3}>
             <span className={styles.titulo}>Endereço</span>
