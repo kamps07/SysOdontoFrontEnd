@@ -16,7 +16,7 @@ export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
             width: '45%',
-            height: '67%',
+            height: '75%',
         },
     };
 
@@ -44,6 +44,7 @@ export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
     const [descricao, setDescricao] = useState("");
     const [dataAtual, setDataAtual] = useState("");
     const [dentes, setDentes] = useState([]);
+    const [tratamento, setTratamento] = useState([]);
 
     useEffect(() => {
         const today = new Date();
@@ -69,7 +70,7 @@ export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
     };
 
     const numbers = Array.from({ length: 32 }, (_, i) => i + 1);
-    const options = numbers.map(num => ({ value: num, label: num }));
+    const options = numbers.map(num => ({ value: num, label: num })); //alterar para lista de tratamentos
 
     return (
         <Modal
@@ -98,6 +99,20 @@ export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
                     <input value={nome} onChange={(e) => setNome(e.target.value)} className={styles.input} />
                 </div>
 
+                <div>
+                    <label className={styles.tituloCampos}>Tratamento: </label>
+                    <Select
+                        isMulti
+                        value={options.filter(option => dentes.includes(option.value))}
+                        onChange={handleDenteChange}
+                        options={options}
+                        className={`${styles.selectDentes} custom-select custom-select-height custom-select-background`}
+                        closeMenuOnSelect={false}
+                        menuPortalTarget={document.body}
+                        placeholder="Selecione os dentes"
+                    />
+                </div>
+
                 <div className={styles.textareaWrapper}>
                 <label className={styles.tituloCampos}>Descrição: </label>
                     <ReactQuill
@@ -108,6 +123,8 @@ export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
                         className={`${styles.textarea} ${styles.customQuill}`}
                     />
                 </div>
+
+               
 
                 <div className={styles.containerButton}>
                     <button className={styles.button} onClick={handleAddTratamento}>+ Adicionar</button>
