@@ -61,7 +61,6 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
             setDentistas(listaDeDentistas);
 
         } catch (error) {
-            ToastService.Error("Erro ao listar dentistas!");
         }
     }
 
@@ -77,7 +76,6 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
             setPacientes(listaDePacientes);
 
         } catch (error) {
-            ToastService.Error("Erro ao listar pacientes!");
         }
     }
     async function ListarServicos() {
@@ -92,7 +90,6 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
             setServicos(servicos);
 
         } catch (error) {
-            ToastService.Error("Erro ao listar serviços!");
         }
     }
 
@@ -113,7 +110,6 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
             setHorarios(listaDeHorarios);
 
         } catch (error) {
-            ToastService.Error("Erro ao listar horarios!");
         }
 
     }
@@ -142,7 +138,6 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
                 ToastService.Error('Horário não disponível');
                 return;
             }
-            ToastService.Error('Houve um erro ao realizar o agendamento');
         };
 
     }
