@@ -29,7 +29,12 @@ export default function BuscarPacientes() {
         MostrarHeaderProntuario(false);
         setPacientes([]);
     };
-    
+
+    const handleEnter = (event) => {
+        if (event.key === 'Enter') {
+            handleBuscarPaciente();
+        }
+    };
 
     const handleInputChange = (event) => {
         setCpfNome(event.target.value);
@@ -37,6 +42,7 @@ export default function BuscarPacientes() {
 
     const handleBuscarPaciente = async () => {
         try {
+            ToastService.Info("Buscando paciente");
             let response;
             if (cpfNome.match(/^\d+$/)) {
                 response = await ApiService.get(`/Paciente/BuscarPorCPF/${cpfNome}`);
@@ -54,9 +60,29 @@ export default function BuscarPacientes() {
         setMostrarCadastro(!mostrarCadastro);
     };
 
+    const formatPhoneNumber = (phoneNumber) => {
+        if (!phoneNumber) return '';
+        const cleaned = ('' + phoneNumber).replace(/\D/g, '');
+        const match = cleaned.match(/^(\d{2})(\d{5})(\d{4})$/);
+        if (match) {
+            return `(${match[1]}) ${match[2]}-${match[3]}`;
+        }
+        return phoneNumber;
+    };
+
+    const formatCPF = (cpf) => {
+        if (!cpf) return '';
+        const cleaned = ('' + cpf).replace(/\D/g, '');
+        const match = cleaned.match(/^(\d{3})(\d{3})(\d{3})(\d{2})$/);
+        if (match) {
+            return `${match[1]}.${match[2]}.${match[3]}-${match[4]}`;
+        }
+        return cpf;
+    };
+
     return (
         <div className={styles.pacientesContainer}>
-            {mostrarProntuario && <Prontuario paciente={pacienteSelecionado} fechar={fechar}/>}
+            {mostrarProntuario && <Prontuario paciente={pacienteSelecionado} fechar={fechar} />}
             {!mostrarCadastro && !mostrarProntuario &&
                 <div className={styles.container}>
                     <div className={styles.containerButton}>
@@ -71,6 +97,7 @@ export default function BuscarPacientes() {
                             type="text"
                             value={cpfNome}
                             onChange={handleInputChange}
+                            onKeyDown={handleEnter}
                             placeholder='Digite nome ou CPF do Paciente'
                         />
                         <button className={styles.button} onClick={handleBuscarPaciente}>
@@ -90,8 +117,8 @@ export default function BuscarPacientes() {
                                 {pacientes && pacientes.map((paciente, index) => (
                                     <tr key={index} onClick={() => handleClick(paciente)}>
                                         <td>{paciente.nome}</td>
-                                        <td>{paciente.cpf}</td>
-                                        <td>{paciente.numero}</td>
+                                        <td>{formatCPF(paciente.cpf)}</td>
+                                        <td>{formatPhoneNumber(paciente.telefone)}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -100,7 +127,6 @@ export default function BuscarPacientes() {
                 </div>
             }
             {mostrarCadastro && !mostrarProntuario && <CadastrarPaciente fechar={fechar} />}
- 
         </div>
     );
 }

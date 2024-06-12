@@ -1,4 +1,4 @@
-import Odontograma from "../../components/Odontograma/Odontograma";
+import Odontograma from "../../components/OdontogramaOld/Odontograma";
 
 export default function PaginaTesteVermelha() {
     return (

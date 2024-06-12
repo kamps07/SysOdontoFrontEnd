@@ -83,6 +83,7 @@ export default function Agenda() {
             <ModalAgendamento
                 modalAberto={modalAgendamentoAberto}
                 setModalAberto={setModalAgendamentoAberto}
+                refresh={ListarAgendamentos}
             ></ModalAgendamento>
 
             <div className={styles.sidebar}>

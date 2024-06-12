@@ -12,7 +12,7 @@ import TextArea from '../TextArea/TextArea';
 import CadastrarPacientes from '../../pages/Pacientes/BuscarPacientes/BuscarPacientes'
 import moment from 'moment';
 
-export default function ModalAgendamento({ modalAberto, setModalAberto }) {
+export default function ModalAgendamento({ modalAberto, setModalAberto, refresh }) {
     const customStyles = {
         content: {
             top: '50%',
@@ -131,6 +131,7 @@ export default function ModalAgendamento({ modalAberto, setModalAberto }) {
             });
 
             ToastService.Success('Agendamento Realizado');
+            refresh();
         }
         catch (error) {
             console.log(error);

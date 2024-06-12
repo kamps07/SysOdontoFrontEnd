@@ -43,23 +43,9 @@ export default function Header({ paginaSelecionada, setPaginaSelecionada }) {
         >
           <span >Pacientes</span>
         </div>
-        <div
-          className={paginaSelecionada === "Financeiro"
-            ? styles.paginaSelecionada
-            : styles.pagina}
-          onClick={() => setPaginaSelecionada("Financeiro")}
-        >
-          <span >Financeiro</span>
-        </div>
+       
 
-        <div
-          className={paginaSelecionada === "Prontuário"
-            ? styles.paginaSelecionada
-            : styles.pagina}
-          onClick={() => setPaginaSelecionada("Prontuário")}
-        >
-          <span >Prontuários</span>
-        </div>
+        
 
       </div>
       <div className={styles.containerLogo}>

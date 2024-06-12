@@ -1,0 +1,38 @@
+.quadrantes {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    border: 1px solid black; /* apenas para visualização */
+    flex-direction: column;
+  }
+  
+  .row {
+    display: flex;
+    flex: 1;
+  }
+  
+
+  .rowGradeDente {
+    display: flex;
+    flex: 1;
+  }
+
+  .columnGradeDente {
+    flex: 1;
+    align-items: center ;
+    padding: 2px;
+    justify-content: center;
+}
+  
+
+  .column {
+    flex: 1;
+    border: 1px solid black; /* apenas para visualização */
+  }
+  
+  .imgDente{
+    width: 500x;
+    height: 500px;
+
+  }

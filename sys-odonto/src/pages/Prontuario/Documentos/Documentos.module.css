@@ -1,3 +1,17 @@
 .color{
     background-color: rgb(123, 0, 255);
 }
+
+.button {
+    height: 2.5rem;
+    background-color: #1088AE;
+    text-align: center;
+    line-height: 1rem;
+  }
+
+  .container{
+    padding: 20px;
+    display: flex;
+    justify-content: flex-end;
+    
+  }

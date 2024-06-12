@@ -13,22 +13,22 @@
 }
 .container{
     padding: 2%;
-    height: 100vh;
+    height: 100%;
 }
 
 .containerOdontograma{
-  background-color: rgba(0, 255, 255, 0.285);
+  /* background-color: rgba(0, 255, 255, 0.285); */
   width: 75%;
   padding: 10px;
 }
 
 .containerTratamento{
-  background-color: rgba(135, 215, 37, 0.249);
+  /* background-color: rgba(135, 215, 37, 0.249); */
   width: 25%;
   padding: 10px;
 }
 .containerHistorico{
-  background-color: rgba(122, 83, 213, 0.308);
+  /* background-color: rgba(122, 83, 213, 0.308); */
   padding: 10px;
 }
 .containerSuperior{
@@ -41,8 +41,22 @@
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
   border-radius: 20px;
   padding: 2%;
-  height: 290px;
   margin-top: 20px;
+  height: 55vh;
+}
+
+.gradeTratamento {
+  background-color: #ffffff;
+  border: 1px solid #666666;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  padding: 2%;
+  height: 58vh;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
 }
 
 
@@ -54,6 +68,13 @@
 
 }
 
+.subTitle {
+  color: #1088AE;
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 15px;
+
+}
 .titleAlinhamento{
   display: flex;
   justify-content: space-between;
@@ -64,6 +85,8 @@
   background-color: #1088AE;
   text-align: center;
   line-height: 1rem;
+  width: 13.5rem;
+ 
 }
 
 .containerTitle{
@@ -87,4 +110,56 @@
 .column {
   flex: 1;
   border: 1px solid black; /* apenas para visualização */
+}
+
+.listagem{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 4%;
+}
+
+.listagem{
+color: #666666;
+}
+
+.buttonA{
+padding: 10px;
+margin-left: 34px;
+}
+
+.img{
+  width: 1100px;
+}
+
+.gradeh {
+  background-color: #ffffff;
+  border: 1px solid #8e8e8e;
+  box-shadow: 0px 0px 8px rgba(158, 156, 156, 0.5);
+  border-radius: 20px;
+  margin-bottom: 10px;
+  color: #666666;
+  font-size: 15px;
+  margin: 20px;
+}
+
+.componenteH{
+  display: flex;
+  align-items: flex-start;
+  margin-left: 25px;
+  margin-bottom: 10px;
+  flex-direction: column;
+  padding: 0px;
+  text-align: justify;
+  margin-right: 25px;
+}
+
+.componenteH2{
+  display: flex;
+  align-items:flex-end;
+  margin-left: 25px;
+  margin-bottom: 10px;
+  flex-direction: column;
+  padding: 0px;
+  margin-right: 20px;
 }

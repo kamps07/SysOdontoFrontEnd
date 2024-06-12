@@ -12,8 +12,8 @@ export default function Dente({ dente }) {
 
     return (
         <div>
-            <svg width="100" height="100">
-                <g transform="scale(5)">
+            <svg width="40" height="40">
+                <g transform="scale(2)">
                     <polygon
                         points="0,0 20,0 15,5 5,5"
                         className={definirClasse('top')}

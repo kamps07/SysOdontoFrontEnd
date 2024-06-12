@@ -6,7 +6,6 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Estilo para o editor
 
 export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
-
     const customStyles = {
         content: {
             top: '50%',
@@ -16,10 +15,9 @@ export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
             width: '45%',
-            height: '75%',
+            height: '84%',
         },
     };
-
 
     const modules = {
         toolbar: {
@@ -45,6 +43,7 @@ export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
     const [dataAtual, setDataAtual] = useState("");
     const [dentes, setDentes] = useState([]);
     const [tratamento, setTratamento] = useState([]);
+    const [status, setStatus] = useState('em andamento'); // Estado para o status
 
     useEffect(() => {
         const today = new Date();
@@ -62,15 +61,23 @@ export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
     };
 
     const handleAddTratamento = () => {
-
+        // Lógica para adicionar o tratamento
     };
 
     const handleChange = (value) => {
         setDescricao(value);
     };
 
+    const handleStatusChange = (selectedOption) => {
+        setStatus(selectedOption.value);
+    };
+
     const numbers = Array.from({ length: 32 }, (_, i) => i + 1);
-    const options = numbers.map(num => ({ value: num, label: num })); //alterar para lista de tratamentos
+    const denteOptions = numbers.map(num => ({ value: num, label: num }));
+    const statusOptions = [
+        { value: 'em andamento', label: 'Em andamento' },
+        { value: 'finalizado', label: 'Finalizado' }
+    ];
 
     return (
         <Modal
@@ -81,8 +88,6 @@ export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
             onRequestClose={handleCloseModal}
         >
             <div className={styles.container}>
-
-
                 <div className={styles.titleClose}>
                     <h2 className={styles.title}>Nova Evolução</h2>
                     <svg className={styles.closeIcon} onClick={handleCloseModal} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512">
@@ -94,18 +99,18 @@ export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
                     <input className={styles.inputData} type="date" id="date" value={dataAtual} readOnly />
                 </div>
 
-                <div>
+                <div className={styles.alinhamento}>
                     <label className={styles.tituloCampos}>Título: </label>
                     <input value={nome} onChange={(e) => setNome(e.target.value)} className={styles.input} />
                 </div>
 
-                <div>
+                <div className={styles.alinhamento}>
                     <label className={styles.tituloCampos}>Tratamento: </label>
                     <Select
                         isMulti
-                        value={options.filter(option => dentes.includes(option.value))}
+                        value={denteOptions.filter(option => dentes.includes(option.value))}
                         onChange={handleDenteChange}
-                        options={options}
+                        options={denteOptions}
                         className={`${styles.selectDentes} custom-select custom-select-height custom-select-background`}
                         closeMenuOnSelect={false}
                         menuPortalTarget={document.body}
@@ -113,8 +118,20 @@ export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
                     />
                 </div>
 
+                <div className={styles.alinhamento}>
+                    <label className={styles.tituloCampos}>Status do tratamento: </label>
+                    <Select
+                        value={statusOptions.find(option => option.value === status)}
+                        onChange={handleStatusChange}
+                        options={statusOptions}
+                        className={`${styles.selectStatus} custom-select custom-select-height custom-select-background`}
+                        menuPortalTarget={document.body}
+                        placeholder="Selecione o status"
+                    />
+                </div>
+
                 <div className={styles.textareaWrapper}>
-                <label className={styles.tituloCampos}>Descrição: </label>
+                    <label className={styles.tituloCampos}>Descrição: </label>
                     <ReactQuill
                         theme="snow"
                         value={descricao}
@@ -124,12 +141,9 @@ export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
                     />
                 </div>
 
-               
-
                 <div className={styles.containerButton}>
                     <button className={styles.button} onClick={handleAddTratamento}>+ Adicionar</button>
                 </div>
-
             </div>
         </Modal>
     );

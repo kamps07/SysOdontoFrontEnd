@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="210mm" height="297mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 21000 29700"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str0 {stroke:#2D2A2B;stroke-width:20;stroke-miterlimit:22.9256}
+    .fil0 {fill:none}
+   ]]>
+  </style>
+ </defs>
+ <g id="Odontograma_x0020_Geral" visibility="hidden">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <image id="Dente_x0020_1" x="311.88" y="3766.2" width="30056.97" height="12523.74" xlink:href="28_Images/28_ImgID1.png"/>
+ </g>
+
+
+ <g id="Dente_x0020_28">
+  <metadata id="CorelCorpID_12Corel-Layer"/>
+  <path class="fil0 str0" d="M10885.61 10773.09l11.95 -388.63c0,0 137.52,-245.14 466.36,-221.22 328.84,23.92 352.75,370.69 322.86,209.26 -29.89,-161.43 131.54,484.3 -95.66,771.29 0,0 -113.38,762.57 -163.52,1008.7 -50.14,246.13 -91.17,656.37 -232.47,729.29 -141.3,72.92 -41.02,-1285.38 -136.74,-1490.49 -95.72,-205.11 -172.78,-618.2 -172.78,-618.2z"/>
+  <path class="fil0 str0" d="M11091.58 11168.14c0,0 148.35,82.11 434.44,-39.74"/>
+  <path class="fil0 str0" d="M11089.42 10366.83c0,0 118.52,31.9 405.68,-9.12"/>
+  <path class="fil0 str0" d="M11229.76 10478.47c0,0 85.59,-92.7 91.16,-214.24"/>
+ </g>
+ 
+
+</svg>
