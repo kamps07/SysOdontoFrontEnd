@@ -18,6 +18,25 @@ export default function ModalAnamnese({ modalAberto, setModalAberto }) {
     };
     Modal.setAppElement('#root');
 
+    async function CadastrarAnanmese() {
+        try {
+            const body = {
+                data,
+                resposta,
+            };
+            
+           const response = await ApiService.post('/Anamnese/cadastrar', body);
+
+            navigate('/');
+        }
+        catch (error) {
+            if (error.response?.status === 400) {
+                ToastService.Error('Erro ao cadastrar anamnese');
+                return;
+            }
+        }
+    }
+    
     const [dataAtual, setDataAtual] = useState("");
     const [queixaPrincipal, setQueixaPrincipal] = useState('');
     const [tratamentoMedico, setTratamentoMedico] = useState('');
@@ -178,7 +197,7 @@ export default function ModalAnamnese({ modalAberto, setModalAberto }) {
                         </div>
     
                         <div className={styles.containerButton}>
-                            <button className={styles.button}>Salvar</button>
+                            <button onClick={CadastrarAnanmese} className={styles.button}>Salvar</button>
                         </div>
                     </form>
                 </div>
