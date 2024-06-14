@@ -18,7 +18,7 @@ export default function ModalAnamnese({ modalAberto, setModalAberto }) {
     };
     Modal.setAppElement('#root');
 
-    async function CadastrarAnanmese() {
+    async function CadastrarResposta() {
         try {
             const body = {
                 data,
@@ -197,7 +197,7 @@ export default function ModalAnamnese({ modalAberto, setModalAberto }) {
                         </div>
     
                         <div className={styles.containerButton}>
-                            <button onClick={CadastrarAnanmese} className={styles.button}>Salvar</button>
+                            <button onClick={CadastrarResposta} className={styles.button}>Salvar</button>
                         </div>
                     </form>
                 </div>
