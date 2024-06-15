@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Estilo para o editor
 import styles from './Evolucoes.module.css';
@@ -6,13 +6,43 @@ import ModalTratamento from '../../../components/ModalTratamento/ModalTratamento
 import ModalNovaEvolucao from '../../../components/ModalEvolucao/ModalNovaEvolucao';
 import Odontograma from '../../../components/Odontograma/Odontograma';
 import historico from '../../../assets/historico.png'
+import ApiService from '../../../services/ApiService';
 
-function Evolucoes() {
+function Evolucoes({ paciente }) {
   const [descricao, setDescricao] = useState('');
   const [modalTratamentoAberto, setModalTratamentoAberto] = useState(false);
   const [modalEvolucaoAberto, setModalEvolucaoAberto] = useState(false);
+  const [pacienteSelecionado, setPacienteSelecionado] = useState(paciente);
+  const [descricaoOdontograma, setDescricaoOdontograma] = useState("");
+  const [status, setStatus] = useState("");
+  const [dataInicio, setDataInicio] = useState("");
+  const [dataFim, setDataFim] = useState("");
+  const [dente, setDente] = useState("");
+  const [posicao, setPosicao] = useState("");
 
+  useEffect(() => {
+    BuscarOdontograma();
+  }, [])
 
+  async function BuscarOdontograma() {
+    try {
+      console.log(paciente);
+      const response = await ApiService.get('/odontograma/paciente/' + paciente.id);
+
+      const tratamentosEmAndamento = [...new Set(response.data
+        .filter(item => item.status === "string")
+        .map(item => item.tratamento)
+    )];
+
+      setTratamentos(tratamentosEmAndamento);
+      setOdontogramas(response.data);
+    } catch (error) {
+
+    }
+  }
+
+  const [odontogramas, setOdontogramas] = useState([]);
+  const [tratamentos, setTratamentos] = useState([]);
 
   const handleAbrirModalTratamento = () => {
     setModalTratamentoAberto(true);
@@ -22,6 +52,13 @@ function Evolucoes() {
     setModalEvolucaoAberto(true);
   };
 
+
+  //   const handleClick = (paciente) => {
+  //     setCpfSelecionado(paciente.cpf);
+  //     setMostrarCadastro(false);
+  //     MostrarHeaderProntuario(true);
+  //     setPacienteSelecionado(paciente);
+  // };
 
   return (
     <div className={styles.container}>
@@ -35,6 +72,11 @@ function Evolucoes() {
           </div>
 
           <div className={styles.grade2}>
+
+            <div>
+
+
+            </div>
             <Odontograma></Odontograma>
 
           </div>
@@ -48,25 +90,26 @@ function Evolucoes() {
 
           <div className={styles.gradeTratamento}>
 
+
             <div className={styles.listagem}>
               <label className={styles.subTitle}>Em andamento</label>
-              <span className={styles.listagem1}>-Limpeza Ortodontica</span>
-              <span className={styles.listagem1} >-Canal</span>
-              <span className={styles.listagem1}>-Restauração</span>
-
-
+              {
+                tratamentos.map((tratamento, index) => {
+                  return (
+                    <div>
+                      <span className={styles.listagem1} key={index}>-{" "}{tratamento}</span>
+                    </div>
+                  );
+                })
+              }
             </div >
 
             <div className={styles.buttonA}>
               <button className={styles.button} onClick={handleAbrirModalTratamento}>+ Adicionar Tratamento</button>
-              <ModalTratamento modalAberto={modalTratamentoAberto} setModalAberto={setModalTratamentoAberto} />
-
+              <ModalTratamento modalAberto={modalTratamentoAberto} setModalAberto={setModalTratamentoAberto} paciente={paciente}/>
             </div>
-
-
           </div>
         </div>
-
       </div>
 
 
@@ -122,7 +165,7 @@ function Evolucoes() {
 
           </div>
 
-          
+
 
         </div>
       </div>

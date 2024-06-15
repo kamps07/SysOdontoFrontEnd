@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import Select from 'react-select';
 import styles from './ModalTratamento.module.css';
+import ApiService from '../../services/ApiService';
 
-export default function ModalTratamento({ modalAberto, setModalAberto }) {
+export default function ModalTratamento({ modalAberto, setModalAberto, paciente }) {
     const customStyles = {
         content: {
             top: '50%',
@@ -38,9 +39,24 @@ export default function ModalTratamento({ modalAberto, setModalAberto }) {
         setModalAberto(false);
     };
 
-    const handleAddTratamento = () => {
 
-    };
+    async function adicionarTratamento() {
+        alert("awe")
+        try {
+            debugger;
+            console.log(dentes);
+            const body = {
+                tratamento: nome,
+                paciente: paciente.id,
+                dentes,
+                descricao,
+            }
+
+            const response = await ApiService.post('/odontograma/multiplo', body)
+        } catch (error) {
+
+        }
+    }
 
     const numbers = Array.from({ length: 32 }, (_, i) => i + 1);
     const options = numbers.map(num => ({ value: num, label: num }));
@@ -102,7 +118,7 @@ export default function ModalTratamento({ modalAberto, setModalAberto }) {
                 </div>
 
                 <div className={styles.containerButton}>
-                    <button className={styles.button} onClick={handleAddTratamento}>+ Adicionar</button>
+                    <button className={styles.button} onClick={adicionarTratamento}>+ Adicionar</button>
                 </div>
 
             </div>
