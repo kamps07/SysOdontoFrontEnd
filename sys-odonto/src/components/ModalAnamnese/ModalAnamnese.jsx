@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import Select from 'react-select';
 import styles from './ModalAnamnese.module.css';
+import ToastService from '../../services/ToastService';
+import ApiService from '../../services/ApiService';
 
-export default function ModalAnamnese({ modalAberto, setModalAberto }) {
+export default function ModalAnamnese({ modalAberto, setModalAberto, pacienteId }) {
     const customStyles = {
         content: {
             top: '50%',
@@ -18,22 +20,39 @@ export default function ModalAnamnese({ modalAberto, setModalAberto }) {
     };
     Modal.setAppElement('#root');
 
-    async function CadastrarResposta() {
+    async function CadastrarResposta(e) {
+        console.log
+        e.preventDefault();
         try {
             const body = {
-                data,
-                resposta,
+                pacienteId,
+                data: dataAtual,
+                respostas: {
+                    queixaPrincipal,
+                    tratamentoMedico,
+                    cirurgiaRecente,
+                    alergiaMedicamento,
+                    reacaoAdversa,
+                    ultimaConsulta,
+                    problemaDental,
+                    habitoDanoso,
+                    condicaoMedica,
+                    restricaoAlimentar,
+                    objetivoTratamento
+                }
             };
-            
-           const response = await ApiService.post('/Anamnese/cadastrar', body);
 
-            navigate('/');
-        }
-        catch (error) {
+            const response = await ApiService.post('/Anamnese/CadastrarResposta', body);
+            if(response.status === 200){
+                ToastService.Success('Anamnese cadastrada com sucesso');
+                navigate('/');
+            }
+        } catch (error) {
             if (error.response?.status === 400) {
                 ToastService.Error('Erro ao cadastrar anamnese');
                 return;
             }
+            ToastService.Error('Erro inesperado ao cadastrar anamnese');
         }
     }
     
@@ -81,7 +100,6 @@ export default function ModalAnamnese({ modalAberto, setModalAberto }) {
                         </svg>
                     </div>
                     <form>
-    
                         <div className={styles.data}>
                             <input className={styles.inputData} type="date" id="date" value={dataAtual} readOnly />
                         </div>

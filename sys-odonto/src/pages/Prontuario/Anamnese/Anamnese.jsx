@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './Anamnese.module.css';
 import ModalAnamnese from '../../../components/ModalAnamnese/ModalAnamnese';
 
-function Anamnese() {
+function Anamnese({ pacienteId }) {
   const [modalAberto, setModalAberto] = useState(false);
 
   const handleAbrirModal = () => {
@@ -14,7 +14,10 @@ function Anamnese() {
 
       <div className={styles.containerButton}>
         <button className={styles.button} onClick={handleAbrirModal}>+ Preencher Anamnese</button>
-        <ModalAnamnese modalAberto={modalAberto} setModalAberto={setModalAberto} />
+        <ModalAnamnese 
+          modalAberto={modalAberto} 
+          setModalAberto={setModalAberto}
+          pacienteId={pacienteId} />
       </div>
 
       <div>
