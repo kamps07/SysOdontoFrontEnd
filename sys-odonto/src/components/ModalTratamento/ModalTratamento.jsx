@@ -1,49 +1,99 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-modal';
 import Select from 'react-select';
 import styles from './ModalTratamento.module.css';
+import ApiService from '../../services/ApiService';
+import ToastService from '../../services/ToastService'; // Certifique-se de que este serviço esteja importado corretamente
 
-export default function ModalTratamento({ modalAberto, setModalAberto }) {
-    const customStyles = {
-        content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-            width: '45%',
-            height: '57%',
-        },
-    };
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        width: '45%',
+        height: '57%',
+    },
+};
+
+export default function ModalTratamento({ modalAberto, setModalAberto, paciente, onModalClose }) {
     Modal.setAppElement('#root');
 
     const [nome, setNome] = useState("");
     const [descricao, setDescricao] = useState("");
-    const [dataAtual, setDataAtual] = useState("");
     const [dentes, setDentes] = useState([]);
 
-    useEffect(() => {
-        const today = new Date();
-        const formattedDate = today.toISOString().split('T')[0];
-        setDataAtual(formattedDate);
-    }, []);
+    const dataAtual = new Date().toISOString().split('T')[0];
 
     const handleDenteChange = (selectedOptions) => {
-        const selectedDentes = selectedOptions.map(option => option.value);
-        setDentes(selectedDentes);
+        const selectedValues = selectedOptions.map(option => option.value);
+    
+        // Verificar se 'Arcada Superior', 'Arcada Inferior' ou 'Todos' foram selecionados
+        if (selectedValues.includes('superior')) {
+            // Selecionar dentes da Arcada Superior (1 a 16)
+            const superiorDentes = Array.from({ length: 16 }, (_, i) => i + 1);
+            setDentes(superiorDentes);
+        } else if (selectedValues.includes('inferior')) {
+            // Selecionar dentes da Arcada Inferior (17 a 32)
+            const inferiorDentes = Array.from({ length: 16 }, (_, i) => i + 17);
+            setDentes(inferiorDentes);
+        } else if (selectedValues.includes('todos')) {
+            // Selecionar todos os dentes (1 a 32)
+            const todosDentes = Array.from({ length: 32 }, (_, i) => i + 1);
+            setDentes(todosDentes);
+        } else {
+            // Caso contrário, manter os dentes selecionados como estão
+            const selectedDentes = selectedValues.map(Number); // Converte os valores para números
+            setDentes(selectedDentes);
+        }
     };
+    
 
     const handleCloseModal = () => {
+        resetForm();
         setModalAberto(false);
+        if (typeof onModalClose === 'function') {
+          onModalClose(); // Chama a função de callback para atualizar dados no pai
+        }
+    };
+    
+    const resetForm = () => {
+        setNome("");
+        setDescricao("");
+        setDentes([]);
     };
 
-    const handleAddTratamento = () => {
-
-    };
-
+    async function adicionarTratamento() {
+        try {
+            const body = {
+                tratamento: nome,
+                paciente: paciente.id,
+                dentes,
+                descricao,
+            };
+            
+            await ApiService.post('/odontograma/multiplo', body);
+            ToastService.Success('Tratamento adicionado');
+            handleCloseModal(); // Fechar o modal após sucesso
+            
+        } catch (error) {
+            ToastService.Error('Erro ao adicionar tratamento.');
+            console.error(error); 
+        }
+    }
+    
     const numbers = Array.from({ length: 32 }, (_, i) => i + 1);
-    const options = numbers.map(num => ({ value: num, label: num }));
+
+    const options = [
+        { value: 'superior', label: 'Arcada Superior' },
+        { value: 'inferior', label: 'Arcada Inferior' },
+        { value: 'todos', label: 'Todos' },
+        ...numbers.map(num => ({ value: num, label: num }))
+    ];
+    
+    
 
     return (
         <Modal
@@ -52,10 +102,9 @@ export default function ModalTratamento({ modalAberto, setModalAberto }) {
             shouldCloseOnEsc={true}
             shouldCloseOnOverlayClick={true}
             onRequestClose={handleCloseModal}
+            role="dialog"
         >
             <div className={styles.container}>
-
-
                 <div className={styles.titleClose}>
                     <h2 className={styles.title}>Novo Tratamento</h2>
                     <svg className={styles.closeIcon} onClick={handleCloseModal} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512">
@@ -73,13 +122,12 @@ export default function ModalTratamento({ modalAberto, setModalAberto }) {
                 </div>
 
                 <div>
-                    <label className={styles.tituloCampos} >Descrição: </label>
+                    <label className={styles.tituloCampos}>Descrição: </label>
                     <div>
                         <textarea
                             value={descricao}
                             onChange={(e) => setDescricao(e.target.value)}
                             className={styles.descricaoTextarea}
-
                         />
                     </div>
                 </div>
@@ -96,15 +144,11 @@ export default function ModalTratamento({ modalAberto, setModalAberto }) {
                         menuPortalTarget={document.body}
                         placeholder="Selecione os dentes"
                     />
-
-
-
                 </div>
 
                 <div className={styles.containerButton}>
-                    <button className={styles.button} onClick={handleAddTratamento}>+ Adicionar</button>
+                    <button className={styles.button} onClick={adicionarTratamento}>+ Adicionar</button>
                 </div>
-
             </div>
         </Modal>
     );

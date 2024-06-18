@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import Select from 'react-select';
 import styles from './ModalAnamnese.module.css';
+import ToastService from '../../services/ToastService';
+import ApiService from '../../services/ApiService';
 
-export default function ModalAnamnese({ modalAberto, setModalAberto }) {
+export default function ModalAnamnese({ modalAberto, setModalAberto, pacienteId }) {
     const customStyles = {
         content: {
             top: '50%',
@@ -18,6 +20,42 @@ export default function ModalAnamnese({ modalAberto, setModalAberto }) {
     };
     Modal.setAppElement('#root');
 
+    async function CadastrarResposta(e) {
+        console.log
+        e.preventDefault();
+        try {
+            const body = {
+                pacienteId,
+                data: dataAtual,
+                respostas: {
+                    queixaPrincipal,
+                    tratamentoMedico,
+                    cirurgiaRecente,
+                    alergiaMedicamento,
+                    reacaoAdversa,
+                    ultimaConsulta,
+                    problemaDental,
+                    habitoDanoso,
+                    condicaoMedica,
+                    restricaoAlimentar,
+                    objetivoTratamento
+                }
+            };
+
+            const response = await ApiService.post('/Anamnese/CadastrarResposta', body);
+            if(response.status === 200){
+                ToastService.Success('Anamnese cadastrada com sucesso');
+                navigate('/');
+            }
+        } catch (error) {
+            if (error.response?.status === 400) {
+                ToastService.Error('Erro ao cadastrar anamnese');
+                return;
+            }
+            ToastService.Error('Erro inesperado ao cadastrar anamnese');
+        }
+    }
+    
     const [dataAtual, setDataAtual] = useState("");
     const [queixaPrincipal, setQueixaPrincipal] = useState('');
     const [tratamentoMedico, setTratamentoMedico] = useState('');
@@ -62,7 +100,6 @@ export default function ModalAnamnese({ modalAberto, setModalAberto }) {
                         </svg>
                     </div>
                     <form>
-    
                         <div className={styles.data}>
                             <input className={styles.inputData} type="date" id="date" value={dataAtual} readOnly />
                         </div>
@@ -178,7 +215,7 @@ export default function ModalAnamnese({ modalAberto, setModalAberto }) {
                         </div>
     
                         <div className={styles.containerButton}>
-                            <button className={styles.button}>Salvar</button>
+                            <button onClick={CadastrarResposta} className={styles.button}>Salvar</button>
                         </div>
                     </form>
                 </div>
