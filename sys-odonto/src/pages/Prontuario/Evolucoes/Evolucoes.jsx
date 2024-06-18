@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // Editor style
+import 'react-quill/dist/quill.snow.css'; // Estilo do editor
 import styles from './Evolucoes.module.css';
 import ModalTratamento from '../../../components/ModalTratamento/ModalTratamento';
 import ModalNovaEvolucao from '../../../components/ModalEvolucao/ModalNovaEvolucao';
@@ -21,10 +21,13 @@ function Evolucoes({ paciente, fechar, onModalClose }) {
   const [posicao, setPosicao] = useState('');
   const [odontogramas, setOdontogramas] = useState([]);
   const [tratamentos, setTratamentos] = useState([]);
+  const [tratamentosEmAndamento, setTratamentosEmAndamento] = useState([]);
+  const [evolucoes, setEvolucoes] = useState([]);
 
   useEffect(() => {
     buscarOdontograma();
-  }, []);
+    buscarEvolucao();
+  }, [paciente]);
 
   const Tooltip = ({ text, children }) => (
     <div className={styles.tooltip}>
@@ -35,6 +38,7 @@ function Evolucoes({ paciente, fechar, onModalClose }) {
 
   const atualizarDados = () => {
     buscarOdontograma();
+    buscarEvolucao();
   };
 
   async function buscarOdontograma() {
@@ -42,17 +46,28 @@ function Evolucoes({ paciente, fechar, onModalClose }) {
       const response = await ApiService.get(`/odontograma/paciente/${paciente.id}`);
       const tratamentosEmAndamento = response.data
         .filter(item => item.status === 'Em andamento')
-        .map(item => ({
-          tratamento: item.tratamento,
-          descricao: item.descricao,
-          dentes: item.dentes
-        }));
-      setTratamentos(tratamentosEmAndamento);
+        .reduce((uniqueTratamentos, item) => {
+          // Usar um Map para garantir que os tratamentos sejam únicos
+          if (!uniqueTratamentos.has(item.tratamento)) {
+            uniqueTratamentos.set(item.tratamento, {
+              tratamento: item.tratamento,
+              descricao: item.descricao,
+              dentes: item.dentes
+            });
+          }
+          return uniqueTratamentos;
+        }, new Map())
+        .values(); // Extrair os valores únicos do Map
+
+      setTratamentosEmAndamento([...tratamentosEmAndamento]);
+      setTratamentos([...tratamentosEmAndamento]); // Se necessário, definir os tratamentos em estado separado
       setOdontogramas(response.data);
     } catch (error) {
       console.error('Erro ao buscar odontograma:', error);
+      alert('Erro ao buscar dados do odontograma. Por favor, tente novamente.');
     }
   }
+
 
   const handleAbrirModalTratamento = () => {
     setModalTratamentoAberto(true);
@@ -62,6 +77,37 @@ function Evolucoes({ paciente, fechar, onModalClose }) {
     setModalEvolucaoAberto(true);
   };
 
+  async function buscarEvolucao() {
+    try {
+      const response = await ApiService.get(`/evolucao/paciente/${paciente.id}`);
+      setEvolucoes(response.data);
+    } catch (error) {
+      console.error('Erro ao buscar evoluções:', error);
+      alert('Erro ao buscar evoluções. Por favor, tente novamente.');
+    }
+  }
+
+
+
+  function formatarData(data) {
+    const dia = String(data.getDate()).padStart(2, '0');
+    const mes = String(data.getMonth() + 1).padStart(2, '0'); // Mês é indexado em zero, então somamos 1
+    const ano = data.getFullYear();
+    const horas = String(data.getHours()).padStart(2, '0');
+    const minutos = String(data.getMinutes()).padStart(2, '0');
+
+    return `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
+  }
+
+
+  const dataString = '2024-06-16T17:15:35';
+  const data = new Date(dataString);
+  const dataFormatada = formatarData(data);
+  console.log(dataFormatada);
+
+
+
+
   return (
     <div className={styles.container}>
       <div className={styles.containerSuperior}>
@@ -69,7 +115,7 @@ function Evolucoes({ paciente, fechar, onModalClose }) {
           <div className={styles.containerTitle}>
             <label className={styles.title}>Odontograma</label>
           </div>
-          <div className={styles.grade2}>
+          <div className={styles.gradeOdonto}>
             <Odontograma />
           </div>
         </div>
@@ -81,7 +127,7 @@ function Evolucoes({ paciente, fechar, onModalClose }) {
           <div className={styles.gradeTratamento}>
             <div className={styles.listagem}>
               <label className={styles.subTitle}>Em andamento</label>
-              {tratamentos.map((tratamento, index) => (
+              {tratamentosEmAndamento.map((tratamento, index) => (
                 <div key={index} className={styles.tooltip}>
                   <Tooltip text={tratamento.descricao}>
                     <span className={styles.listagem1}>- {tratamento.tratamento}</span>
@@ -105,38 +151,31 @@ function Evolucoes({ paciente, fechar, onModalClose }) {
           <button className={styles.button} onClick={handleAbrirModalEvolucao}>
             + Adicionar Evolução
           </button>
-          <ModalNovaEvolucao modalAberto={modalEvolucaoAberto} setModalAberto={setModalEvolucaoAberto} />
+          <ModalNovaEvolucao modalAberto={modalEvolucaoAberto} setModalAberto={setModalEvolucaoAberto} paciente={paciente} tratamentosEmAndamento={tratamentosEmAndamento} onModalClose={atualizarDados} />
         </div>
         <div className={styles.grade2}>
-          {/* Example historical entries */}
-          <div className={styles.gradeh}>
-            <label>
-              <div className={styles.componenteH}>
-                <h3>Pulpite irreversível</h3>
-                <span>Diagnosticado com pulpite irreversível no dente 46. Tratamento de canal iniciado com anestesia, abertura, instrumentação e medicação intracanal, seguido de restauração temporária. Retorno agendado para 7 dias.</span>
+          {evolucoes.length > 0 ? (
+            evolucoes.map((evolucao, index) => (
+              <div className={styles.gradeh} key={index}>
+                <label>
+                  <div className={styles.componenteH}>
+                    <h2 className={styles.titleEvolucao}>{evolucao.titulo}</h2>
+                    <div dangerouslySetInnerHTML={{ __html: evolucao.descricao }} />
+                  </div>
+                  <div className={styles.componenteH}>
+             
+                    <span><strong className={styles.titleEvolucao}>Tratamento:</strong> <strong>{evolucao.tratamento.join(', ')}</strong></span>
+                  </div>
+                  <div className={styles.componenteH2}>
+                    <span>{formatarData(new Date(evolucao.dataEvolucao))}</span>
+
+                  </div>
+                </label>
               </div>
-              <div className={styles.componenteH}>
-                <span><strong>Tratamento:</strong> Canal e restauração</span>
-              </div>
-              <div className={styles.componenteH2}>
-                <span>22/09/2024 - 9:48</span>
-              </div>
-            </label>
-          </div>
-          <div className={styles.gradeh}>
-            <label>
-              <div className={styles.componenteH}>
-                <h3>Dente cariado</h3>
-                <span>Diagnosticado com cárie extensa no dente 36. Realizada remoção da cárie e restauração com resina composta. Orientado sobre higiene bucal e agendado retorno em 6 meses para revisão.</span>
-              </div>
-              <div className={styles.componenteH}>
-                <span><strong>Tratamento:</strong> Limpeza e restauração</span>
-              </div>
-              <div className={styles.componenteH2}>
-                <span>22/09/2024 - 9:48</span>
-              </div>
-            </label>
-          </div>
+            ))
+          ) : (
+            <p>Nenhuma evolução encontrada.</p>
+          )}
         </div>
       </div>
     </div>

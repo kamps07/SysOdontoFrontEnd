@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
+import ApiService from '../../services/ApiService';
+import ToastService from '../../services/ToastService';
 import Select from 'react-select';
 import styles from './ModalNovaEvolucao.module.css';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // Estilo para o editor
+import 'react-quill/dist/quill.snow.css';
 
-export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
+export default function ModalNovaEvolucao({ modalAberto, setModalAberto, tratamentosEmAndamento, onModalClose, paciente }) {
     const customStyles = {
         content: {
             top: '50%',
@@ -22,7 +24,7 @@ export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
     const modules = {
         toolbar: {
             container: [
-                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                [{ 'header': [3, 4, 5, 6, false] }],
                 ['bold', 'italic', 'underline', 'strike'],
                 [{ 'list': 'ordered' }, { 'list': 'bullet' }],
                 [{ 'color': [] }],
@@ -30,10 +32,10 @@ export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
             ]
         },
         clipboard: {
-            matchVisual: false // Desabilita a inserção de arquivos
+            matchVisual: false
         },
-        imageDrop: false, // Desabilita a inserção de imagens arrastando e soltando
-        imageResize: false // Desabilita o redimensionamento de imagens
+        imageDrop: false,
+        imageResize: false
     };
 
     Modal.setAppElement('#root');
@@ -43,7 +45,7 @@ export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
     const [dataAtual, setDataAtual] = useState("");
     const [dentes, setDentes] = useState([]);
     const [tratamento, setTratamento] = useState([]);
-    const [status, setStatus] = useState('em andamento'); // Estado para o status
+    const [status, setStatus] = useState('em andamento');
 
     useEffect(() => {
         const today = new Date();
@@ -51,20 +53,12 @@ export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
         setDataAtual(formattedDate);
     }, []);
 
-    const handleDenteChange = (selectedOptions) => {
-        const selectedDentes = selectedOptions.map(option => option.value);
-        setDentes(selectedDentes);
+    const handleTratamento = (selectedOptions) => {
+        setTratamento(selectedOptions);
+        console.log("Tratamento selecionado:", selectedOptions); // Depuração
     };
 
-    const handleCloseModal = () => {
-        setModalAberto(false);
-    };
-
-    const handleAddTratamento = () => {
-        // Lógica para adicionar o tratamento
-    };
-
-    const handleChange = (value) => {
+    const handleChangeDescricao = (value) => {
         setDescricao(value);
     };
 
@@ -72,8 +66,51 @@ export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
         setStatus(selectedOption.value);
     };
 
-    const numbers = Array.from({ length: 32 }, (_, i) => i + 1);
-    const denteOptions = numbers.map(num => ({ value: num, label: num }));
+    const handleTituloChange = (e) => {
+        setNome(e.target.value);
+    };
+
+    const adicionarEvolucao = async () => {
+        try {
+            const body = {
+                titulo: nome,
+                descricao,
+                tratamento: tratamento.map(opcao => opcao.value),
+                paciente: paciente.id,
+                status: status, // Inclui o status no corpo da requisição
+                dataEvolucao: dataAtual // Inclui a data de evolução
+            };
+            console.log("Dados enviados:", body); // Depuração
+            await ApiService.post('/evolucao/adicionar', body);
+    
+            ToastService.Success('Evolução adicionada');
+            handleCloseModal();
+        } catch (error) {
+            ToastService.Error('Erro ao adicionar evolução.');
+            console.error(error);
+        }
+    };
+
+    const handleCloseModal = () => {
+        resetForm();
+        setModalAberto(false);
+        if (typeof onModalClose === 'function') {
+            onModalClose();
+        }
+    };
+
+    const resetForm = () => {
+        setNome("");
+        setDescricao("");
+        setTratamento([]);
+        setStatus('em andamento');
+    };
+
+    const tratamentosOptions = tratamentosEmAndamento.map(tratamento => ({
+        value: tratamento.tratamento,
+        label: tratamento.tratamento
+    }));
+
     const statusOptions = [
         { value: 'em andamento', label: 'Em andamento' },
         { value: 'finalizado', label: 'Finalizado' }
@@ -101,20 +138,20 @@ export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
 
                 <div className={styles.alinhamento}>
                     <label className={styles.tituloCampos}>Título: </label>
-                    <input value={nome} onChange={(e) => setNome(e.target.value)} className={styles.input} />
+                    <input value={nome} onChange={handleTituloChange} className={styles.input} />
                 </div>
 
                 <div className={styles.alinhamento}>
                     <label className={styles.tituloCampos}>Tratamento: </label>
                     <Select
                         isMulti
-                        value={denteOptions.filter(option => dentes.includes(option.value))}
-                        onChange={handleDenteChange}
-                        options={denteOptions}
+                        value={tratamento}
+                        onChange={handleTratamento}
+                        options={tratamentosOptions}
                         className={`${styles.selectDentes} custom-select custom-select-height custom-select-background`}
                         closeMenuOnSelect={false}
                         menuPortalTarget={document.body}
-                        placeholder="Selecione os dentes"
+                        placeholder="Selecione os tratamentos em andamento"
                     />
                 </div>
 
@@ -135,14 +172,14 @@ export default function ModalNovaEvolucao({ modalAberto, setModalAberto }) {
                     <ReactQuill
                         theme="snow"
                         value={descricao}
-                        onChange={handleChange}
-                        modules={modules} // Passando os módulos configurados
+                        onChange={handleChangeDescricao}
+                        modules={modules}
                         className={`${styles.textarea} ${styles.customQuill}`}
                     />
                 </div>
 
                 <div className={styles.containerButton}>
-                    <button className={styles.button} onClick={handleAddTratamento}>+ Adicionar</button>
+                    <button className={styles.button} onClick={adicionarEvolucao}>+ Adicionar</button>
                 </div>
             </div>
         </Modal>

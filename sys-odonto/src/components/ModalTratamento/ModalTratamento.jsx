@@ -75,7 +75,7 @@ export default function ModalTratamento({ modalAberto, setModalAberto, paciente,
             };
             
             await ApiService.post('/odontograma/multiplo', body);
-            ToastService.Success('Tratamento realizado');
+            ToastService.Success('Tratamento adicionado');
             handleCloseModal(); // Fechar o modal após sucesso
             
         } catch (error) {
