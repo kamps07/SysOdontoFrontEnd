@@ -24,7 +24,7 @@ const UploadDocumento = () => {
     e.preventDefault();
 
     if (!fileBase64) {
-      setModalMessage('Por favor, selecione um arquivo');
+      setModalMessage('selecione um arquivo');
       setIsModalOpen(true);
       return;
     }
