@@ -1,125 +1,84 @@
-import React, { useState } from 'react'
-import styles from './Documentos.module.css'
-// import addButton from '../../assets/AddButton.svg'
-// import deleteButton from '../../assets/delete.svg'
-// import ToastService from '../../services/ToastService'
+import React, { useState } from 'react';
+import axios from 'axios';
+import './Documentos.module.css'; 
 
-export default function Documentos() {
+const UploadDocumento = () => {
+  const [titulo, setTitulo] = useState('');
+  const [fileBase64, setFileBase64] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
-    // const [draggingFile, setDraggingFile] = useState(0);
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result.split(',')[1];
+        setFileBase64(base64String);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
-    // const handleDragOver = (event) => {
-    //     event.preventDefault();
-    // }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    // const handleDrop = (event) => {
-    //     event.preventDefault();
-    //     setDraggingFile(0);
-    //     const files = event.dataTransfer.files;
-    //     handleFiles(files);
-    // }
+    if (!fileBase64) {
+      setModalMessage('Por favor, selecione um arquivo');
+      setIsModalOpen(true);
+      return;
+    }
 
-    // const handleFileInputChange = (event) => {
-    //     const files = event.target.files;
-    //     handleFiles(files);
-    // }
+    const documento = {
+      Titulo: titulo,
+      Base64: fileBase64,
+    };
 
-    // const fileInputRef = React.createRef();
-    // const handleClick = (bypass) => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/Documentos/InserirDocumento', documento, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      setModalMessage(response.data);
+    } catch (error) {
+      console.error(error);
+      setModalMessage('Erro ao inserir documento');
+    } finally {
+      setIsModalOpen(true);
+    }
+  };
 
-    //     if (draggingFile > 0) return;
-    //     if (bypass && anexos.length > 0) return;
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalMessage('');
+  };
 
-    //     fileInputRef.current.click();
-    // }
+  return (
+    <>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Título:</label>
+          <input type="text" value={titulo} onChange={(e) => setTitulo(e.target.value)} />
+        </div>
+        <div>
+          <label>Selecione o PDF:</label>
+          <input type="file" accept="application/pdf" onChange={handleFileChange} />
+        </div>
+        <button type="submit">Inserir Documento</button>
+      </form>
 
-    // const handleFiles = (files) => {
-    //     if (files.length > 0) {
-    //         for (let i = 0; i < files.length; i++) {
-    //             const file = files[i];
-    //             if (file.size > 25 * 1024 * 1024) {
-    //                 ToastService.Error("O arquivo é maior do que 25MB");
-    //                 return;
-    //             }
-    //             const reader = new FileReader();
-    //             reader.onload = (event) => {
-    //                 const base64String = event.target.result;
-    //                 adicionarAnexo(file, base64String);
-    //             };
-    //             reader.readAsDataURL(file);
-    //         }
-    //     }
-    // }
+      {isModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={closeModal}>&times;</span>
+            <p>{modalMessage}</p>
+            <button onClick={closeModal}>Fechar</button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
 
-    // const handleDragEnter = (event) => {
-    //     event.preventDefault();
-    //     setDraggingFile((prev) => prev + 1);
-    // }
-
-    // const handleDragLeave = (event) => {
-    //     event.preventDefault();
-    //     setDraggingFile((prev) => prev - 1);
-    // }
-
-    return (
-        <div 
-        
-        className={styles.container}
-            // onDragEnter={handleDragEnter}
-            // onDragLeave={handleDragLeave}
-        >
-            {/* <input
-                type="file"
-                onChange={handleFileInputChange}
-                style={{ display: 'none' }}
-                multiple
-                ref={fileInputRef}
-            />
-            <div className={styles.addButtonContainer}>
-                <span>Anexos: </span>
-                {anexos.length > 0 &&
-                    <div
-                        onClick={() => handleClick(false)}
-                    >
-                        <img ></img>
-                    </div>
-                }
-            </div>
-
-            <div className={anexos.length > 0 && draggingFile == false ? styles.content : styles.contentSemAnexo}
-                onDrop={handleDrop}
-                onDragOver={handleDragOver}
-                onClick={() => handleClick(true)}
-            >
-                {draggingFile === 0 &&
-                    <div>
-                        {
-                            anexos.map((anexo) => (
-                                <div className={styles.line} key={anexo?.key}>
-                                    <div className={styles.lineContent}>
-                                        <span>{anexo.nome} </span>
-                                        <img onClick={() => excluirAnexo(anexo?.key)} src={deleteButton}></img>
-                                    </div>
-                                    {anexo?.key !== anexos.length - 1 && <div className={styles.divider}></div>}
-                                </div>
-                            ))
-                        }
-                        {
-                            anexos.length == 0 &&
-                            <div>
-                                <img className={styles.imgAdd} src={addButton}></img>
-                            </div>
-                        }
-                    </div>
-                }
-                {draggingFile > 0 &&
-                    <span>Arraste e solte arquivos de até 25MB.</span>
-                }
-            </div> */}
-
-            <div>
-            <button className={styles.button}>+ Adicionar documento</button>
-            </div>
-        </div >
-    )
-}
+export default UploadDocumento;
