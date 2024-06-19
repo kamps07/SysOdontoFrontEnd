@@ -132,6 +132,7 @@ export default function ModalAgendamento({ modalAberto, setModalAberto, refresh 
 
             ToastService.Success('Agendamento Realizado');
             refresh();
+            setModalAberto(false);
         }
         catch (error) {
             console.log(error);
