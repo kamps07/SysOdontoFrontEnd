@@ -5,11 +5,9 @@ import AlterarPaciente from '../../Pacientes/AlterarPaciente/AlterarPaciente';
 import whatsapp from '../../../assets/whatsapp.png';
 
 
-function DadosPessoais({ paciente }) {
+function DadosPessoais({ paciente, refresh }) {
   const [mostrarAlterar, setMostrarAlterar] = useState(false);
   const [mostrarDadosPessoais, setMostrarDadosPessoais] = useState(true);
-  const [pacienteSelecionado, setPacienteSelecionado] = useState(paciente);
-
 
   const handleAlterarPaciente = () => {
     setMostrarDadosPessoais(false);
@@ -251,7 +249,7 @@ function DadosPessoais({ paciente }) {
         </div>
       )}
       {mostrarAlterar && (
-        <AlterarPaciente paciente={pacienteSelecionado} fechar={fechar} />
+        <AlterarPaciente paciente={paciente} fechar={fechar} refresh={refresh} />
       )}
     </div>
   );

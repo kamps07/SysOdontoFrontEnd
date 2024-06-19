@@ -42,6 +42,7 @@ export default function BuscarPacientes() {
 
     const handleBuscarPaciente = async () => {
         try {
+            console.log('chamando', cpfNome);
             ToastService.Info("Buscando paciente");
             let response;
             if (cpfNome.match(/^\d+$/)) {
@@ -51,6 +52,17 @@ export default function BuscarPacientes() {
             }
             const pacientes = response.data;
             setPacientes(pacientes);
+        } catch (error) {
+            ToastService.Error('Paciente não encontrado.');
+        }
+    };
+
+    const BuscarPacientePorCPF = async () => {
+        try {
+            const response = await ApiService.get(`/Paciente/BuscarPorCPF/${pacienteSelecionado.cpf}`);
+            const paciente = response.data[0];
+
+            setPacienteSelecionado(paciente);
         } catch (error) {
             ToastService.Error('Paciente não encontrado.');
         }
@@ -82,7 +94,7 @@ export default function BuscarPacientes() {
 
     return (
         <div className={styles.pacientesContainer}>
-            {mostrarProntuario && <Prontuario paciente={pacienteSelecionado} fechar={fechar} />}
+            {mostrarProntuario && <Prontuario paciente={pacienteSelecionado} fechar={fechar} refresh={BuscarPacientePorCPF} />}
             {!mostrarCadastro && !mostrarProntuario &&
                 <div className={styles.container}>
                     <div className={styles.containerButton}>

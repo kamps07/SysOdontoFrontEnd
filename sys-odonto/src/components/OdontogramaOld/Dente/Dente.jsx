@@ -1,5 +1,5 @@
 import styles from './Dente.module.css'
-export default function Dente({ dente }) {
+export default function Dente({ dente, onClick }) {
 
     function definirClasse(posicao) {
         if (dente.hasOwnProperty(posicao)) {
@@ -11,7 +11,7 @@ export default function Dente({ dente }) {
     }
 
     return (
-        <div>
+        <div onClick={onClick}>
             <svg width="40" height="40">
                 <g transform="scale(2)">
                     <polygon

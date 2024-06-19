@@ -8,7 +8,7 @@ import Arquivos from './Arquivos/Arquivos';
 import Documentos from './Documentos/Documentos';
 import ModalCadastroClinica from '../../components/ModalCadastroClínica/ModalAlterarClínica';
 
-function Prontuario({ paciente }) {
+function Prontuario({ paciente, refresh }) {
     
     const [paginaSelecionada, setPaginaSelecionada] = useState("DadosPessoais");
 
@@ -28,7 +28,7 @@ function Prontuario({ paciente }) {
                 </div>
                 <div>
                     <div>
-                        {paginaSelecionada === "DadosPessoais" && <DadosPessoais paciente={paciente} />}
+                        {paginaSelecionada === "DadosPessoais" && <DadosPessoais paciente={paciente} refresh={refresh} />}
                         {paginaSelecionada === "Anamnese" && <Anamnese paciente={paciente} />}
                         {paginaSelecionada === "Evolucoes" && <Evolucoes paciente={paciente} />}
                         {paginaSelecionada === "Arquivos" && <Arquivos paciente={paciente} />}
