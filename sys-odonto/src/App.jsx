@@ -1,12 +1,13 @@
-import './App.css'
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Cadastro from './pages/Cadastro/Cadastro'
+import './App.css';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Cadastro from './pages/Cadastro/Cadastro';
 import { ToastContainer } from 'react-toastify';
-import Login from './pages/Login/Login'
+import 'react-toastify/dist/ReactToastify.css';
+import Login from './pages/Login/Login';
 import Home from './pages/Home/Home';
+import PaginaInicial from './pages/PaginaInicial/PaginaInicial';
 
 function App() {
-
   const router = createBrowserRouter([
     {
       path: "/Login",
@@ -18,7 +19,11 @@ function App() {
     },
     {
       path: "/",
-      element: <Home />
+      element: <Home />,
+    },
+    {
+      path: "/PaginaInicial",
+      element: <PaginaInicial />,
     },
   ]);
 
@@ -30,4 +35,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

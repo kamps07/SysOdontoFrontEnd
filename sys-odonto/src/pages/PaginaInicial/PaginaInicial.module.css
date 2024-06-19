@@ -1,0 +1,48 @@
+.loginWallpaper {
+    background-image: url('../../assets/WallpaperLogin.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.middle{
+    background-color: #1088AE;
+    color: #fff;
+    height: 10vh;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    font-weight: 100;
+    font-size: 30px;
+}
+
+.header {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 1px;
+}
+
+  
+  .logoClinica {
+    height: 100%;
+    width: 25%;
+  }
+  
+  .containerLogo {
+    height: 100%;
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .logo {
+    padding-right: 20%;
+  }
+

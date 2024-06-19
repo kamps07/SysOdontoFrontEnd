@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Documentos.module.css'; 
+import ModalOdontograma from '../../../components/ModalOdontograma/ModalOdontograma';
 
 const UploadDocumento = () => {
   const [titulo, setTitulo] = useState('');
@@ -54,10 +55,18 @@ const UploadDocumento = () => {
     setModalMessage('');
   };
 
+  
+
   return (
     <>
       <form onSubmit={handleSubmit}>
         <div>
+
+          <div>
+            <button onChange={ModalOdontograma}> Modal Oodontograma </button>
+          </div>
+
+
           <label>Título:</label>
           <input type="text" value={titulo} onChange={(e) => setTitulo(e.target.value)} />
         </div>

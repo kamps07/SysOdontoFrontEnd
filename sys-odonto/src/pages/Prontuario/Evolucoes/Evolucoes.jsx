@@ -47,7 +47,7 @@ function Evolucoes({ paciente, fechar, onModalClose }) {
       const tratamentosEmAndamento = response.data
         .filter(item => item.status === 'Em andamento')
         .reduce((uniqueTratamentos, item) => {
-          // Usar um Map para garantir que os tratamentos sejam únicos
+     
           if (!uniqueTratamentos.has(item.tratamento)) {
             uniqueTratamentos.set(item.tratamento, {
               tratamento: item.tratamento,
@@ -57,10 +57,10 @@ function Evolucoes({ paciente, fechar, onModalClose }) {
           }
           return uniqueTratamentos;
         }, new Map())
-        .values(); // Extrair os valores únicos do Map
+        .values(); 
 
       setTratamentosEmAndamento([...tratamentosEmAndamento]);
-      setTratamentos([...tratamentosEmAndamento]); // Se necessário, definir os tratamentos em estado separado
+      setTratamentos([...tratamentosEmAndamento]);
       setOdontogramas(response.data);
     } catch (error) {
       console.error('Erro ao buscar odontograma:', error);
@@ -91,7 +91,7 @@ function Evolucoes({ paciente, fechar, onModalClose }) {
 
   function formatarData(data) {
     const dia = String(data.getDate()).padStart(2, '0');
-    const mes = String(data.getMonth() + 1).padStart(2, '0'); // Mês é indexado em zero, então somamos 1
+    const mes = String(data.getMonth() + 1).padStart(2, '0');
     const ano = data.getFullYear();
     const horas = String(data.getHours()).padStart(2, '0');
     const minutos = String(data.getMinutes()).padStart(2, '0');

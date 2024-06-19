@@ -5,7 +5,7 @@ import ToastService from '../../../services/ToastService';
 import InputMask from 'react-input-mask';
 import axios from 'axios';
 
-export default function AlterarPaciente({ paciente, fechar }) {
+export default function AlterarPaciente({ paciente, fechar, refresh }) {
     const [nome, setNome] = useState('');
     const [nomeModificado, setNomeModificado] = useState(false);
     const [dataNascimento, setDataNascimento] = useState('');
@@ -155,6 +155,7 @@ export default function AlterarPaciente({ paciente, fechar }) {
                 grauDeParentesco: grauDeParentesco === 'Outro' ? outroGrauParentesco : grauDeParentesco,
             });
             ToastService.Success('Alterações realizadas');
+            refresh();
             fechar();
         } catch (error) {
             ToastService.Error('Erro ao alterar.');

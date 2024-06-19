@@ -34,7 +34,7 @@
   cursor: pointer;
 }
 
-button {
+.button {
   background-color: #1088AE; /* Button color */
   color: rgb(235, 63, 63);
   padding: 10px 20px;
