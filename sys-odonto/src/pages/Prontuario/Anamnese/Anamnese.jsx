@@ -1,60 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Anamnese.module.css';
 import ModalAnamnese from '../../../components/ModalAnamnese/ModalAnamnese';
+import ApiService from '../../../services/ApiService';
+import ToastService from '../../../services/ToastService';
+import AnamneseItem from './AnamneseItem'; // Importe o componente AnamneseItem
 
-function Anamnese({ pacienteId }) {
-  const [modalAberto, setModalAberto] = useState(false);
+function Anamnese({ paciente }) {
+    const [modalAberto, setModalAberto] = useState(false);
+    const [dadosAnamneses, setDadosAnamneses] = useState([]);
 
-  const handleAbrirModal = () => {
-    setModalAberto(true);
-  };
+    useEffect(() => {
+        if (paciente) {
+            buscarAnamneses();
+        }
+    }, [paciente]);
 
-  return (
-    <div className={styles.container}>
+    const atualizarDados = () => {
+        buscarAnamneses();
+    };
 
-      <div className={styles.containerButton}>
-        <button className={styles.button} onClick={handleAbrirModal}>+ Preencher Anamnese</button>
-        <ModalAnamnese 
-          modalAberto={modalAberto} 
-          setModalAberto={setModalAberto}
-          pacienteId={pacienteId} />
-      </div>
+    const buscarAnamneses = async () => {
+        try {
+            const response = await ApiService.get(`/Anamnese/Buscar/${paciente.id}`);
+            const anamneses = response.data;
+            console.log('Anamneses recebidas:', anamneses);
+            setDadosAnamneses(anamneses); // Armazena todas as anamneses encontradas
+        } catch (error) {
+            ToastService.Error('Erro ao buscar anamnese.');
+            console.error(error);
+        }
+    };
 
-      <div>
-        <div className={styles.gradeh}>
-          <label>
+    const handleAbrirModal = () => {
+        setModalAberto(true);
+    };
 
-            <div className={styles.componenteH}>
-              <h3 className={styles.title}>Anamense Padrão</h3>
-              <span><strong>Queixa Prinicapal:</strong> Dor nos dentes superiores</span>
-
+    return (
+        <div className={styles.container}>
+            <div className={styles.containerButton}>
+                <button className={styles.button} onClick={handleAbrirModal}>+ Preencher Anamnese</button>
+                <ModalAnamnese
+                    modalAberto={modalAberto}
+                    setModalAberto={setModalAberto}
+                    paciente={paciente}
+                    onModalClose={atualizarDados}
+                />
             </div>
-            <div className={styles.componenteH2}>
 
-              <span>22/09/2024 - 9:48</span>
-            </div>
-          </label>
-
+            {dadosAnamneses.length > 0 ? (
+                <div>
+                    {dadosAnamneses.map((anamnese) => (
+                        <AnamneseItem key={anamnese.ID_Anamnese} anamnese={anamnese} />
+                    ))}
+                </div>
+            ) : (
+                <p>Nenhuma anamnese encontrada para exibir.</p>
+            )}
         </div>
-
-        <div className={styles.gradeh}>
-          <label>
-
-            <div className={styles.componenteH}>
-              <h3 className={styles.title}>Anamense Padrão - Retorno 6 Meses</h3>
-              <span><strong>Queixa Prinicapal:</strong> Alinhamento dos dentes inferiores</span>
-
-            </div>
-            <div className={styles.componenteH2}>
-
-              <span>01/03/2024 - 9:48</span>
-            </div>
-          </label>
-
-        </div>
-      </div>
-    </div>
-  )
+    );
 }
 
 export default Anamnese;
