@@ -1,48 +1,76 @@
-/* Modal.css */
-.modal {
-  display: block; /* Initially hidden */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+.containerButton {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
 }
 
-.modal-content {
-  background-color: #fff;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #a5a4a4;
-  width: 80%; /* Could be more or less, depending on screen size */
-}
 
-.close {
-  color: #e24747;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.button {
-  background-color: #1088AE; /* Button color */
-  color: rgb(235, 63, 63);
-  padding: 10px 20px;
+.buttonCadastro {
+  background-color: #1088AE;
+  color: white;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px;
+  align-items: flex-start;
+  margin-bottom: 25px;
 }
 
-button:hover {
-  background-color: #0b6a87;
+.buttonCadastro:hover {
+  background-color: #0c6c89;
 }
+
+.container {
+  padding: 10px;
+  margin: 2%;
+}
+
+
+.tableContainer {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 15px;
+  background-color: #fff;
+  color: #666666;
+  margin-top: 30px;
+}
+
+.tableContainer table {
+  border-collapse: collapse;
+  width: 100%;
+  /* color: #666666; */
+}
+
+.tableContainer th, .tableContainer td {
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #ddd; 
+ 
+}
+
+.tableContainer th {
+  background-color: #fff;
+  color: #1088AE;
+  border: 1px solid #ddd; /* Adiciona uma borda de 1px sólida com cor #ddd */
+  text-align: left;
+  padding: 8px;
+}
+
+.tableContainer tr:nth-child(odd) {
+  background-color: #1089ae13;;
+}
+
+.tableContainer tr:hover {
+  background-color: #1089ae53;
+}
+
+.tableContainer th:nth-child(1), .tableContainer td:nth-child(1) {
+  width: 50%; /* Define a largura da primeira coluna como 100 pixels */
+}
+
+.tableContainer th:nth-child(2), .tableContainer td:nth-child(2) {
+  width: 15%; /* Define a largura da segunda coluna como 150 pixels */
+}
+
+
