@@ -46,12 +46,10 @@ export default function Agenda() {
             const response = await ApiService.get(rota);
 
             const ag = response.data[0];
-            console.log(ag.servico.duracao)
 
             const startDate = moment(`${ag.dataDaConsulta} ${ag.horario}`, 'YYYY-MM-DD HH:mm');
             const endDate = moment(startDate).add(ag.servico.duracao, 'minutes');
-            console.log(startDate.toISOString());
-            console.log(endDate.toISOString());
+            
             const agenda = response.data.map(agendamento => {
                 const startDate = moment(`${agendamento.dataDaConsulta} ${agendamento.horario}`, 'YYYY-MM-DD HH:mm');
                 const endDate = moment(startDate).add('minutes', agendamento.servico.duracao);
@@ -109,8 +107,8 @@ export default function Agenda() {
                     />
                     <View
                         type="week"
-                        startDayHour={4}
-                        endDayHour={22}
+                        startDayHour={7}
+                        endDayHour={19}
                     />
                 </Scheduler>
             </div>

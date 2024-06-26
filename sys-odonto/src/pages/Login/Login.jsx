@@ -47,7 +47,7 @@ export default function Login() {
 
             AuthService.SalvarToken(token);
 
-            ToastService.Success('Seja bem vindo, ' + email);
+            ToastService.Success('Seja bem vindo, Matheus!');
 
             navigate('/');
         }

@@ -23,6 +23,8 @@ function Evolucoes({ paciente, fechar, onModalClose }) {
   const [tratamentos, setTratamentos] = useState([]);
   const [tratamentosEmAndamento, setTratamentosEmAndamento] = useState([]);
   const [evolucoes, setEvolucoes] = useState([]);
+  const [dentesFocados, setDentesFocados] = useState([]);
+
 
   useEffect(() => {
     buscarOdontograma();
@@ -44,20 +46,25 @@ function Evolucoes({ paciente, fechar, onModalClose }) {
   async function buscarOdontograma() {
     try {
       const response = await ApiService.get(`/odontograma/paciente/${paciente.id}`);
+
       const tratamentosEmAndamento = response.data
         .filter(item => item.status === 'Em andamento')
         .reduce((uniqueTratamentos, item) => {
-     
           if (!uniqueTratamentos.has(item.tratamento)) {
+            // Create a new treatment object if it doesn't exist in the map
             uniqueTratamentos.set(item.tratamento, {
               tratamento: item.tratamento,
               descricao: item.descricao,
-              dentes: item.dentes
+              dentes: [] // Initialize dentes as an empty array
             });
           }
+
+          // Push the single "dente" into the dentes array of the existing or new treatment object
+          uniqueTratamentos.get(item.tratamento).dentes.push(item.dente);
+
           return uniqueTratamentos;
         }, new Map())
-        .values(); 
+        .values();
 
       setTratamentosEmAndamento([...tratamentosEmAndamento]);
       setTratamentos([...tratamentosEmAndamento]);
@@ -87,7 +94,13 @@ function Evolucoes({ paciente, fechar, onModalClose }) {
     }
   }
 
+  function handleTooltipEnter(tratamento) {
+    setDentesFocados(tratamento.dentes);
+  }
 
+  function handleTooltipLeave() {
+    setDentesFocados([]);
+  }
 
   function formatarData(data) {
     const dia = String(data.getDate()).padStart(2, '0');
@@ -103,7 +116,6 @@ function Evolucoes({ paciente, fechar, onModalClose }) {
   const dataString = '2024-06-16T17:15:35';
   const data = new Date(dataString);
   const dataFormatada = formatarData(data);
-  console.log(dataFormatada);
 
 
 
@@ -116,7 +128,7 @@ function Evolucoes({ paciente, fechar, onModalClose }) {
             <label className={styles.title}>Odontograma</label>
           </div>
           <div className={styles.gradeOdonto}>
-            <Odontograma />
+            <Odontograma paciente={paciente} dentesFocados={dentesFocados} setDentesFocados={setDentesFocados} />
           </div>
         </div>
 
@@ -128,8 +140,8 @@ function Evolucoes({ paciente, fechar, onModalClose }) {
             <div className={styles.listagem}>
               <label className={styles.subTitle}>Em andamento</label>
               {tratamentosEmAndamento.map((tratamento, index) => (
-                <div key={index} className={styles.tooltip}>
-                  <Tooltip text={tratamento.descricao}>
+                <div key={index} className={styles.tooltip} onMouseEnter={() => handleTooltipEnter(tratamento)} onMouseLeave={() => handleTooltipLeave()} >
+                  <Tooltip text={tratamento.descricao} >
                     <span className={styles.listagem1}>- {tratamento.tratamento}</span>
                   </Tooltip>
                 </div>
@@ -163,7 +175,7 @@ function Evolucoes({ paciente, fechar, onModalClose }) {
                     <div dangerouslySetInnerHTML={{ __html: evolucao.descricao }} />
                   </div>
                   <div className={styles.componenteH}>
-             
+
                     <span><strong className={styles.titleEvolucao}>Tratamento:</strong> <strong>{evolucao.tratamento.join(', ')}</strong></span>
                   </div>
                   <div className={styles.componenteH2}>

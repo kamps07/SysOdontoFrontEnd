@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import styles from "./ModalOdontograma.module.css"
 import Select from 'react-select';
@@ -20,21 +20,72 @@ const customStyles = {
 
 const dataAtual = new Date().toISOString().split('T')[0];
 
-
-
-export default function ModalOdontograma({ modalAberto, setModalAberto, paciente, onModalClose }) {
+export default function ModalOdontograma({ modalAberto, setModalAberto, paciente, onModalClose, dente, posicao }) {
     Modal.setAppElement('#root');
 
     const handleCloseModal = () => {
         setModalAberto(false);
-     };
-    
-     const [nome, setNome] = useState("");
-     const [descricao, setDescricao] = useState("");
-     const [dentes, setDentes] = useState([]);
- 
+    };
 
+    const posicoes = [
+        {
+            label: "Right",
+            value: "right"
+        },
+        {
+            label: "Left",
+            value: "left"
+        },
+        {
+            label: "Top",
+            value: "top"
+        },
+        {
+            label: "Bot",
+            value: "bot"
+        },
+        {
+            label: "Center",
+            value: "center"
+        },
+        {
+            label: "All",
+            value: "all"
+        }
+    ]
 
+    useEffect(() => {
+        const test = posicoes.find(x => x.value == posicao);
+        console.log(test);
+        setPosicaoSelecionada(posicoes.find(x => x.value == posicao));
+
+    }, [posicao])
+
+    const handleSelectPosicao = (selectedOptions) => {
+        setPosicaoSelecionada(selectedOptions);
+    };
+
+    const handleAdicionar = () =>{
+        const body ={
+            tratamento,
+            dente,
+            paciente: paciente.id,
+            descricao,
+            posicao: posicaoSelecionada.value
+        }
+
+        try {
+            ApiService.post('/odontograma/unitario', body);
+        } catch (error) {
+            console.log(error)
+        }
+
+        console.log(body)
+    }
+
+    const [tratamento, setTratamento] = useState("");
+    const [descricao, setDescricao] = useState("");
+    const [posicaoSelecionada, setPosicaoSelecionada] = useState();
 
     return (
         <Modal
@@ -45,8 +96,7 @@ export default function ModalOdontograma({ modalAberto, setModalAberto, paciente
             onRequestClose={handleCloseModal}
             role="dialog"
         >
-        
-        <div className={styles.container}>
+            <div className={styles.container}>
                 <div className={styles.titleClose}>
                     <h2 className={styles.title}>Novo Tratamento</h2>
                     <svg className={styles.closeIcon} onClick={handleCloseModal} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512">
@@ -59,22 +109,19 @@ export default function ModalOdontograma({ modalAberto, setModalAberto, paciente
                 </div>
 
                 <div>
-                    <label className={styles.tituloCampos}>Dentes: </label>
-
-                    <select>
-                    <option value="">Selecione</option>
-                        <option value="Superior">Superior</option>
-                        <option value="Inferior">Inferior</option>
-                        <option value="Lateral Direita"> Lateral Direita</option>
-                         <option value="Lateral Esquerda">Lateral Esquerda</option>
-                         <option value="Central">Central</option>
-                    </select>
-                
+                    <label className={styles.tituloCampos}>Posição: </label>
+                    <Select
+                        value={posicaoSelecionada}
+                        onChange={handleSelectPosicao}
+                        options={posicoes}
+                        className={`${styles.selectDentes} custom-select custom-select-height custom-select-background`}
+                        closeMenuOnSelect={false}
+                    />
                 </div>
 
                 <div>
                     <label className={styles.tituloCampos}>Nome do tratamento: </label>
-                    <input value={nome} onChange={(e) => setNome(e.target.value)} className={styles.input} />
+                    <input value={tratamento} onChange={(e) => setTratamento(e.target.value)} className={styles.input} />
                 </div>
 
                 <div>
@@ -87,13 +134,11 @@ export default function ModalOdontograma({ modalAberto, setModalAberto, paciente
                         />
                     </div>
                 </div>
-
-
                 <div className={styles.containerButton}>
-                    <button>+ Adicionar</button>
+                    <button className={styles.button} onClick={handleAdicionar}>+ Adicionar</button>
                 </div>
             </div>
-       
+
         </Modal>
     );
 }
