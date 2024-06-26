@@ -2,9 +2,11 @@ import React from 'react';
 import styles from './Anamnese.module.css';
 
 function AnamneseItem({ anamnese }) {
-    // Função para formatar a data no formato desejado (dd/mm/aaaa)
     const formatarData = (data) => {
         const dataObj = new Date(data);
+        if (isNaN(dataObj.getTime())) {
+            return { dataFormatada: 'Data Inválida', horaFormatada: '' };
+        }
         const dia = dataObj.getDate().toString().padStart(2, '0');
         const mes = (dataObj.getMonth() + 1).toString().padStart(2, '0');
         const ano = dataObj.getFullYear();
@@ -15,7 +17,6 @@ function AnamneseItem({ anamnese }) {
         return { dataFormatada, horaFormatada };
     };
 
-    // Formatar a data realizada
     const { dataFormatada, horaFormatada } = formatarData(anamnese.dataRealizada);
 
     return (
