@@ -1,91 +1,78 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './Documentos.module.css'; 
-import ModalOdontograma from '../../../components/ModalOdontograma/ModalOdontograma';
+import styles from './Documentos.module.css';
+import ModalDocumentos from '../../../components/ModalDocumentos/ModalDocumentos';
+import ApiService from '../../../services/ApiService';
+import downloadButton from '../../../assets/Download.svg'
+import deleteButton from '../../../assets/Delete.svg'
 
-const UploadDocumento = () => {
-  const [titulo, setTitulo] = useState('');
-  const [fileBase64, setFileBase64] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
+const UploadDocumento = ({ paciente }) => {
+  const [modalDocumentosAberto, setModalDocumentosAberto] = useState(false);
+  const [documentos, setDocumentos] = useState(false);
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result.split(',')[1];
-        setFileBase64(base64String);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  useEffect(() => {
+    buscarDocumentos();
+  }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!fileBase64) {
-      setModalMessage('selecione um arquivo');
-      setIsModalOpen(true);
-      return;
-    }
-
-    const documento = {
-      Titulo: titulo,
-      Base64: fileBase64,
-    };
-
+  async function buscarDocumentos() {
     try {
-      const response = await axios.post('http://localhost:5000/api/Documentos/InserirDocumento', documento, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      setModalMessage(response.data);
+      const response = await ApiService.get('/documentos/' + paciente.id);
+      setDocumentos(response.data);
     } catch (error) {
-      console.error(error);
-      setModalMessage('Erro ao inserir documento');
-    } finally {
-      setIsModalOpen(true);
+
     }
-  };
+  }
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setModalMessage('');
-  };
 
-  
+
+  async function removerDocumento(documento) {
+    try {
+      alert(documento.id)
+      // const response = await ApiService.get('/documentos/' + 35);
+      // setDocumentos(response.data);
+    } catch (error) {
+
+    }
+  }
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <div>
+      <ModalDocumentos modalAberto={modalDocumentosAberto} setModalAberto={setModalDocumentosAberto} paciente={paciente} refresh={buscarDocumentos} />
 
-          <div>
-            <button onChange={ModalOdontograma}> Modal Oodontograma </button>
-          </div>
-
-
-          <label>Título:</label>
-          <input type="text" value={titulo} onChange={(e) => setTitulo(e.target.value)} />
+      <div className={styles.container}>
+        <div className={styles.containerButton}>
+          <button className={styles.buttonCadastro} onClick={() => setModalDocumentosAberto(true)}>+ Adicionar Documentos</button>
         </div>
-        <div>
-          <label>Selecione o PDF:</label>
-          <input type="file" accept="application/pdf" onChange={handleFileChange} />
-        </div>
-        <button type="submit">Inserir Documento</button>
-      </form>
+        <div className={styles.tableContainer}>
+          <table>
+            <thead>
+              <tr>
+                <th>Titulo</th>
+                <th>Data Upload</th>
+                <th>Baixar</th>
+                <th>Excluir</th>
+              </tr>
+            </thead>
+            <tbody>
+              {documentos && documentos.map((documento, index) => (
+                <tr key={index}>
+                  <td>{documento.titulo}</td>
+                  <td>{documento.dataUpload}</td>
+                  <td >
 
-      {isModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={closeModal}>&times;</span>
-            <p>{modalMessage}</p>
-            <button onClick={closeModal}>Fechar</button>
-          </div>
+                    <a href={documento.link} target='_blank'>
+                      <img className={styles.imgDownload} src={downloadButton}></img>
+                    </a>
+                  </td>
+                  <td onClick={() => removerDocumento(documento)}>
+                    <img className={styles.imgDelete} src={deleteButton}></img>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-      )}
+      </div>
     </>
   );
 };
