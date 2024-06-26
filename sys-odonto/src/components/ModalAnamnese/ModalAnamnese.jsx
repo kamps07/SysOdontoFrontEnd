@@ -32,9 +32,15 @@ export default function ModalAnamnese({ modalAberto, setModalAberto, paciente, o
 
     const handleCloseModal = () => {
         setModalAberto(false);
+        resetForm();
         if (typeof onModalClose === 'function') {
           onModalClose(); // Chama a função de callback para atualizar dados no pai
         }
+        
+    };
+
+    const resetForm = () => {
+        setRespostas([]);
     };
 
     const BuscarPerguntas = async () => {
@@ -51,35 +57,43 @@ export default function ModalAnamnese({ modalAberto, setModalAberto, paciente, o
     };
 
 
-        async function AdicionarAnamnese() {
-            if (!paciente || !paciente.id) {
-                console.error('ID do paciente não definido.');
-                return;
-            }
-        
-            try {
-                const respostasParaEnviar = perguntas.map((pergunta, index) => ({
-                    pergunta: pergunta && pergunta.id ? pergunta.id.toString() : '',
-                    resposta: respostas[index] || ''
-                }));
-        
-                const body = {
-                    respostas: respostasParaEnviar,
-                    paciente: paciente.id,
-                };                
-        
-                console.log('Dados enviados para a API:', body);
-        
-                const response = await ApiService.post('/anamnese/CadastrarResposta', body);
-                ToastService.Success('Anamnese adicionada');
-
-                handleCloseModal(); // Fechar o modal após sucesso
-        
-            } catch (error) {
-                ToastService.Error('Erro ao adicionar anamnese.');
-                console.error(error);
-            }
+    async function AdicionarAnamnese() {
+        if (!paciente || !paciente.id) {
+            console.error('ID do paciente não definido.');
+            return;
         }
+    
+        try {
+            // Filtrar perguntas e respostas não vazias
+            const respostasParaEnviar = perguntas.map((pergunta, index) => {
+                const resposta = respostas[index];
+                if (pergunta && pergunta.id && resposta) {
+                    return {
+                        pergunta: pergunta.id.toString(),
+                        resposta: resposta
+                    };
+                }
+                return null;
+            }).filter(item => item !== null);
+    
+            const body = {
+                respostas: respostasParaEnviar,
+                paciente: paciente.id,
+            };
+    
+            console.log('Dados enviados para a API:', body);
+    
+            const response = await ApiService.post('/anamnese/CadastrarResposta', body);
+            ToastService.Success('Anamnese adicionada');
+    
+            handleCloseModal(); // Fechar o modal após sucesso
+    
+        } catch (error) {
+            ToastService.Error('Erro ao adicionar anamnese.');
+            console.error(error);
+        }
+    }
+    
         
 
     const handleInputChange = (index, event) => {
